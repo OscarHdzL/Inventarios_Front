@@ -1,0 +1,141 @@
+<vex-page-layout>
+  <div class="p-gutter m-2" >
+    <div class="card overflow-auto mt-2">
+      <div class="mt-4 flex flex-col text-center justify-center gap-2 mr-5">
+        <h1 class="title mt-0 mb-1">Mesa de validación</h1>
+      </div>
+      <form role="form" autocomplete="off" [formGroup]="formBusqueda" novalidate>
+          <div class="flex flex-col xl:flex-row lg:flex-row gap-2 m-5 ">
+            <mat-form-field class="flex-auto">
+              <mat-label>Cliente</mat-label>
+              <mat-select formControlName="cliente" (valueChange)="changeCliente($event)">
+                <mat-option *ngIf="listaClientes.length==0"> No se encontraron clientes por mostrar</mat-option>
+                <mat-option *ngFor="let cliente of listaClientes" [value]="cliente.id">{{cliente.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.cliente.hasError('required')"> El campo es requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+              <mat-label>Partida</mat-label>
+              <mat-select formControlName="partida" (valueChange)="changePartida($event)">
+                <mat-option *ngIf="listaPartidas.length==0"> No se encontraron partidas por mostrar</mat-option>
+                <mat-option *ngFor="let partida of listaPartidas" [value]="partida.id">{{partida.nombre }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.partida.hasError('required')"> El campo es requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+              <mat-label>Proceso</mat-label>
+              <mat-select formControlName="proceso" (valueChange)="changeProceso($event)">
+                <mat-option *ngIf="listaProcesos.length==0"> No se encontraron procesos por mostrar</mat-option>
+                <mat-option *ngFor="let proceso of listaProcesos" [value]="proceso.id">{{proceso.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.proceso.hasError('required')"> El campo es requerido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto">
+              <mat-label>Periodo</mat-label>
+              <mat-select formControlName="periodo" (valueChange)="changePeriodo($event)">
+                <mat-option *ngIf="listaPeriodos.length==0"> No se encontraron periodos por mostrar</mat-option>
+                <mat-option *ngFor="let periodo of listaPeriodos" [value]="periodo.id">{{periodo.nombre}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.periodo.hasError('required')"> El campo es requerido</mat-error>
+            </mat-form-field>
+
+            <button
+              class="ml-4 flex-none"
+              color="primary"
+              mat-mini-fab
+              matTooltip="Agregar proyecto"
+              type="button"
+              *ngIf="listaProyectos.length == 0; else showButton"
+              (click)="openModalProyectos()"
+            >
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+
+            <ng-template #showButton>
+              <mat-form-field class="flex-auto">
+                <mat-label>Proyecto</mat-label>
+                <mat-select formControlName="proyecto" (valueChange)="changeProyecto($event)">
+                  <mat-option *ngIf="listaProyectos.length==0"> No se encontraron proyectos por mostrar</mat-option>
+                <mat-option *ngFor="let proyecto of listaProyectos" [value]="proyecto.id">{{proyecto.nombre}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="this.proyecto.hasError('required')">El campo es requerido</mat-error>
+              </mat-form-field>
+            </ng-template>
+          </div>
+      </form>
+<hr>
+      <div class=" mt-4 flex flex-col text-center justify-center gap-2 mr-5" *ngIf="this.listaDocumentosProyecto.length > 0">
+        <h1 class="title m-5">Documentos por cubrir</h1>
+        <div class="mb-5" *ngFor="let data of listaDocumentosProyecto" >
+          <div class="flex flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-row" >
+            <div class="basis-1/3">
+              <div class="flex justify-end">
+                <p class="inline-block font-bold">Versiones:</p>
+                <br>
+                <p class="inline-block">&nbsp;{{data.numeroVersiones}}</p>
+                <div class="align-middle inline-block">
+                  <img
+                      src="assets/img/down-arrow.png"
+                      alt="line"
+                      class="w-5 h-150 ml-5 mb-1"
+                  >
+                  <button
+                      mat-fab
+                      color="primary"
+                      class="mat-focus-indicator mat-fab mat-button-base mat-primary w-5 h-5 ml-5"
+                  ></button>
+              </div>
+              </div>
+            </div>
+            <div class="basis-2/3">
+              <mat-card class="inline-block ml-5 items-center flex flex-col  xl:w-3/4 lg:w-3/4 md:w-3/4 w-full" >
+                <mat-card-header >
+                    <mat-card-title>{{data.documento}}</mat-card-title>
+                    <mat-card-subtitle>{{data.proyecto}}</mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-actions class="m-3 flex xl:flex-row lg:flex-row md:flex-row sm:flex-col flex-col justify-center gap-1">
+                  <button
+                  mat-raised-button
+
+                  color="warn"
+                        (click)="movimientos(data)"
+                    >
+                        Movimientos
+                    </button>
+                    <button
+                    mat-raised-button
+
+                        color="primary"
+                        (click)="detalles(data)"
+                    >
+                        Detalles
+                    </button>
+                    <button
+                    *ngIf="this.data.idUltimaVersion"
+                    mat-raised-button
+
+                    color="accent"
+                        (click)="comentarios(data)"
+                    >
+                        Comentarios
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            </div>
+          </div>
+
+
+
+      </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</vex-page-layout>
