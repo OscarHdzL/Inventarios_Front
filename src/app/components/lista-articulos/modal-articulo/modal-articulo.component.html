@@ -1,6 +1,7 @@
 <div class="flex items-center " style="border: none !important" mat-dialog-title>
     <h2 class="headline m-0 flex-auto">{{this.articuloModel.id > 0 ? 'Editar articulo ' : 'Agregar articulo '}}
-        <b>{{this.articuloModel.modelo }}</b></h2>
+        <b>{{this.articuloModel.modelo }}</b>
+    </h2>
     <button></button>
     <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
@@ -112,6 +113,11 @@
                     <mat-icon class="icon-sm" svgIcon="mat:keyboard_arrow_down"></mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
+            <div class="flex justify-end w-full">
+                <button class="m-4" color="primary" mat-mini-fab matTooltip="Agregar característica" type="button">
+                    <mat-icon svgIcon="mat:add"></mat-icon>
+                </button>
+            </div>
             <div class="relative shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -142,7 +148,7 @@
                 </table>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel >
+        <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     ARTICULO
@@ -153,13 +159,13 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="relative shadow-md sm:rounded-lg grid grid-cols-1 justify-items-center">
-                <div class="py-3">Valor después del 1° año: $7,200.00 </div> 
-                <div class="py-3">Valor después del 2° año: $7,200.00 - $1,440.00 = $5,760.00 </div> 
-                <div class="py-3">Valor después del 3° año: $5,760.00 - $1,440.00 = $4,320.00   </div> 
-                <div class="py-3">Valor después del 4° año: $4,320.00 - $1,440.00 = $2,880.00   </div> 
+                <div class="py-3">Valor después del 1° año: $7,200.00 </div>
+                <div class="py-3">Valor después del 2° año: $7,200.00 - $1,440.00 = $5,760.00 </div>
+                <div class="py-3">Valor después del 3° año: $5,760.00 - $1,440.00 = $4,320.00 </div>
+                <div class="py-3">Valor después del 4° año: $4,320.00 - $1,440.00 = $2,880.00 </div>
             </div>
         </mat-expansion-panel>
-        <mat-expansion-panel >
+        <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     ARTICULO
@@ -169,6 +175,11 @@
                     <mat-icon class="icon-sm" svgIcon="mat:keyboard_arrow_down"></mat-icon>
                 </mat-panel-description>
             </mat-expansion-panel-header>
+            <div class="flex justify-end w-full">
+                <button class="m-4" color="primary" mat-mini-fab matTooltip="Agregar documento" type="button">
+                    <mat-icon svgIcon="mat:add"></mat-icon>
+                </button>
+            </div>
             <div class="relative shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -182,7 +193,7 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                               Manual de uso
+                                Manual de uso
                             </th>
                             <td class="px-3 py-2">
                                 <a matTooltip="Descargar"

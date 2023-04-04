@@ -60,6 +60,7 @@ import { ModalBaseComponent } from './lista-base/modal-base/modal-base.component
 import { ListaGeneralArticulosComponent } from './lista-general-articulos/lista-general-articulos.component';
 import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
 import { ModalArticuloComponent } from './lista-articulos/modal-articulo/modal-articulo.component';
+import { ModalCaracteristicaComponent } from './lista-articulos/modal-caracteristica/modal-caracteristica.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -97,6 +98,7 @@ import { ModalArticuloComponent } from './lista-articulos/modal-articulo/modal-a
     ListaGeneralArticulosComponent,
     ListaArticulosComponent,
     ModalArticuloComponent,
+    ModalCaracteristicaComponent,
   ],
   imports: [
     CommonModule,
