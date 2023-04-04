@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { RolesComponent } from './roles/roles.component';
 import { AuthGuard } from '../auth.guard';
 import { InicioComponent } from './inicio/inicio.component';
+import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,16 @@ const routes: Routes = [
   {
     path: 'lista',
     component: ListaBaseComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'articulos',
+    component: ListaArticulosComponent,
     canActivate: [AuthGuard]
   }
 /*   {

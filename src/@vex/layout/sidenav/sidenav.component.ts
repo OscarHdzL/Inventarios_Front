@@ -54,16 +54,21 @@ export class SidenavComponent implements OnInit {
 
     let children = [];
 
-
     children.push({
-      type: 'link',
-      label: 'lista',
-      route: '/components/lista',
-      icon: 'mat:file_copy',
-      routerLinkActiveOptions: { exact: true }
+      type: 'dropdown',
+      label: 'Catálogos',
+      icon: 'mat:list',
+      children: [
+        {
+          type: 'link',
+          label: 'Articulos',
+          route: '/components/articulos',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        }
+      ]
     });
-
-
+    
 
 
      let menu = this.sesionUsuarioActual.funciones.filter((x)=> x.modulo == 'Sidebar' && x.activo == true);

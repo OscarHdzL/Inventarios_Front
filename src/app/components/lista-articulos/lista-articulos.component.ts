@@ -1,5 +1,4 @@
 import { MesaValidacionService } from './../../servicios/mesa-validacion.service';
-import { AreaModel } from 'src/app/modelos/area.model';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,17 +7,20 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { SwalServices } from 'src/app/servicios/sweetalert2.services';
-import { ModalAreaComponent } from '../areas/modal-area/modal-area.component';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
-import { UsuarioModel } from '../../modelos/usuario.model';
-import { ModalBaseComponent } from './modal-base/modal-base.component';
+
+import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { ModalArticuloComponent } from './modal-articulo/modal-articulo.component';
+import { ArticuloModel } from 'src/app/modelos/Inventarios/articulo.model';
+
+
 
 @Component({
-  selector: 'vex-lista-base',
-  templateUrl: './lista-base.component.html',
-  styleUrls: ['./lista-base.component.scss']
+  selector: 'vex-lista-articulos',
+  templateUrl: './lista-articulos.component.html',
+  styleUrls: ['./lista-articulos.component.scss']
 })
-export class ListaBaseComponent implements OnInit {
+export class ListaArticulosComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   
@@ -26,9 +28,9 @@ export class ListaBaseComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: UsuarioModel[] = [];
+  dataSourceOriginal: ArticuloModel[] = [];
   dataSourceTabla:any;
-  listaItems: UsuarioModel[] = [];
+  listaItems: ArticuloModel[] = [];
 
   public selectedVal: string = 'cards';
 
@@ -36,8 +38,9 @@ export class ListaBaseComponent implements OnInit {
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Descripcion', property: 'descripcion', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Correo', property: 'correo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Proveedor', property: 'proveedor', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -46,7 +49,7 @@ export class ListaBaseComponent implements OnInit {
     private servicios: MesaValidacionService,
     private swalService: SwalServices,
     private changeDetectorRefs: ChangeDetectorRef,
-    private mesaValidacionService: MesaValidacionService,
+    private inventariosService: InventariosService,
     ) {
 
    }
@@ -73,8 +76,9 @@ export class ListaBaseComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.nombre.toLowerCase().includes(filterValue) ||
-        val.correo.toLowerCase().includes(filterValue)
+        val.modelo.toLowerCase().includes(filterValue) ||
+        val.fabricante.toLowerCase().includes(filterValue)||
+        val.proveedor.toLowerCase().includes(filterValue)
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
@@ -96,11 +100,11 @@ export class ListaBaseComponent implements OnInit {
     console.log(this.selectedVal);
   }
 
-  async deshabilitarUsuario(item){
+  async deshabilitarArticulo(item){
     console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarUsuario(item);
+    let res = {exito: true} //await this.servicios.deshabilitarArticulo(item);
     if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Usuario Deshabilitado");
+      this.swalService.alertaPersonalizada(true, "Articulo Deshabilitado");
       this.ngOnInit();
     }
     else {
@@ -112,7 +116,27 @@ export class ListaBaseComponent implements OnInit {
 
     this.dataSourceOriginal = [];
 
-    this.dataSourceOriginal = await this.obtenerUsuarios();
+    //this.dataSourceOriginal = await this.obtenerArticulos();
+
+    this.dataSourceOriginal = [
+      {
+        id: 1,
+        modelo: 'HP 15-EF2024NR',
+        fabricante: 'HP',
+        proveedor: 'Amazon '
+      },
+      {
+        id: 4,
+        modelo: 'X515JA-EJ2558W',
+        fabricante: 'ASUS',
+        proveedor: 'Amazon'
+      },
+      {
+        id: 6,
+        modelo: 'Ideapad 5-14ARE05',
+        fabricante: 'Lenovo',
+        proveedor: 'Amazon'
+      }];
 
 
       if (window.innerWidth >= 1280) {
@@ -131,15 +155,15 @@ export class ListaBaseComponent implements OnInit {
     this.dataSourceTabla.sort = this.sort;
  
 
-    this.matPaginatorIntl.itemsPerPageLabel = "Usuarios por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Articulos por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
 
 
 
-  public async obtenerUsuarios(){
-    const respuesta = await this.mesaValidacionService.obtenerCatalogoUsuarios();
+  public async obtenerArticulos(){
+    const respuesta = await this.inventariosService.obtenerCatalogoArticulos();
     return respuesta.exito ? respuesta.respuesta : [];
   }
 
@@ -149,16 +173,15 @@ export class ListaBaseComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
 
-  openModal(usuario: UsuarioModel){
+  openModal(usuario: ArticuloModel){
 
-    this.dialog.open(ModalBaseComponent,{
-      height: '45%',
+    this.dialog.open(ModalArticuloComponent,{
+      height: '60%',
       width: '100%',
       autoFocus: true,
       data: usuario,
       disableClose: true,
       maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
-      //maxWidth: '90%'
     }).afterClosed().subscribe(result => {
 
       this.ngOnInit();

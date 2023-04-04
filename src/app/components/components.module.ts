@@ -56,6 +56,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalFuncionUsuarioComponent } from './usuarios/modal-funcion-usuario/modal-funcion-usuario.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { ListaBaseComponent } from './lista-base/lista-base.component';
+import { ModalBaseComponent } from './lista-base/modal-base/modal-base.component';
+import { ListaGeneralArticulosComponent } from './lista-general-articulos/lista-general-articulos.component';
+import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
+import { ModalArticuloComponent } from './lista-articulos/modal-articulo/modal-articulo.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -89,6 +93,10 @@ import { ListaBaseComponent } from './lista-base/lista-base.component';
     ModalFuncionUsuarioComponent,
     InicioComponent,
     ListaBaseComponent,
+    ModalBaseComponent,
+    ListaGeneralArticulosComponent,
+    ListaArticulosComponent,
+    ModalArticuloComponent,
   ],
   imports: [
     CommonModule,
