@@ -1,14 +1,14 @@
 <div></div>
 
 <vex-page-layout>
-  <!-- <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
+  <vex-page-layout-header class="flex flex-col items-start justify-center">
       <div class="w-full flex flex-col sm:flex-row justify-between">
         <div>
-          <h1 class="title mt-0 mb-1">Lista de Articulos</h1>
-          <vex-breadcrumbs [crumbs]="['Lista de Articulos']"></vex-breadcrumbs>
+          <h1 class="title mt-0 mb-1">Software</h1>
+          <vex-breadcrumbs [crumbs]="['Software']"></vex-breadcrumbs>
         </div>
       </div>
-    </vex-page-layout-header> -->
+    </vex-page-layout-header>
 
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
@@ -17,13 +17,13 @@
       >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
           <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Articulo" type="button">
+          matTooltip="Agregar Software" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button> -->
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Articulo"
+            matTooltip="Agregar Software"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -114,7 +114,7 @@
             >
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Modelo: {{ item.modelo }}</div>
+                <div class="text-center">Nombre: {{ item.nombre }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
@@ -177,53 +177,6 @@
                   </button>
                 </div>
                 <div class="mr-5">
-                  <!-- <button (click)="openModalGraficas(item)" class=" " color="basic" mat-mini-fab matTooltip="Gráficas"
-                    type="button">
-                    <mat-icon svgIcon="mat:signal_cellular_alt"></mat-icon>
-                  </button> -->
-                  <button
-                    (click)="openModalGraficas(item)"
-                    matTooltip="Gráficas"
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-                  >
-                    <svg
-                      class="fill-current w-5 h-5"
-                      fill="#000000"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      preserveAspectRatio="xMidYMid"
-                    >
-                      <path
-                        class="st0"
-                        d="M70.697,395.352h80.633c5.658,0,10.246-4.252,10.246-9.498v-143.72c0-5.246-4.588-9.499-10.246-9.499H70.697
-                      c-5.658,0-10.246,4.253-10.246,9.499v143.72C60.451,391.1,65.039,395.352,70.697,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M215.684,395.352h80.631c5.658,0,10.248-4.252,10.248-9.498V141.117c0-5.246-4.59-9.498-10.248-9.498h-80.631
-                      c-5.66,0-10.248,4.252-10.248,9.498v244.736C205.436,391.1,210.024,395.352,215.684,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M360.668,395.352h80.631c5.66,0,10.248-4.252,10.248-9.498V25.964c0-5.246-4.588-9.499-10.248-9.499h-80.631
-                      c-5.66,0-10.248,4.253-10.248,9.499v359.89C350.42,391.1,355.008,395.352,360.668,395.352z"
-                      />
-                      <polygon
-                        class="st0"
-                        points="495.426,438.633 16.574,438.633 0,438.633 0,495.535 16.574,495.535 495.426,495.535 512,495.535
-                      512,438.633 	"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div class="mr-5">
-                  <!-- <button color="basic" mat-mini-fab matTooltip="Descargar documentación"
-                    type="button">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
-                  <!-- <button matTooltip="Descargar documentación" class="justify-items-center  w-10 h-10 bg-gray-400 hover:bg-gray-600 text-white font-bold rounded-full shadow-sm-light ">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
                   <button
                     matTooltip="Descargar documentación"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -241,7 +194,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarArticulo(item)"
+                      (change)="EliminarSoftware(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -267,13 +220,13 @@
           mat-table
           matSort
         >
-          <ng-container matColumnDef="modelo">
+          <ng-container matColumnDef="nombre">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Modelo
+              Nombre
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Modelo">
+            <mat-cell *matCellDef="let row" data-label="Nombre">
               <div>
-                {{ row.modelo }}
+                {{ row.nombre }}
               </div>
             </mat-cell>
           </ng-container>
@@ -307,7 +260,7 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar articulo"
+                  matTooltip="Editar software"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -322,8 +275,8 @@
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
                 </a>
                 <a
-                  (click)="EliminarArticulo(row)"
-                  matTooltip="Eliminar articulo"
+                  (click)="EliminarSoftware(row)"
+                  matTooltip="Eliminar software"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -344,7 +297,7 @@
           class="flex-auto items-center justify-center"
         >
           <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron articulos registrados
+            No se encontraron softwares registrados
           </h1>
         </div>
         <mat-paginator

@@ -1,7 +1,4 @@
-<div>
-
-</div>
-
+<div></div>
 
 <vex-page-layout>
   <!-- <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
@@ -15,68 +12,155 @@
 
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
-      <div class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col">
-
+      <div
+        class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
+      >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
-          <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
+          <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
           matTooltip="Agregar Articulo" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
+        </button> -->
+
+          <button
+            (click)="openModal(null)"
+            matTooltip="Agregar Articulo"
+            class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+          >
+            <svg
+              class="fill-current w-5 h-5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="Complete">
+                <g data-name="add" id="add-2">
+                  <g>
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="12"
+                      x2="12"
+                      y1="19"
+                      y2="5"
+                    />
+
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
         </div>
 
-        <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2" >
-        <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
+        <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
+          <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
           <mat-label>Buscador</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
           <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
         </mat-form-field> -->
-        <input
-        type="text"
-        placeholder="Buscar..."
-        name="comentario"
-        id="comentario"
-        formControlName="comentario"
-        (keyup)="applyFilter($event)"
-        class="px-2 py-2 bg-white-100  w-full focus:outline-none rounded-md  "
-      />
+          <form>
+            <input
+              type="text"
+              placeholder="Buscar..."
+              name="comentario"
+              id="comentario"
+              (keyup)="applyFilter($event)"
+              class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"
+            />
+          </form>
         </div>
-        <div class="xl:w-3/12 lg:w-3/12 md:w-3/12 w-12/12 flex justify-center" >
-          <mat-button-toggle-group class="px-2 py-2" #group="matButtonToggleGroup" aria-label="Favorite Color" [value]="selectedVal"
-          (change)="onValChange(group.value)">
-          <mat-button-toggle value="cards">Tarjetas</mat-button-toggle>
-          <mat-button-toggle value="tables">Tabla</mat-button-toggle>
-        </mat-button-toggle-group>
+        <div class="xl:w-3/12 lg:w-3/12 md:w-3/12 w-12/12 flex justify-center">
+          <mat-button-toggle-group
+            class="px-2 py-2"
+            #group="matButtonToggleGroup"
+            aria-label="Favorite Color"
+            [value]="selectedVal"
+            (change)="onValChange(group.value)"
+          >
+            <mat-button-toggle value="cards">Tarjetas</mat-button-toggle>
+            <mat-button-toggle value="tables">Tabla</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
       </div>
+
+      <!--  -->
+      <div>
+        <form role="form" autocomplete="off" [formGroup]="formFiltros" novalidate>
+          <div class="mt-4 flex flex-col gap-2  m-2">
+              <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+                <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
+                  <mat-label>Marca</mat-label>
+                  <mat-select formControlName="marca" placeholder="Seleccione una opción">
+                    <mat-option *ngFor="let marca of listaMarca" [value]="marca.id">{{marca.descripcion}}
+                    </mat-option>
+                </mat-select>
+                  <mat-error *ngIf="this.marca.hasError('required')"> El campo es requerido</mat-error>
+              </mat-form-field>
+                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
+                      <mat-label>Modelo</mat-label>
+                      <mat-select formControlName="modelo" placeholder="Seleccione una opción">
+                        <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id">{{modelo.descripcion}}
+                        </mat-option>
+                    </mat-select>
+                      <mat-error *ngIf="this.modelo.hasError('required')"> El campo es requerido</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
+                      <mat-label>Propietario</mat-label>
+                      <mat-select formControlName="propietario" placeholder="Seleccione una opción">
+                        <mat-option *ngFor="let propietario of listaPropietario" [value]="propietario.id">{{propietario.descripcion}}
+                        </mat-option>
+                    </mat-select>
+                      <mat-error *ngIf="this.propietario.hasError('required')"> El campo es requerido</mat-error>
+                  </mat-form-field>
+
+              </div>
+
+
+          </div>
+      </form>
+      </div>
+
 
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
-
-          <div *ngIf="this.listaItems.length == 0" class="flex justify-center items-center mb-10">
+          <div
+            *ngIf="this.listaItems.length == 0"
+            class="flex justify-center items-center mb-10"
+          >
             <h1 class="title text-3xl">No hay registros</h1>
           </div>
-          <div *ngIf="this.listaItems.length != 0"
-            class="card overflow-auto  grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1">
-            <div *ngFor="let item of listaItems"
-              class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5 ">
+          <div
+            *ngIf="this.listaItems.length != 0"
+            class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
+          >
+            <div
+              *ngFor="let item of listaItems"
+              class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
+            >
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">
-                  Modelo: {{item.modelo}}
-                </div>
+                <div class="text-center">Modelo: {{ item.modelo }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">
-                  Fabricante: {{item.fabricante}}
-                </div>
+                <div class="text-center">Fabricante: {{ item.fabricante }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">
-                  Proveedor: {{item.proveedor}}
-                </div>
+                <div class="text-center">Proveedor: {{ item.proveedor }}</div>
               </div>
               <mat-divider></mat-divider>
               <!-- <div class="flex justify-between items-center mb-10">
@@ -90,33 +174,137 @@
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
-                  <button (click)="openModal(item)" class=" " color="secondary" mat-fab matTooltip="Editar"
+                  <!--   <button (click)="openModal(item)" color="basic" mat-mini-fab matTooltip="Editar"
                     type="button">
                     <mat-icon svgIcon="mat:edit"></mat-icon>
+                  </button> -->
+                  <button
+                    (click)="openModal(item)"
+                    matTooltip="Editar"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                    <svg
+                      class="fill-current w-5 h-5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        id="Page-1"
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          id="Dribbble-Light-Preview"
+                          transform="translate(-59.000000, -400.000000)"
+                          fill="#000000"
+                        >
+                          <g
+                            id="icons"
+                            transform="translate(56.000000, 160.000000)"
+                          >
+                            <path
+                              d="M3,260 L24,260 L24,258.010742 L3,258.010742 L3,260 Z M13.3341,254.032226 L9.3,254.032226 L9.3,249.950269 L19.63095,240 L24,244.115775 L13.3341,254.032226 Z"
+                              id="edit_fill-[#1480]"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+                <div class="mr-5">
+                  <!-- <button (click)="openModalGraficas(item)" class=" " color="basic" mat-mini-fab matTooltip="Gráficas"
+                    type="button">
+                    <mat-icon svgIcon="mat:signal_cellular_alt"></mat-icon>
+                  </button> -->
+                  <button
+                    (click)="openModalGraficas(item)"
+                    matTooltip="Gráficas"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                    <svg
+                      class="fill-current w-5 h-5"
+                      fill="#000000"
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                      preserveAspectRatio="xMidYMid"
+                    >
+                      <path
+                        class="st0"
+                        d="M70.697,395.352h80.633c5.658,0,10.246-4.252,10.246-9.498v-143.72c0-5.246-4.588-9.499-10.246-9.499H70.697
+                      c-5.658,0-10.246,4.253-10.246,9.499v143.72C60.451,391.1,65.039,395.352,70.697,395.352z"
+                      />
+                      <path
+                        class="st0"
+                        d="M215.684,395.352h80.631c5.658,0,10.248-4.252,10.248-9.498V141.117c0-5.246-4.59-9.498-10.248-9.498h-80.631
+                      c-5.66,0-10.248,4.252-10.248,9.498v244.736C205.436,391.1,210.024,395.352,215.684,395.352z"
+                      />
+                      <path
+                        class="st0"
+                        d="M360.668,395.352h80.631c5.66,0,10.248-4.252,10.248-9.498V25.964c0-5.246-4.588-9.499-10.248-9.499h-80.631
+                      c-5.66,0-10.248,4.253-10.248,9.499v359.89C350.42,391.1,355.008,395.352,360.668,395.352z"
+                      />
+                      <polygon
+                        class="st0"
+                        points="495.426,438.633 16.574,438.633 0,438.633 0,495.535 16.574,495.535 495.426,495.535 512,495.535
+                      512,438.633 	"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="mr-5">
+                  <!-- <button color="basic" mat-mini-fab matTooltip="Descargar documentación"
+                    type="button">
+                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
+                  </button> -->
+                  <!-- <button matTooltip="Descargar documentación" class="justify-items-center  w-10 h-10 bg-gray-400 hover:bg-gray-600 text-white font-bold rounded-full shadow-sm-light ">
+                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
+                  </button> -->
+                  <button
+                    matTooltip="Descargar documentación"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                    <svg
+                      class="fill-current w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
                   </button>
                 </div>
                 <div class="mt-3.5 flex flex-col justify-center">
                   <div class="flex justify-center">
-                    <mat-slide-toggle [checked]="true" (change)="deshabilitarArticulo(item)"></mat-slide-toggle>
+                    <mat-slide-toggle
+                      [checked]="true"
+                      (change)="EliminarArticulo(item)"
+                    ></mat-slide-toggle>
                   </div>
-                  <div>
-                    Deshabilitar
-                  </div>
+                  <div>Deshabilitar</div>
                 </div>
               </div>
             </div>
           </div>
 
-
-          <mat-paginator #paginatorCards [length]="this.dataSourceOriginal.length" [pageSize]="pageSize"
-            [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)"></mat-paginator>
-
+          <mat-paginator
+            #paginatorCards
+            [length]="this.dataSourceOriginal.length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChanged($event)"
+          ></mat-paginator>
         </div>
-
       </div>
       <!-- TABLA -->
       <div class="py-4" [hidden]="group.value == 'cards'">
-        <table [dataSource]="this.dataSourceTabla" class="w-full" mat-table matSort>
+        <table
+          [dataSource]="this.dataSourceTabla"
+          class="w-full"
+          mat-table
+          matSort
+        >
           <ng-container matColumnDef="modelo">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Modelo
@@ -130,7 +318,7 @@
 
           <ng-container matColumnDef="fabricante">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Fabricante
+              Fabricante
             </mat-header-cell>
             <mat-cell *matCellDef="let row" data-label="fabricante">
               <div>
@@ -140,7 +328,7 @@
           </ng-container>
           <ng-container matColumnDef="proveedor">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Proveedor
+              Proveedor
             </mat-header-cell>
             <mat-cell *matCellDef="let row" data-label="proveedor">
               <div>
@@ -155,20 +343,32 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let row" data-label="Acción">
               <div class="flex justify-center">
-                <a (click)="openModal(row)" matTooltip="Editar articulo"
+                <a
+                  (click)="openModal(row)"
+                  matTooltip="Editar articulo"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button>
+                  mat-icon-button
+                >
                   <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
                 </a>
-                <a (click)="openModal(row)" matTooltip="Ver funciones"
+                <a
+                  (click)="openModal(row)"
+                  matTooltip="Ver funciones"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button>
+                  mat-icon-button
+                >
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
                 </a>
-                <a (click)="deshabilitarArticulo(row)" matTooltip="Eliminar articulo"
+                <a
+                  (click)="EliminarArticulo(row)"
+                  matTooltip="Eliminar articulo"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button>
-                  <mat-icon class="icon-sm" svgIcon="mat:delete_forever"></mat-icon>
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
                 </a>
               </div>
             </mat-cell>
@@ -177,14 +377,19 @@
           <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: visibleColumns"> </mat-row>
         </table>
-        <div *ngIf="this.listaItems.length == 0" class="flex-auto items-center justify-center">
+        <div
+          *ngIf="this.listaItems.length == 0"
+          class="flex-auto items-center justify-center"
+        >
           <h1 class="m-10 headline2" style="text-align: center">
             No se encontraron articulos registrados
           </h1>
         </div>
-        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+        <mat-paginator
+          #paginator
+          [pageSizeOptions]="[5, 10, 15]"
+        ></mat-paginator>
       </div>
-
     </div>
   </vex-page-layout-content>
 </vex-page-layout>

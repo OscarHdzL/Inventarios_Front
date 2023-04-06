@@ -1,0 +1,199 @@
+<form role="form" autocomplete="off" [formGroup]="formSoftware" novalidate>
+  <div
+    class="flex items-center"
+    style="border: none !important"
+    mat-dialog-title
+  >
+    <h2 class="headline m-0 flex-auto">
+      {{
+        this.softwareModel.id > 0 ? "Editar software " : "Agregar software "
+      }}
+      <b>{{ this.softwareModel.nombre }}</b>
+    </h2>
+    <button></button>
+    <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="px-1">
+    <div class="mt-4 flex flex-col gap-2 m-2">
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Nombre</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="nombre"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.nombre.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Fabricante</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="fabricante"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.fabricante.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Número de licencias</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="numeroLicencias"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.numeroLicencias.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+
+      </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Propietario</mat-label>
+          <mat-select formControlName="propietario">
+            <mat-option
+              *ngFor="let propietario of listaPropietario"
+              [value]="propietario.id"
+            >
+              {{ propietario.descripcion }}</mat-option
+            >
+          </mat-select>
+
+          <mat-error *ngIf="this.propietario.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Objetivo</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="objetivo"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.objetivo.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+
+        </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Proveedor</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="proveedor"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.proveedor.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Contacto proveedor</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="contactoProveedor"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.proveedor.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Soporte</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="soporte"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.soporte.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Contacto soporte</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="contactoSoporte"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.contactoSoporte.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Notas de instalación</mat-label>
+          <textarea
+            type="text"
+            matInput
+            formControlName="notasInstalacion"
+            maxlength="2000"
+          ></textarea>
+          <mat-error *ngIf="this.notasInstalacion.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <!-- UPLOAD FILE -->
+      <div class="lg:w-1/3 md:w-1/3 w-full">
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900"
+          for="file_input"
+          >Manual de instalación</label
+        >
+        <input
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          aria-describedby="file_input_help"
+          id="file_input"
+          type="file"
+        />
+        <a
+          href="javascript: void(0)"
+          class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
+          id="file_input_help"
+          >Descargar manual de instalación.</a
+        >
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="guardarSoftware()"
+      [disabled]="formSoftware.invalid"
+    >
+      {{ this.softwareModel.id > 0 ? "Editar" : "Agregar" }}
+    </button>
+  </mat-dialog-actions>
+</form>

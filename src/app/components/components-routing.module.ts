@@ -11,6 +11,8 @@ import { RolesComponent } from './roles/roles.component';
 import { AuthGuard } from '../auth.guard';
 import { InicioComponent } from './inicio/inicio.component';
 import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
+import { ListaGeneralArticulosComponent } from './lista-general-articulos/lista-general-articulos.component';
+import { ListaSoftwareComponent } from './lista-software/lista-software.component';
 
 const routes: Routes = [
   {
@@ -32,7 +34,19 @@ const routes: Routes = [
     path: 'articulos',
     component: ListaArticulosComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'articulos-general',
+    component: ListaGeneralArticulosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'software',
+    component: ListaSoftwareComponent,
+    canActivate: [AuthGuard]
   }
+
+
 /*   {
     path: 'home',
     component: HomeComponent,

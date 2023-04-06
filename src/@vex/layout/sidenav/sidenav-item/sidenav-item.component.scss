@@ -5,8 +5,8 @@
   cursor: pointer;
   display: flex;
   flex-direction: row;
-  min-height: var(--sidenav-item-min-height);
-  padding: var(--sidenav-item-padding-vertical) var(--sidenav-item-padding-horizontal);
+  min-height: 25px;
+  /* padding: var(--sidenav-item-padding-vertical) var(--sidenav-item-padding-horizontal); */
   position: relative;
   text-decoration: none;
   transition: var(--trans-ease-out);

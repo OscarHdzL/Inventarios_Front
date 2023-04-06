@@ -1,29 +1,23 @@
 import { MesaValidacionService } from './../../servicios/mesa-validacion.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
 import { SwalServices } from 'src/app/servicios/sweetalert2.services';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
-
 import { InventariosService } from 'src/app/servicios/inventarios.service';
-import { ModalArticuloComponent } from './modal-articulo/modal-articulo.component';
-import { ArticuloModel } from 'src/app/modelos/Inventarios/articulo.model';
-import { MatAccordion } from '@angular/material/expansion';
-import { ModalGraficasArticuloComponent } from './modal-graficas-articulo/modal-graficas-articulo.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SoftwareModel } from 'src/app/modelos/Inventarios/software.model';
+import { ModalSoftwareComponent } from '../lista-software/modal-software/modal-software.component';
 
 
 
 @Component({
-  selector: 'vex-lista-articulos',
-  templateUrl: './lista-articulos.component.html',
-  styleUrls: ['./lista-articulos.component.scss']
+  selector: 'vex-lista-software',
+  templateUrl: './lista-software.component.html',
+  styleUrls: ['./lista-software.component.scss']
 })
-export class ListaArticulosComponent implements OnInit {
+export class ListaSoftwareComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -31,23 +25,17 @@ export class ListaArticulosComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: ArticuloModel[] = [];
+  dataSourceOriginal: SoftwareModel[] = [];
   dataSourceTabla:any;
-  listaItems: ArticuloModel[] = [];
-  listaMarca: any[] = [{id: 1, descripcion: 'Marca 1'}];
-  listaModelo: any[] = [{id: 1, descripcion: 'Modelo 1'}];
-  listaPropietario: any[] = [{id: 1, descripcion: 'Propietario 1'}];
-
-
+  listaItems: SoftwareModel[] = [];
 
   public selectedVal: string = 'cards';
 
   public tamanoPantalla: boolean;
-  formFiltros: FormGroup;
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Nombre', property: 'nombre', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Proveedor', property: 'proveedor', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
@@ -59,9 +47,8 @@ export class ListaArticulosComponent implements OnInit {
     private swalService: SwalServices,
     private changeDetectorRefs: ChangeDetectorRef,
     private inventariosService: InventariosService,
-    private formBuilder: FormBuilder,
     ) {
-      this.iniciarForm()
+
    }
 
 
@@ -86,7 +73,7 @@ export class ListaArticulosComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.modelo.toLowerCase().includes(filterValue) ||
+        val.nombre.toLowerCase().includes(filterValue) ||
         val.fabricante.toLowerCase().includes(filterValue)||
         val.proveedor.toLowerCase().includes(filterValue)
         );
@@ -103,18 +90,6 @@ export class ListaArticulosComponent implements OnInit {
 
   }
 
-  public iniciarForm(){
-    this.formFiltros = this.formBuilder.group({
-      marca: [''],
-      modelo: [''],
-      propietario: ['']
-
-    });
-  }
-
-  get marca() { return this.formFiltros.get('marca')};
-  get modelo() { return this.formFiltros.get('modelo')};
-  get propietario() { return this.formFiltros.get('propietario')};
 
   public onValChange(val: string) {
     this.selectedVal = val;
@@ -122,11 +97,11 @@ export class ListaArticulosComponent implements OnInit {
     console.log(this.selectedVal);
   }
 
-  async deshabilitarArticulo(item){
+  async deshabilitarSoftware(item){
     console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarArticulo(item);
+    let res = {exito: true} //await this.servicios.deshabilitarSoftware(item);
     if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Articulo Deshabilitado");
+      this.swalService.alertaPersonalizada(true, "Software Deshabilitado");
       this.ngOnInit();
     }
     else {
@@ -138,26 +113,26 @@ export class ListaArticulosComponent implements OnInit {
 
     this.dataSourceOriginal = [];
 
-    //this.dataSourceOriginal = await this.obtenerArticulos();
+    //this.dataSourceOriginal = await this.obtenerSoftwares();
 
     this.dataSourceOriginal = [
       {
         id: 1,
-        modelo: 'HP 15-EF2024NR',
-        fabricante: 'HP',
-        proveedor: 'Amazon '
+        nombre: 'Windows',
+        fabricante: 'Microsoft',
+        proveedor: 'Angop '
       },
       {
         id: 4,
-        modelo: 'X515JA-EJ2558W',
-        fabricante: 'ASUS',
-        proveedor: 'Amazon'
+        nombre: 'Microsoft 365',
+        fabricante: 'Microsoft',
+        proveedor: 'Angop'
       },
       {
         id: 6,
-        modelo: 'Ideapad 5-14ARE05',
-        fabricante: 'Lenovo',
-        proveedor: 'Amazon'
+        nombre: 'Photoshop',
+        fabricante: 'Adobe',
+        proveedor: 'Angop'
       }];
 
 
@@ -177,15 +152,15 @@ export class ListaArticulosComponent implements OnInit {
     this.dataSourceTabla.sort = this.sort;
 
 
-    this.matPaginatorIntl.itemsPerPageLabel = "Articulos por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Softwares por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
 
 
 
-  public async obtenerArticulos(){
-    const respuesta = await this.inventariosService.obtenerCatalogoArticulos();
+  public async obtenerSoftwares(){
+    const respuesta = await this.inventariosService.obtenerCatalogoSoftware();
     return respuesta.exito ? respuesta.respuesta : [];
   }
 
@@ -195,9 +170,9 @@ export class ListaArticulosComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
 
-  openModal(usuario: ArticuloModel){
+  openModal(usuario: SoftwareModel){
 
-    this.dialog.open(ModalArticuloComponent,{
+    this.dialog.open(ModalSoftwareComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
@@ -211,29 +186,13 @@ export class ListaArticulosComponent implements OnInit {
 
   }
 
-  openModalGraficas(articulo){
 
-    this.dialog.open(ModalGraficasArticuloComponent,{
-      height: '80%',
-      width: '100%',
-      autoFocus: true,
-      data: articulo,
-      disableClose: true,
-      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
-    }).afterClosed().subscribe(result => {
-
-      this.ngOnInit();
-    });
-
-  }
-
-
-  public async EliminarArticulo(articulo){
+  public async EliminarSoftware(software){
 
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
-      articulo.activo = false;
+      software.activo = false;
       const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
@@ -243,5 +202,4 @@ export class ListaArticulosComponent implements OnInit {
       }
     }
   }
-
 }

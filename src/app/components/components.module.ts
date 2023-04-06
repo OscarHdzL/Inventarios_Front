@@ -35,7 +35,7 @@ import { ModalProcesoComponent } from './clientes/procesos/modal-proceso/modal-p
 import { PeriodosComponent } from './clientes/periodos/periodos.component';
 import { ModalPeriodoComponent } from './clientes/periodos/modal-periodo/modal-periodo.component';
 import { DocumentosComponent } from './clientes/documentos/documentos.component';
-import { ModalDocumentoComponent } from './clientes/documentos/modal-documento/modal-documento.component';
+
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ProyectosComponent } from './clientes/proyectos/proyectos.component';
@@ -61,6 +61,12 @@ import { ListaGeneralArticulosComponent } from './lista-general-articulos/lista-
 import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
 import { ModalArticuloComponent } from './lista-articulos/modal-articulo/modal-articulo.component';
 import { ModalCaracteristicaComponent } from './lista-articulos/modal-caracteristica/modal-caracteristica.component';
+import { ModalDocumentoComponent } from './clientes/documentos/modal-documento/modal-documento.component';
+import { ModalDocumentoArticuloComponent } from './lista-articulos/modal-documento-articulo/modal-documento-articulo.component';
+import { ModalGraficasArticuloComponent } from './lista-articulos/modal-graficas-articulo/modal-graficas-articulo.component';
+import { ListaSoftwareComponent } from './lista-software/lista-software.component';
+import { ModalSoftwareComponent } from './lista-software/modal-software/modal-software.component';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -99,6 +105,10 @@ import { ModalCaracteristicaComponent } from './lista-articulos/modal-caracteris
     ListaArticulosComponent,
     ModalArticuloComponent,
     ModalCaracteristicaComponent,
+    ModalDocumentoArticuloComponent,
+    ModalGraficasArticuloComponent,
+    ListaSoftwareComponent,
+    ModalSoftwareComponent
   ],
   imports: [
     CommonModule,

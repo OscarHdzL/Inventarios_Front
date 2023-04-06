@@ -42,7 +42,7 @@ export class SidenavComponent implements OnInit {
               ) {
 
                 let sesion = localStorage.getItem(KeysStorageEnum.USER);
-    this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
+                this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
 
               }
 
@@ -61,17 +61,45 @@ export class SidenavComponent implements OnInit {
       children: [
         {
           type: 'link',
+          label: 'Clientes',
+          route: '/components/clientes',
+          icon: 'mat:list',
+          routerLinkActiveOptions: { exact: false }
+        },
+        {
+          type: 'link',
+          label: 'Propietarios',
+          route: '/components/propietarios',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Familia articulos',
+          route: '/components/articulos-general',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
           label: 'Articulos',
           route: '/components/articulos',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Software',
+          route: '/components/software',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         }
       ]
     });
-    
 
 
-     let menu = this.sesionUsuarioActual.funciones.filter((x)=> x.modulo == 'Sidebar' && x.activo == true);
+
+     /* let menu = this.sesionUsuarioActual.funciones.filter((x)=> x.modulo == 'Sidebar' && x.activo == true);
 
 
      menu.forEach((x)=>{
@@ -127,7 +155,7 @@ export class SidenavComponent implements OnInit {
         });
         break;
       }
-     });
+     }); */
 
      this.navigationService.items = [
       {

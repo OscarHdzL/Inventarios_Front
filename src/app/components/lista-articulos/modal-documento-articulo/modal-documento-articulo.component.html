@@ -1,0 +1,92 @@
+<form role="form" autocomplete="off" [formGroup]="formDocumento" novalidate>
+  <div class="flex items-center " style="border: none !important" mat-dialog-title >
+    <h2 class="headline m-0 flex-auto">{{this.documentoModel.id > 0 ? 'Editar documento ' : 'Agregar documento '}} <b>{{this.documentoModel.documento}}</b></h2>
+    <button></button>
+    <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+        <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="px-1 ">
+    <div class="mt-4 flex flex-col gap-2  m-2">
+      <div class="flex flex-col sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Tipo de documento</mat-label>
+          <input type="text" matInput formControlName="documento" maxlength="2000">
+          <mat-error *ngIf="this.documento_.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col sm:gap-4">
+       <!--  -->
+       <div>
+        <label
+          for="message"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-600"
+        >
+          Documento
+        </label>
+        <div>
+          <label
+            for="dropzone-file"
+            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 "
+          >
+            <div
+              class="flex flex-col items-center justify-center pt-5 pb-6"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-10 h-10 mb-3 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15
+                                          13l-3-3m0 0l-3 3m3-3v12"
+                ></path>
+              </svg>
+              <p
+                class="mb-2 text-sm text-gray-500 dark:text-gray-400"
+              >
+                <span class="font-semibold"
+                  >{{
+                    this.archivoEditableNombreEdicion
+                      ? archivoEditableNombreEdicion
+                      : "Click para subir archivo editable"
+                  }}
+                </span>
+              </p>
+              <p
+                class="text-xs text-gray-500 dark:text-gray-400"
+                *ngIf="!this.archivoEditableNombreEdicion"
+              >
+                PDF, WORD, EXCEL
+              </p>
+            </div>
+            <input
+              id="dropzone-file"
+              type="file"
+              class="hidden"
+              (change)="editableSeleccionadoEdicion($event)"
+            />
+          </label>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button type="submit" mat-flat-button color="primary" (click)="guardarDocumento()" [disabled]=" formDocumento.invalid ">{{this.documentoModel.id > 0 ? 'Editar' : 'Agregar'}}</button>
+  </mat-dialog-actions>
+
+  </form>
