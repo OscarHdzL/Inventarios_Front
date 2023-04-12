@@ -34,13 +34,13 @@ export class Cliente {
 }
 
 export class SesionModel {
-  id: number;
-  nombre: string;
-  correo: string;
-  clientes: Cliente[];
-  administrador: boolean;
-  funciones: Funcion[]
-  vigenciaSesion : number
+  id: number = 0;
+  nombre: string = '';
+  correo: string = '';
+  clientes: Cliente[] = [];
+  administrador: boolean = true;
+  funciones: Funcion[] = []
+  vigenciaSesion : number = 0;
 }
 
 

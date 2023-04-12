@@ -66,6 +66,17 @@ import { ModalDocumentoArticuloComponent } from './lista-articulos/modal-documen
 import { ModalGraficasArticuloComponent } from './lista-articulos/modal-graficas-articulo/modal-graficas-articulo.component';
 import { ListaSoftwareComponent } from './lista-software/lista-software.component';
 import { ModalSoftwareComponent } from './lista-software/modal-software/modal-software.component';
+import { ListaPropietariosComponent } from './lista-propietarios/lista-propietarios.component';
+import { ModalPropietarioComponent } from './lista-propietarios/modal-propietario/modal-propietario.component';
+import { ListaProductosComponent } from './lista-productos/lista-productos.component';
+import { ModalProductoComponent } from './lista-productos/modal-producto/modal-producto.component';
+
+import { ListaFabricantesComponent } from './lista-fabricantes/lista-fabricantes.component';
+import { ModalFabricanteComponent } from './lista-fabricantes/modal-fabricante/modal-fabricante.component';
+import { ModalCaracteristicaProductoComponent } from './lista-productos/modal-caracteristica-producto/modal-caracteristica-producto.component';
+import { ListaAdquisicionesComponent } from './lista-adquisiciones/lista-adquisiciones.component';
+import { ModalAdquisicionComponent } from './lista-adquisiciones/modal-adquisicion/modal-adquisicion.component';
+import { ModalProductoAdquisicionComponent } from './lista-adquisiciones/modal-producto-adquisicion/modal-producto-adquisicion.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +119,18 @@ import { ModalSoftwareComponent } from './lista-software/modal-software/modal-so
     ModalDocumentoArticuloComponent,
     ModalGraficasArticuloComponent,
     ListaSoftwareComponent,
-    ModalSoftwareComponent
+    ModalSoftwareComponent,
+    ListaPropietariosComponent,
+    ModalPropietarioComponent,
+    ListaProductosComponent,
+    ModalProductoComponent,
+
+    ListaFabricantesComponent,
+    ModalFabricanteComponent,
+    ModalCaracteristicaProductoComponent,
+    ListaAdquisicionesComponent,
+    ModalAdquisicionComponent,
+    ModalProductoAdquisicionComponent
   ],
   imports: [
     CommonModule,

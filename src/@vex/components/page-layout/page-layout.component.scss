@@ -36,7 +36,8 @@
   box-sizing: content-box !important;
   display: flex;
   flex-direction: row;
-  height: calc(var(--page-layout-header-height) - var(--page-layout-toolbar-height));
+  /* height: calc(var(--page-layout-header-height) - var(--page-layout-toolbar-height)); */
+  @apply py-4;
   padding-left: var(--padding);
   padding-right: var(--padding);
   place-content: center flex-start;

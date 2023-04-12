@@ -15,6 +15,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+
 @NgModule({
   declarations: [AppComponent,  LoaderComponent],
   imports: [

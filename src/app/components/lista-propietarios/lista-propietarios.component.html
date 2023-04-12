@@ -4,11 +4,12 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Artículos</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Artículos']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Propietarios</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Propietarios']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
+
 
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
@@ -17,13 +18,13 @@
       >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
           <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Articulo" type="button">
+          matTooltip="Agregar Propietario" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button> -->
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Articulo"
+            matTooltip="Agregar Propietario"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -65,6 +66,11 @@
         </div>
 
         <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
+          <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
+          <mat-label>Buscador</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
+          <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
+        </mat-form-field> -->
           <form>
             <input
               type="text"
@@ -90,44 +96,6 @@
         </div>
       </div>
 
-      <!--  -->
-      <div>
-        <form role="form" autocomplete="off" [formGroup]="formFiltros" novalidate>
-          <div class="mt-4 flex flex-col gap-2  m-2">
-              <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-                <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                  <mat-label>Marca</mat-label>
-                  <mat-select formControlName="marca" placeholder="Seleccione una opción">
-                    <mat-option *ngFor="let marca of listaMarca" [value]="marca.id">{{marca.descripcion}}
-                    </mat-option>
-                </mat-select>
-                  <mat-error *ngIf="this.marca.hasError('required')"> El campo es requerido</mat-error>
-              </mat-form-field>
-                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                      <mat-label>Modelo</mat-label>
-                      <mat-select formControlName="modelo" placeholder="Seleccione una opción">
-                        <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id">{{modelo.descripcion}}
-                        </mat-option>
-                    </mat-select>
-                      <mat-error *ngIf="this.modelo.hasError('required')"> El campo es requerido</mat-error>
-                  </mat-form-field>
-                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                      <mat-label>Propietario</mat-label>
-                      <mat-select formControlName="propietario" placeholder="Seleccione una opción">
-                        <mat-option *ngFor="let propietario of listaPropietario" [value]="propietario.id">{{propietario.descripcion}}
-                        </mat-option>
-                    </mat-select>
-                      <mat-error *ngIf="this.propietario.hasError('required')"> El campo es requerido</mat-error>
-                  </mat-form-field>
-
-              </div>
-
-
-          </div>
-      </form>
-      </div>
-
-
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
@@ -147,15 +115,15 @@
             >
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Modelo: {{ item.modelo }}</div>
+                <div class="text-center">Modelo: {{ item.razonSocial }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Fabricante: {{ item.fabricante }}</div>
+                <div class="text-center">Dirección: {{ item.direccion }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Proveedor: {{ item.proveedor }}</div>
+                <div class="text-center">Proveedor: {{ item.rfc }}</div>
               </div>
               <mat-divider></mat-divider>
               <!-- <div class="flex justify-between items-center mb-10">
@@ -169,10 +137,6 @@
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
-                  <!--   <button (click)="openModal(item)" color="basic" mat-mini-fab matTooltip="Editar"
-                    type="button">
-                    <mat-icon svgIcon="mat:edit"></mat-icon>
-                  </button> -->
                   <button
                     (click)="openModal(item)"
                     matTooltip="Editar"
@@ -210,53 +174,6 @@
                   </button>
                 </div>
                 <div class="mr-5">
-                  <!-- <button (click)="openModalGraficas(item)" class=" " color="basic" mat-mini-fab matTooltip="Gráficas"
-                    type="button">
-                    <mat-icon svgIcon="mat:signal_cellular_alt"></mat-icon>
-                  </button> -->
-                  <button
-                    (click)="openModalGraficas(item)"
-                    matTooltip="Gráficas"
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-                  >
-                    <svg
-                      class="fill-current w-5 h-5"
-                      fill="#000000"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      preserveAspectRatio="xMidYMid"
-                    >
-                      <path
-                        class="st0"
-                        d="M70.697,395.352h80.633c5.658,0,10.246-4.252,10.246-9.498v-143.72c0-5.246-4.588-9.499-10.246-9.499H70.697
-                      c-5.658,0-10.246,4.253-10.246,9.499v143.72C60.451,391.1,65.039,395.352,70.697,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M215.684,395.352h80.631c5.658,0,10.248-4.252,10.248-9.498V141.117c0-5.246-4.59-9.498-10.248-9.498h-80.631
-                      c-5.66,0-10.248,4.252-10.248,9.498v244.736C205.436,391.1,210.024,395.352,215.684,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M360.668,395.352h80.631c5.66,0,10.248-4.252,10.248-9.498V25.964c0-5.246-4.588-9.499-10.248-9.499h-80.631
-                      c-5.66,0-10.248,4.253-10.248,9.499v359.89C350.42,391.1,355.008,395.352,360.668,395.352z"
-                      />
-                      <polygon
-                        class="st0"
-                        points="495.426,438.633 16.574,438.633 0,438.633 0,495.535 16.574,495.535 495.426,495.535 512,495.535
-                      512,438.633 	"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div class="mr-5">
-                  <!-- <button color="basic" mat-mini-fab matTooltip="Descargar documentación"
-                    type="button">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
-                  <!-- <button matTooltip="Descargar documentación" class="justify-items-center  w-10 h-10 bg-gray-400 hover:bg-gray-600 text-white font-bold rounded-full shadow-sm-light ">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
                   <button
                     matTooltip="Descargar documentación"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -274,7 +191,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarArticulo(item)"
+                      (change)="EliminarPropietario(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -300,34 +217,34 @@
           mat-table
           matSort
         >
-          <ng-container matColumnDef="modelo">
+          <ng-container matColumnDef="razonSocial">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Modelo
+              Razón social
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Modelo">
+            <mat-cell *matCellDef="let row" data-label="Razón social">
               <div>
-                {{ row.modelo }}
+                {{ row.razonSocial }}
               </div>
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="fabricante">
+          <ng-container matColumnDef="direccion">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Fabricante
+              Dirección
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="fabricante">
+            <mat-cell *matCellDef="let row" data-label="direccion">
               <div>
-                {{ row.fabricante }}
+                {{ row.direccion }}
               </div>
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="proveedor">
+          <ng-container matColumnDef="rfc">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Proveedor
+              RFC
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="proveedor">
+            <mat-cell *matCellDef="let row" data-label="RFC">
               <div>
-                {{ row.proveedor }}
+                {{ row.rfc }}
               </div>
             </mat-cell>
           </ng-container>
@@ -340,7 +257,7 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar articulo"
+                  matTooltip="Editar propietario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -355,8 +272,8 @@
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
                 </a>
                 <a
-                  (click)="EliminarArticulo(row)"
-                  matTooltip="Eliminar articulo"
+                  (click)="EliminarPropietario(row)"
+                  matTooltip="Eliminar propietario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -377,7 +294,7 @@
           class="flex-auto items-center justify-center"
         >
           <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron articulos registrados
+            No se encontraron propietarios registrados
           </h1>
         </div>
         <mat-paginator

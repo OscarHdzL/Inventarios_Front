@@ -93,6 +93,20 @@ export class SidenavComponent implements OnInit {
           route: '/components/software',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Productos',
+          route: '/components/productos',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Adquisiciones',
+          route: '/components/adquisiciones',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
         }
       ]
     });

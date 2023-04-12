@@ -1,0 +1,284 @@
+<div class="flex items-center" style="border: none !important" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    {{ this.productoModel.id > 0 ? "Editar producto " : "Agregar producto " }}
+    <b>{{ this.productoModel.modelo }}</b>
+  </h2>
+  <button></button>
+  <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1">
+  <!-- ACCORDION -->
+  <mat-accordion
+    #accordion="matAccordion"
+    class="example-headers-align"
+    [multi]="true"
+  >
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> PRODUCTO </mat-panel-title>
+        <mat-panel-description>
+          Información general
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- FORMULARIO PRODUCTO -->
+      <form
+        role="form"
+        autocomplete="off"
+        [formGroup]="formProducto"
+        novalidate
+      >
+        <div class="mt-4 flex flex-col gap-2 m-2">
+          <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+            <mat-form-field class="flex-auto">
+              <mat-label>Modelo</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="modelo"
+                maxlength="2000"
+              />
+              <mat-error *ngIf="this.modelo.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+              <mat-label>Año</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="anio"
+                maxlength="4"
+              />
+              <mat-error *ngIf="this.anio.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+            <mat-form-field class="flex-auto">
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="categoria">
+                <mat-option *ngFor="let cat of listaCategoria" [value]="cat.id"
+                  >{{ cat.descripcion }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="this.categoria.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="flex-auto">
+              <mat-label>Fabricante</mat-label>
+              <mat-select formControlName="fabricante">
+                <mat-option
+                  *ngFor="let fabricante of listaFabricante"
+                  [value]="fabricante.id"
+                >
+                  {{ fabricante.descripcion }}</mat-option
+                >
+              </mat-select>
+              <mat-error *ngIf="this.fabricante.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+            <mat-form-field class="flex-auto">
+              <mat-label>Vida útil</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="vidaUtil"
+                maxlength="4"
+              />
+              <mat-error *ngIf="this.vidaUtil.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto" floatLabel="always" appearance="outline">
+
+              Usado
+              <mat-slide-toggle
+               formControlName="nuevo"
+                  [checked]="true"
+
+                ></mat-slide-toggle> Nuevo
+                <textarea matInput hidden></textarea>
+              <mat-error *ngIf="this.nuevo.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field>
+
+            <!-- <div class="mt-3.5 flex flex-col justify-center">
+              <div>Usado</div>
+              <div class="flex justify-center">
+                <mat-slide-toggle
+                  [checked]="true"
+                ></mat-slide-toggle>
+              </div>
+              <div>Nuevo</div>
+            </div> -->
+
+
+          </div>
+        </div>
+      </form>
+      <!-- TERMINA FORMULARIO PRODUCTO -->
+      <div class="flex justify-end">
+        <button type="button" mat-button mat-dialog-close>Cancelar</button>
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          (click)="guardarProducto()"
+          [disabled]="formProducto.invalid"
+        >
+          {{ this.productoModel.id > 0 ? "Editar" : "Agregar" }}
+        </button>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> PRODUCTO </mat-panel-title>
+        <mat-panel-description>
+          Características
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="flex justify-end w-full">
+        <button
+          (click)="openModalCaracteristica(null)"
+          class="m-4"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Agregar característica"
+          type="button"
+        >
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
+      <div class="relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th colspan="3" class="px-6 py-3">
+                Características del artículo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b">
+              <th
+                scope="row"
+                class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+              >
+                Apple MacBook Pro 17"
+              </th>
+              <td class="px-3 py-2">Silver</td>
+              <td class="px-3 py-2">
+                <a
+                  matTooltip="Eliminar caracteristica"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> PRODUCTO </mat-panel-title>
+        <mat-panel-description>
+          Depreciación
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div
+        class="relative shadow-md sm:rounded-lg grid grid-cols-1 justify-items-center"
+      >
+        <div class="py-3">Valor después del 1° año: $7,200.00</div>
+        <div class="py-3">
+          Valor después del 2° año: $7,200.00 - $1,440.00 = $5,760.00
+        </div>
+        <div class="py-3">
+          Valor después del 3° año: $5,760.00 - $1,440.00 = $4,320.00
+        </div>
+        <div class="py-3">
+          Valor después del 4° año: $4,320.00 - $1,440.00 = $2,880.00
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> PRODUCTO </mat-panel-title>
+        <mat-panel-description>
+          Manuales y documentación
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!-- <div class="flex justify-end w-full">
+              <button (click)="openModalDocumento(null)" class="m-4" color="primary" mat-mini-fab matTooltip="Agregar documento" type="button">
+                  <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+          </div> -->
+      <div class="relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th colspan="2" class="px-6 py-3">Manuales y documentación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b">
+              <th
+                scope="row"
+                class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+              >
+                Manual de uso
+              </th>
+              <td class="px-3 py-2">
+                <a
+                  matTooltip="Descargar"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:attach_file"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+</mat-dialog-actions>

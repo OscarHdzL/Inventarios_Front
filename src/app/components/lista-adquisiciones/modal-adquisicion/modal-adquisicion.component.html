@@ -1,0 +1,177 @@
+<div class="flex items-center " style="border: none !important" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">{{this.adquisicionModel.iD > 0 ? 'Editar adquisición ' : 'Agregar adquisición '}}
+      <b>{{this.adquisicionModel.iD }}</b>
+  </h2>
+  <button></button>
+  <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1 ">
+
+  <!-- ACCORDION -->
+  <mat-accordion #accordion="matAccordion" class="example-headers-align"  [multi]="true">
+      <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                  ADQUISICIÓN
+              </mat-panel-title>
+              <mat-panel-description>
+                  Información general
+                  <mat-icon class="icon-sm" svgIcon="mat:keyboard_arrow_down"></mat-icon>
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+          <!-- FORMULARIO ADQUISICION -->
+          <form role="form" autocomplete="off" [formGroup]="formAdquisicion" novalidate>
+              <div class="mt-4 flex flex-col gap-2  m-2">
+                  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+                      <mat-form-field class="flex-auto">
+                          <mat-label>Proveedor</mat-label>
+                          <mat-select formControlName="proveedor">
+                              <mat-option *ngFor="let proveedor of listaProveedor" [value]="proveedor.id">
+                                  {{proveedor.descripcion}}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="this.proveedor.hasError('required')"> El campo es requerido</mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="flex-auto">
+                          <mat-label>Propietario</mat-label>
+                          <mat-select formControlName="propietario">
+                              <mat-option *ngFor="let propietario of listaPropietario" [value]="propietario.id">
+                                  {{propietario.descripcion}}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="this.propietario.hasError('required')"> El campo es requerido</mat-error>
+                      </mat-form-field>
+                  </div>
+
+                  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+                      <mat-form-field class="flex-auto">
+                          <mat-label>Articulos</mat-label>
+                          <input type="text" matInput formControlName="articulos" maxlength="2000">
+                          <mat-error *ngIf="this.articulos.hasError('required')"> El campo es requerido</mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="flex-auto">
+                          <mat-label>Monto</mat-label>
+                          <input type="text" matInput formControlName="monto" maxlength="4">
+                          <mat-error *ngIf="this.monto.hasError('required')"> El campo es requerido
+                          </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="flex-auto">
+                        <mat-label>Impuesto</mat-label>
+                        <input type="text" matInput formControlName="impuesto" maxlength="4">
+                        <mat-error *ngIf="this.impuesto.hasError('required')"> El campo es requerido
+                        </mat-error>
+                    </mat-form-field>
+                      <mat-form-field class="flex-auto">
+                          <mat-label>Fecha de compra</mat-label>
+                          <input type="text" matInput formControlName="fechaCompra" maxlength="4">
+                          <mat-error *ngIf="this.fechaCompra.hasError('required')"> El campo es requerido</mat-error>
+                      </mat-form-field>
+                  </div>
+                  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+                    <div class="lg:w-1/2 md:w-1/2 w-full">
+                      <label
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        for="file_input"
+                        >Factura PDF</label
+                      >
+                      <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        aria-describedby="file_input_help"
+                        id="file_input"
+                        type="file"
+                      />
+                      <a
+                        href="javascript: void(0)"
+                        class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
+                        id="file_input_help"
+                        >Descargar factura PDF.</a
+                      >
+                    </div>
+                    <div class="lg:w-1/2 md:w-1/2 w-full">
+                      <label
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        for="file_input2"
+                        >Factura XML</label
+                      >
+                      <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        aria-describedby="file_input_help"
+                        id="file_input2"
+                        type="file"
+                      />
+                      <a
+                        href="javascript: void(0)"
+                        class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
+                        id="file_input_help"
+                        >Descargar factura XML.</a
+                      >
+                    </div>
+                  </div>
+
+              </div>
+          </form>
+          <!-- TERMINA FORMULARIO ADQUISICION -->
+          <div class="flex justify-end">
+            <button type="button" mat-button mat-dialog-close>Cancelar</button>
+          <button type="submit" mat-flat-button color="primary" (click)="guardarAdquisicion()"
+      [disabled]=" formAdquisicion.invalid ">{{this.adquisicionModel.iD > 0 ? 'Editar' : 'Agregar'}}</button>
+          </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                ADQUISICIÓN
+              </mat-panel-title>
+              <mat-panel-description>
+                  Productos
+                  <mat-icon class="icon-sm" svgIcon="mat:keyboard_arrow_down"></mat-icon>
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="flex justify-end w-full">
+              <button (click)="openModalCaracteristica(null)" class="m-4" color="primary" mat-mini-fab matTooltip="Agregar producto" type="button">
+                  <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+          </div>
+          <div class="relative shadow-md sm:rounded-lg">
+              <table class="w-full text-sm text-left text-gray-500 ">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                      <tr>
+                          <th colspan="3" class="px-6 py-3">
+                              Productos de la adquisición
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr class="bg-white border-b ">
+                          <th scope="row"
+                              class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap">
+                              Apple MacBook Pro 17"
+                          </th>
+                          <td class="px-3 py-2">
+                              Silver
+                          </td>
+                          <td class="px-3 py-2">
+                              <a matTooltip="Eliminar producto"
+                                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                                  mat-icon-button>
+                                  <mat-icon class="icon-sm" svgIcon="mat:delete_forever"></mat-icon>
+                              </a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </mat-expansion-panel>
+  </mat-accordion>
+
+
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+
+</mat-dialog-actions>

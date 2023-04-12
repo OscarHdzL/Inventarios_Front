@@ -4,8 +4,8 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Artículos</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Artículos']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Adquisicions</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Adquisicions']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
@@ -17,13 +17,13 @@
       >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
           <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Articulo" type="button">
+          matTooltip="Agregar Adquisicion" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button> -->
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Articulo"
+            matTooltip="Agregar Adquisicion"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -147,15 +147,15 @@
             >
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Modelo: {{ item.modelo }}</div>
+                <div class="text-center">Monto: {{ item.mONTO }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Fabricante: {{ item.fabricante }}</div>
+                <div class="text-center">Impuesto: {{ item.iMPUESTO }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Proveedor: {{ item.proveedor }}</div>
+                <div class="text-center">Articulos: {{ item.aRTICULOS }}</div>
               </div>
               <mat-divider></mat-divider>
               <!-- <div class="flex justify-between items-center mb-10">
@@ -214,7 +214,7 @@
                     type="button">
                     <mat-icon svgIcon="mat:signal_cellular_alt"></mat-icon>
                   </button> -->
-                  <button
+                  <!-- <button
                     (click)="openModalGraficas(item)"
                     matTooltip="Gráficas"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -247,7 +247,7 @@
                       512,438.633 	"
                       />
                     </svg>
-                  </button>
+                  </button> -->
                 </div>
                 <div class="mr-5">
                   <!-- <button color="basic" mat-mini-fab matTooltip="Descargar documentación"
@@ -274,7 +274,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarArticulo(item)"
+                      (change)="EliminarAdquisicion(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -300,34 +300,34 @@
           mat-table
           matSort
         >
-          <ng-container matColumnDef="modelo">
+          <ng-container matColumnDef="mONTO">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Modelo
+              Monto
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Modelo">
+            <mat-cell *matCellDef="let row" data-label="Monto">
               <div>
-                {{ row.modelo }}
+                {{ row.mONTO }}
               </div>
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="fabricante">
+          <ng-container matColumnDef="iMPUESTO">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Fabricante
+              Impuesto
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="fabricante">
+            <mat-cell *matCellDef="let row" data-label="iMPUESTO">
               <div>
-                {{ row.fabricante }}
+                {{ row.iMPUESTO }}
               </div>
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="proveedor">
+          <ng-container matColumnDef="aRTICULOS">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Proveedor
+              Articulos
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="proveedor">
+            <mat-cell *matCellDef="let row" data-label="aRTICULOS">
               <div>
-                {{ row.proveedor }}
+                {{ row.aRTICULOS }}
               </div>
             </mat-cell>
           </ng-container>
@@ -340,7 +340,7 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar articulo"
+                  matTooltip="Editar adquisicion"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -355,8 +355,8 @@
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
                 </a>
                 <a
-                  (click)="EliminarArticulo(row)"
-                  matTooltip="Eliminar articulo"
+                  (click)="EliminarAdquisicion(row)"
+                  matTooltip="Eliminar adquisicion"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -377,7 +377,7 @@
           class="flex-auto items-center justify-center"
         >
           <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron articulos registrados
+            No se encontraron adquisicions registrados
           </h1>
         </div>
         <mat-paginator

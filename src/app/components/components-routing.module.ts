@@ -13,6 +13,9 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ListaArticulosComponent } from './lista-articulos/lista-articulos.component';
 import { ListaGeneralArticulosComponent } from './lista-general-articulos/lista-general-articulos.component';
 import { ListaSoftwareComponent } from './lista-software/lista-software.component';
+import { ListaPropietariosComponent } from './lista-propietarios/lista-propietarios.component';
+import { ListaProductosComponent } from './lista-productos/lista-productos.component';
+import { ListaAdquisicionesComponent } from './lista-adquisiciones/lista-adquisiciones.component';
 
 const routes: Routes = [
   {
@@ -43,6 +46,22 @@ const routes: Routes = [
   {
     path: 'software',
     component: ListaSoftwareComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'propietarios',
+    component: ListaPropietariosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'productos',
+    component: ListaProductosComponent,
+    canActivate: [AuthGuard]
+  }
+  ,
+  {
+    path: 'adquisiciones',
+    component: ListaAdquisicionesComponent,
     canActivate: [AuthGuard]
   }
 
