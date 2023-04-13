@@ -19,6 +19,7 @@ import { ListaAdquisicionesComponent } from './lista-adquisiciones/lista-adquisi
 import { ListaFabricantesComponent } from './lista-fabricantes/lista-fabricantes.component';
 import { ListaCategoriaProductoComponent } from './lista-categoria-producto/lista-categoria-producto.component';
 import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
+import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 
 const routes: Routes = [
   {
@@ -80,6 +81,11 @@ const routes: Routes = [
   {
     path: 'cliente',
     component: ListaClienteComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'proveedor',
+    component: ListaProveedorComponent,
     canActivate: [AuthGuard]
   }
 

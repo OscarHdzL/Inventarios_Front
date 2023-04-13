@@ -81,6 +81,8 @@ import { ListaCategoriaProductoComponent } from './lista-categoria-producto/list
 import { ModalCategoriaProductoComponent } from './lista-categoria-producto/modal-categoria-producto/modal-categoria-producto.component';
 import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-catalogo/modal-cliente-catalogo.component';
+import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
+import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal-proveedor.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +140,9 @@ import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-cat
     ListaCategoriaProductoComponent,
     ModalCategoriaProductoComponent,
     ListaClienteComponent,
-    ModalClienteCatalogoComponent
+    ModalClienteCatalogoComponent,
+    ListaProveedorComponent,
+    ModalProveedorComponent
   ],
   imports: [
     CommonModule,

@@ -154,5 +154,21 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async deshabilitarCliente(propietario: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'api/Cliente/Disable?id='+propietario);
     }
+    /* Proveedor */
+    public async obtenerCatalogoProveedores() : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/Proveedor/Get');
+    }
+
+    public async insertarProveedor(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'api/Proveedor/Add', propietario);
+    }
+
+    public async actualizarProveedor(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'api/Proveedor/Update', propietario);
+    }
+
+    public async deshabilitarProveedor(propietario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'api/Proveedor/Disable?id='+propietario);
+    }
 
 }

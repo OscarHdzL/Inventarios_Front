@@ -12,12 +12,40 @@ export class PropietarioFormModel {
   rfc?: string;
   sigla?: string;
   activo?: boolean;
+
   constructor(){
     this.id = 0;
     this.razonSocial = null;
     this.rfc = null;
     this.sigla = null;
     this.activo = true;
+
+  }
+}
+
+export class ProveedorModel{
+  id?: number;
+  correo?: string;
+  razonsocial?: string;
+  rfc?: string;
+  estatus?: boolean;
+  contacto?: any[];
+}
+
+export class ProveedorFormModel {
+  id?: number;
+  razonSocial?: string;
+  rfc?: string;
+  correo?: string;
+  activo?: boolean;
+  contacto?: any[];
+  constructor(){
+    this.id = 0;
+    this.razonSocial = null;
+    this.rfc = null;
+    this.correo = null;
+    this.activo = true;
+    this.contacto = [];
   }
 }
 
