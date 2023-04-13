@@ -13,16 +13,15 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
-import { PropietarioModel } from 'src/app/modelos/Inventarios/propietario.model';
-
-
+import { ModalCategoriaProductoComponent } from './modal-categoria-producto/modal-categoria-producto.component';
 
 @Component({
-  selector: 'vex-lista-propietarios',
-  templateUrl: './lista-propietarios.component.html',
-  styleUrls: ['./lista-propietarios.component.scss']
+  selector: 'vex-lista-categoria-producto',
+  templateUrl: './lista-categoria-producto.component.html',
+  styleUrls: ['./lista-categoria-producto.component.scss']
 })
-export class ListaPropietariosComponent implements OnInit {
+export class ListaCategoriaProductoComponent implements OnInit {
+
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,9 +29,9 @@ export class ListaPropietariosComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: PropietarioModel[] = [];
+  dataSourceOriginal: any[] = [];
   dataSourceTabla:any;
-  listaItems: PropietarioModel[] = [];
+  listaItems: any[] = [];
 
   public selectedVal: string = 'cards';
 
@@ -40,9 +39,8 @@ export class ListaPropietariosComponent implements OnInit {
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Razon Social', property: 'razonsocial', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'RFC', property: 'rfc', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Sigla', property: 'sigla', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Nombre', property: 'nombre', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Estatico', property: 'estatico', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -73,9 +71,7 @@ export class ListaPropietariosComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.razonsocial.toLowerCase().includes(filterValue) ||
-        val.rfc.toLowerCase().includes(filterValue)||
-        val.sigla.toLowerCase().includes(filterValue)
+        val.nombre.toLowerCase().includes(filterValue)
       );
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
       this.paginatorCards.length = this.listaItems.length;
@@ -94,7 +90,7 @@ export class ListaPropietariosComponent implements OnInit {
     console.log("Deshabilidar -> ", item);
     let res = {exito: true} //await this.servicios.deshabilitarPropietario(item);
     if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Propietario Deshabilitado");
+      this.swalService.alertaPersonalizada(true, "CategoriaProducto Deshabilitado");
       this.ngOnInit();
     }
     else {
@@ -103,7 +99,7 @@ export class ListaPropietariosComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.dataSourceOriginal = [];
-    this.dataSourceOriginal = await this.obtenerPropietarios();
+    this.dataSourceOriginal = await this.obtenerFabricantes();
     if (window.innerWidth >= 1280) {
       this.tamanoPantalla = true;
     }
@@ -115,12 +111,12 @@ export class ListaPropietariosComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Propietarios por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Fabricantes por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
-  public async obtenerPropietarios(){
-    const respuesta = await this.inventariosService.obtenerCatalogoPropietarios();
+  public async obtenerFabricantes(){
+    const respuesta = await this.inventariosService.obtenerCatalogoCategoriaProducto();
     return respuesta.exito ? respuesta.output : [];
   }
   onPageChanged(e) {
@@ -128,8 +124,8 @@ export class ListaPropietariosComponent implements OnInit {
     let secondCut = firstCut + e.pageSize;
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
-  openModal(usuario: PropietarioModel){
-    this.dialog.open(ModalPropietarioComponent,{
+  openModal(usuario: any){
+    this.dialog.open(ModalCategoriaProductoComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
@@ -141,10 +137,10 @@ export class ListaPropietariosComponent implements OnInit {
       this.ngOnInit();
     });
   }
-  public async EliminarPropietario(propietario){
+  public async EliminarFabricante(propietario){
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
-      const respuesta = await this.inventariosService.deshabilitarPropietario(propietario.id);
+      const respuesta = await this.inventariosService.deshabilitarCategoriaProducto(propietario.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();

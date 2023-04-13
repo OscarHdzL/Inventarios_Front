@@ -77,6 +77,10 @@ import { ModalCaracteristicaProductoComponent } from './lista-productos/modal-ca
 import { ListaAdquisicionesComponent } from './lista-adquisiciones/lista-adquisiciones.component';
 import { ModalAdquisicionComponent } from './lista-adquisiciones/modal-adquisicion/modal-adquisicion.component';
 import { ModalProductoAdquisicionComponent } from './lista-adquisiciones/modal-producto-adquisicion/modal-producto-adquisicion.component';
+import { ListaCategoriaProductoComponent } from './lista-categoria-producto/lista-categoria-producto.component';
+import { ModalCategoriaProductoComponent } from './lista-categoria-producto/modal-categoria-producto/modal-categoria-producto.component';
+import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
+import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-catalogo/modal-cliente-catalogo.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +134,11 @@ import { ModalProductoAdquisicionComponent } from './lista-adquisiciones/modal-p
     ModalCaracteristicaProductoComponent,
     ListaAdquisicionesComponent,
     ModalAdquisicionComponent,
-    ModalProductoAdquisicionComponent
+    ModalProductoAdquisicionComponent,
+    ListaCategoriaProductoComponent,
+    ModalCategoriaProductoComponent,
+    ListaClienteComponent,
+    ModalClienteCatalogoComponent
   ],
   imports: [
     CommonModule,

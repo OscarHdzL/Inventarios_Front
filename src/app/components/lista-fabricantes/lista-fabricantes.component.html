@@ -1,1 +1,269 @@
-<p>lista-fabricantes works!</p>
+<div></div>
+
+<vex-page-layout>
+  <vex-page-layout-header class="flex flex-col items-start justify-center">
+    <div class="w-full flex flex-col sm:flex-row justify-between">
+      <div>
+        <h1 class="title mt-0 mb-1">Fabricantes</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Fabricantes']"></vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+
+
+  <vex-page-layout-content class="-mt-6">
+    <div class="card overflow-auto mt-5">
+      <div
+        class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
+      >
+        <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
+          <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
+          matTooltip="Agregar Fabricante" type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button> -->
+
+          <button
+            (click)="openModal(null)"
+            matTooltip="Agregar Fabricante"
+            class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+          >
+            <svg
+              class="fill-current w-5 h-5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="Complete">
+                <g data-name="add" id="add-2">
+                  <g>
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="12"
+                      x2="12"
+                      y1="19"
+                      y2="5"
+                    />
+
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+
+        <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
+          <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
+          <mat-label>Buscador</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
+          <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
+        </mat-form-field> -->
+          <form>
+            <input
+              type="text"
+              placeholder="Buscar..."
+              name="comentario"
+              id="comentario"
+              (keyup)="applyFilter($event)"
+              class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"
+            />
+          </form>
+        </div>
+        <div class="xl:w-3/12 lg:w-3/12 md:w-3/12 w-12/12 flex justify-center">
+          <mat-button-toggle-group
+            class="px-2 py-2"
+            #group="matButtonToggleGroup"
+            aria-label="Favorite Color"
+            [value]="selectedVal"
+            (change)="onValChange(group.value)"
+          >
+            <mat-button-toggle value="cards">Tarjetas</mat-button-toggle>
+            <mat-button-toggle value="tables">Tabla</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="py-4" [hidden]="group.value == 'tables'">
+        <div class="py-2">
+          <div
+            *ngIf="this.listaItems.length == 0"
+            class="flex justify-center items-center mb-10"
+          >
+            <h1 class="title text-3xl">No hay registros</h1>
+          </div>
+          <div
+            *ngIf="this.listaItems.length != 0"
+            class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
+          >
+            <div
+              *ngFor="let item of listaItems"
+              class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
+            >
+              <mat-divider></mat-divider>
+              <div class="flex justify-center items-center mb-10">
+                <div class="text-center">Nombre: {{ item.nombre }}</div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="flex justify-center items-center">
+                <div class="mr-5">
+                  <button
+                    (click)="openModal(item)"
+                    matTooltip="Editar"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                    <svg
+                      class="fill-current w-5 h-5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        id="Page-1"
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          id="Dribbble-Light-Preview"
+                          transform="translate(-59.000000, -400.000000)"
+                          fill="#000000"
+                        >
+                          <g
+                            id="icons"
+                            transform="translate(56.000000, 160.000000)"
+                          >
+                            <path
+                              d="M3,260 L24,260 L24,258.010742 L3,258.010742 L3,260 Z M13.3341,254.032226 L9.3,254.032226 L9.3,249.950269 L19.63095,240 L24,244.115775 L13.3341,254.032226 Z"
+                              id="edit_fill-[#1480]"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+                <!-- <div class="mr-5">
+                  <button
+                    matTooltip="Descargar documentación"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                    <svg
+                      class="fill-current w-5 h-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                    </svg>
+                  </button>
+                </div> -->
+                <div class="mt-3.5 flex flex-col justify-center">
+                  <div class="flex justify-center">
+                    <mat-slide-toggle
+                      [checked]="true"
+                      (change)="EliminarFabricante(item)"
+                    ></mat-slide-toggle>
+                  </div>
+                  <div>Deshabilitar</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <mat-paginator
+            #paginatorCards
+            [length]="this.dataSourceOriginal.length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChanged($event)"
+          ></mat-paginator>
+        </div>
+      </div>
+      <!-- TABLA -->
+      <div class="py-4" [hidden]="group.value == 'cards'">
+        <table
+          [dataSource]="this.dataSourceTabla"
+          class="w-full"
+          mat-table
+          matSort
+        >
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nombre
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Nombre">
+              <div>
+                {{ row.nombre }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Acción
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Acción">
+              <div class="flex justify-center">
+                <a
+                  (click)="openModal(row)"
+                  matTooltip="Editar Fabricante"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
+                </a>
+                <!-- <a
+                  (click)="openModal(row)"
+                  matTooltip="Ver funciones"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
+                </a> -->
+                <a
+                  (click)="EliminarFabricante(row)"
+                  matTooltip="Eliminar Fabricante"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: visibleColumns"> </mat-row>
+        </table>
+        <div
+          *ngIf="this.listaItems.length == 0"
+          class="flex-auto items-center justify-center"
+        >
+          <h1 class="m-10 headline2" style="text-align: center">
+            No se encontraron Fabricantes registrados
+          </h1>
+        </div>
+        <mat-paginator
+          #paginator
+          [pageSizeOptions]="[5, 10, 15]"
+        ></mat-paginator>
+      </div>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
