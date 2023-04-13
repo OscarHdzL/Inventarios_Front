@@ -1,6 +1,6 @@
 <form role="form" autocomplete="off" [formGroup]="formPropietario" novalidate>
   <div class="flex items-center " style="border: none !important" mat-dialog-title >
-    <h2 class="headline m-0 flex-auto">{{this.propietarioModel.id > 0 ? 'Editar propietario ' : 'Agregar propietario '}} <b>{{this.propietarioModel.razonSocial}}</b></h2>
+    <h2 class="headline m-0 flex-auto">{{this.propietarioModel.id > 0 ? 'Editar categoria producto ' : 'Agregar categoria producto '}} <b>{{this.propietarioModel.nombre}}</b></h2>
     <button></button>
     <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
@@ -13,22 +13,20 @@
       <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
         <mat-form-field class="flex-auto">
           <mat-label>Razón social</mat-label>
-          <input type="text" matInput formControlName="razonSocial" maxlength="2000">
-          <mat-error *ngIf="this.razonSocial.hasError('required')"> El campo es requerido</mat-error>
+          <input type="text" matInput formControlName="nombre" maxlength="2000">
+          <mat-error *ngIf="this.nombre.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
-        <mat-form-field class="flex-auto">
-          <mat-label>RFC</mat-label>
-          <input type="text" matInput formControlName="rfc">
-          <mat-error *ngIf="this.rfc.hasError('required')"> El campo es requerido</mat-error>
-        </mat-form-field>
-        <mat-form-field class="flex-auto">
-          <mat-label>Sigla</mat-label>
-          <input type="text" matInput formControlName="sigla" maxlength="2000">
-          <mat-error *ngIf="this.sigla.hasError('required')"> El campo es requerido</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-
+        <div>
+          <div class="mt-3.5 flex flex-col justify-center">
+            <div class="flex justify-center">
+              <mat-slide-toggle
+                [checked]="propietarioModel.estatico"
+                formControlName="estatico"
+              ></mat-slide-toggle>
+            </div>
+            <div>Estatico</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -41,3 +39,5 @@
   </mat-dialog-actions>
 
   </form>
+
+

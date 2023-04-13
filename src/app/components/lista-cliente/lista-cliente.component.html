@@ -4,8 +4,8 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Propietarios</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Propietarios']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Clientes</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Clientes']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
@@ -18,13 +18,13 @@
       >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
           <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Propietario" type="button">
+          matTooltip="Agregar Cliente" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button> -->
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Propietario"
+            matTooltip="Agregar Cliente"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -115,25 +115,34 @@
             >
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
+                <div class="text-center">Nombre: {{ item.nombre }}</div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="flex justify-center items-center mb-10">
                 <div class="text-center">Razon Social: {{ item.razonsocial }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Sigla: {{ item.sigla }}</div>
+                <div class="text-center">Direccion: {{ item.direccion }}</div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">RFC: {{ item.rfc }}</div>
+              <div class="flex justify-between items-center mb-10">
+                <div>
+                  Sigla: {{ item.sigla }}
+                </div>
+                <div>
+                  RFC: {{ item.rfc }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <!-- <div class="flex justify-between items-center mb-10">
+              <div class="flex justify-between items-center mb-10">
                 <div>
-                  Cuenta:
+                  Longitud: {{ item.longitud }}
                 </div>
                 <div>
-                  Rol:
+                  Latitud: {{ item.latitud }}
                 </div>
-              </div> -->
+              </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
@@ -217,6 +226,26 @@
           mat-table
           matSort
         >
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nombre
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Nombre">
+              <div>
+                {{ row.nombre}}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="direccion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Direccion
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Direccion">
+              <div>
+                {{ row.direccion }}
+              </div>
+            </mat-cell>
+          </ng-container>
           <ng-container matColumnDef="razonsocial">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Razón Social
@@ -305,3 +334,4 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
+

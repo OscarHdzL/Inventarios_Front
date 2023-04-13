@@ -1,0 +1,106 @@
+<form role="form" autocomplete="off" [formGroup]="formPropietario" novalidate>
+  <div class="flex items-center " style="border: none !important" mat-dialog-title >
+    <h2 class="headline m-0 flex-auto">{{this.propietarioModel.id > 0 ? 'Editar proveedor ' : 'Agregar proveedor '}} <b>{{this.propietarioModel.razonSocial}}</b></h2>
+    <button></button>
+    <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+        <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="px-1 ">
+    <div class="mt-4 flex flex-col gap-2  m-2">
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Razón social</mat-label>
+          <input type="text" matInput formControlName="razonSocial" maxlength="2000">
+          <mat-error *ngIf="this.razonSocial.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>RFC</mat-label>
+          <input type="text" matInput formControlName="rfc">
+          <mat-error *ngIf="this.rfc.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Correo</mat-label>
+          <input type="email" matInput formControlName="correo" maxlength="2000">
+          <mat-error *ngIf="this.correo.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-center">
+        <h1>Contactos</h1>
+      </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Nombre</mat-label>
+          <input type="text" matInput formControlName="nombreCon" maxlength="2000">
+          <mat-error *ngIf="this.razonSocial.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Correo</mat-label>
+          <input type="text" matInput formControlName="correoCon">
+          <mat-error *ngIf="this.rfc.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Telefono</mat-label>
+          <input type="text" matInput formControlName="telefonoCon" maxlength="2000">
+          <mat-error *ngIf="this.correo.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+        <button type="button" mat-flat-button color="primary" (click)="agregarContacto()">Agregar Contacto</button>
+      </div>
+      <div class="flex justify-center">
+        <div *ngIf="this.listaSubs.length == 0">
+          <h1 class="title text-3xl">Usuario sin subordinados</h1>
+        </div>
+        <table *ngIf="this.listaSubs.length != 0" class="w-3/4 min-w-3/4 text-sm text-center text-gray-900 dark:text-gray-900">
+          <thead class="text-sm text-gray-900 uppercase bg-gray-50 dark:bg-gray-300 dark:text-gray-900">
+            <tr>
+              <th scope="col" class="py-3 px-6">
+                Nombre
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Correo
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Telefono
+              </th>
+              <th scope="col" class="py-3 px-6">
+                Eliminar
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b-slate-700 dark:bg-gray-200 dark:border-gray-700"
+              *ngFor="let item of listaSubs; index as i;">
+              <td class="py-4 px-6">
+                {{ item.nombre}}
+              </td>
+              <td class="py-4 px-6">
+                {{ item.correo}}
+              </td>
+              <td class="py-4 px-6">
+                {{ item.telefono}}
+              </td>
+              <td class="py-4 px-6 flex items-center justify-center">
+                <a (click)="eliminarSubordinado(item.nombreCompleto)" matTooltip="Eliminar"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-warn bg-primary/10"
+                  mat-icon-button>
+                  <mat-icon class="icon-sm" svgIcon="mat:delete"></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button type="submit" mat-flat-button color="primary" (click)="guardarPropietario()" [disabled]=" formPropietario.invalid ">{{this.propietarioModel.id > 0 ? 'Editar' : 'Agregar'}}</button>
+  </mat-dialog-actions>
+
+  </form>
+

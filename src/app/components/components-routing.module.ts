@@ -16,6 +16,10 @@ import { ListaSoftwareComponent } from './lista-software/lista-software.componen
 import { ListaPropietariosComponent } from './lista-propietarios/lista-propietarios.component';
 import { ListaProductosComponent } from './lista-productos/lista-productos.component';
 import { ListaAdquisicionesComponent } from './lista-adquisiciones/lista-adquisiciones.component';
+import { ListaFabricantesComponent } from './lista-fabricantes/lista-fabricantes.component';
+import { ListaCategoriaProductoComponent } from './lista-categoria-producto/lista-categoria-producto.component';
+import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
+import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 
 const routes: Routes = [
   {
@@ -57,11 +61,31 @@ const routes: Routes = [
     path: 'productos',
     component: ListaProductosComponent,
     canActivate: [AuthGuard]
-  }
-  ,
+  },
   {
     path: 'adquisiciones',
     component: ListaAdquisicionesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'fabricantes',
+    component: ListaFabricantesComponent,
+    canActivate: [AuthGuard]
+  }
+  ,
+  {
+    path: 'categoria-producto',
+    component: ListaCategoriaProductoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'cliente',
+    component: ListaClienteComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'proveedor',
+    component: ListaProveedorComponent,
     canActivate: [AuthGuard]
   }
 

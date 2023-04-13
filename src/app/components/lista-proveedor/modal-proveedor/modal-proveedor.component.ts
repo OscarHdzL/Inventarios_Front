@@ -9,25 +9,26 @@ import { MesaValidacionService } from 'src/app/servicios/mesa-validacion.service
 import { SwalServices } from 'src/app/servicios/sweetalert2.services';
 import { SesionModel } from 'src/app/modelos/sesion.model';
 import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
-import { PropietarioFormModel,  PropietarioModel } from 'src/app/modelos/Inventarios/propietario.model';
+import { ProveedorFormModel,  ProveedorModel } from 'src/app/modelos/Inventarios/propietario.model';
 import { Observable, map, startWith } from 'rxjs';
 import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 @Component({
-  selector: 'vex-modal-propietario',
-  templateUrl: './modal-propietario.component.html',
-  styleUrls: ['./modal-propietario.component.scss']
+  selector: 'vex-modal-proveedor',
+  templateUrl: './modal-proveedor.component.html',
+  styleUrls: ['./modal-proveedor.component.scss']
 })
-export class ModalPropietarioComponent implements OnInit {
+export class ModalProveedorComponent implements OnInit {
 
   sesionUsuarioActual: SesionModel;
-  listaPropietarios: PropietarioModel[] = [];
+  listaPropietarios: ProveedorModel[] = [];
   formPropietario: FormGroup;
-  propietarioModel: PropietarioFormModel = new PropietarioFormModel();
-  filteredPropietarios: Observable<PropietarioModel[]>;
+  propietarioModel: ProveedorFormModel = new ProveedorFormModel();
+  filteredPropietarios: Observable<ProveedorModel[]>;
+  listaSubs: any[] = [];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public propietario: PropietarioModel,
-              private dialogRef: MatDialogRef<ModalPropietarioComponent>,
+  constructor(@Inject(MAT_DIALOG_DATA) public propietario: ProveedorModel,
+              private dialogRef: MatDialogRef<ModalProveedorComponent>,
               private formBuilder: FormBuilder,
               private swalService: SwalServices,
               private inventariosService: InventariosService
@@ -38,10 +39,11 @@ export class ModalPropietarioComponent implements OnInit {
                   this.propietarioModel.id = this.propietario.id;
                   this.propietarioModel.razonSocial = this.propietario.razonsocial;
                   this.propietarioModel.rfc = this.propietario.rfc;
-                  this.propietarioModel.sigla = this.propietario.sigla;
+                  this.propietarioModel.correo = this.propietario.correo;
+                  this.listaSubs = this.propietario.contacto
 
                 } else {
-                  this.propietarioModel = new PropietarioFormModel();
+                  this.propietarioModel = new ProveedorFormModel();
                 }
 
                 //this.propietarioModel = this.propietario;
@@ -51,6 +53,12 @@ export class ModalPropietarioComponent implements OnInit {
                }
 
   async ngOnInit() {
+    if(this.propietario != null){
+      this.listaSubs = this.propietario.contacto
+    }
+    else{
+      this.listaSubs = []
+    }
     //this.listaPropietarios = await this.obtenerAreas();
     // this.listaPropietarios = [{
     //   id: 1,
@@ -82,31 +90,55 @@ export class ModalPropietarioComponent implements OnInit {
 
   get razonSocial() { return this.formPropietario.get('razonSocial') }
   get rfc() { return this.formPropietario.get('rfc') }
-  get sigla() { return this.formPropietario.get('sigla') }
+  get correo() { return this.formPropietario.get('correo') }
+  get correoCon() { return this.formPropietario.get('correoCon') }
+  get nombreCon() { return this.formPropietario.get('nombreCon') }
+  get telefonoCon() { return this.formPropietario.get('telefonoCon') }
 
 
   public iniciarForm(){
     this.formPropietario = this.formBuilder.group({
       razonSocial: ['', [Validators.required]],
       rfc: ['', [Validators.required]],
-      sigla: ['', [Validators.required]],
+      correo: ['', [Validators.required]],
+      correoCon: ['',],
+      nombreCon: ['',],
+      telefonoCon: ['',],
+
     });
+  }
+  async eliminarSubordinado(item: string){
+
+  }
+  agregarContacto(){
+    console.log("Contacto -> ");
+    this.listaSubs.push({
+      id: 0,
+      nombre: this.nombreCon.value,
+      correo: this.correoCon.value,
+      telefono: this.telefonoCon.value
+    })
+    this.formPropietario.controls['correoCon'].reset()
+    this.formPropietario.controls['nombreCon'].reset()
+    this.formPropietario.controls['telefonoCon'].reset()
   }
 
 
   public inicializarForm() {
     this.razonSocial.setValue(this.propietarioModel.razonSocial);
     this.rfc.setValue(this.propietarioModel.rfc);
-    this.sigla.setValue(this.propietarioModel.sigla);
+    this.correo.setValue(this.propietarioModel.correo);
   }
 
   public async guardarPropietario(){
     //this.propietarioModel.id = 0;
+    debugger
     this.propietarioModel.razonSocial = this.razonSocial.value;
     this.propietarioModel.rfc = this.rfc.value;
-    this.propietarioModel.sigla = this.sigla.value;
+    this.propietarioModel.correo = this.correo.value;
+    this.propietarioModel.contacto = this.listaSubs
 
-    const respuesta = this.propietarioModel.id > 0 ? await this.inventariosService.actualizarPropietario(this.propietarioModel) : await this.inventariosService.insertarPropietario(this.propietarioModel);
+    const respuesta = this.propietarioModel.id > 0 ? await this.inventariosService.actualizarProveedor(this.propietarioModel) : await this.inventariosService.insertarProveedor(this.propietarioModel);
 
     if(respuesta.exito){
       this.swalService.alertaPersonalizada(true, 'Exito');

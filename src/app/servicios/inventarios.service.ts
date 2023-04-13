@@ -92,19 +92,83 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     /* PROPIETARIOS */
     public async obtenerCatalogoPropietarios() : Promise <any> {
-      return await this.getAsync(this.url_api + 'Propietarios');
+      return await this.getAsync(this.url_api + 'Propietario/Get');
     }
 
     public async insertarPropietario(propietario: PropietarioFormModel) : Promise <any> {
-      return await this.postAsync(this.url_api + 'Propietario', propietario);
+      return await this.postAsync(this.url_api + 'Propietario/Add', propietario);
     }
 
-    public async actualizarPropietarios(propietario: PropietarioFormModel) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Propietario', propietario);
+    public async actualizarPropietario(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Propietario/Update', propietario);
     }
 
     public async deshabilitarPropietario(propietario: number) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Propietario/Disable/'+propietario, {});
+      return await this.deleteAsync(this.url_api + 'Propietario/Disable?id='+propietario);
+    }
+    /* FABRICANTES */
+    public async obtenerCatalogoFabricantes() : Promise <any> {
+      return await this.getAsync(this.url_api + 'Fabricante/Get');
+    }
+
+    public async insertarFabricante(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Fabricante/Add', propietario);
+    }
+
+    public async actualizarFabricante(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Fabricante/Update', propietario);
+    }
+
+    public async deshabilitarFabricante(propietario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Fabricante/Disable?id='+propietario);
+    }
+    /* CategoriaProducto */
+    public async obtenerCatalogoCategoriaProducto() : Promise <any> {
+      return await this.getAsync(this.url_api + 'CategoriaProducto/Get');
+    }
+
+    public async insertarCategoriaProducto(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'CategoriaProducto/Add', propietario);
+    }
+
+    public async actualizarCategoriaProducto(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'CategoriaProducto/Update', propietario);
+    }
+
+    public async deshabilitarCategoriaProducto(propietario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'CategoriaProducto/Disable?id='+propietario);
+    }
+    /* CLIENTES */
+    public async obtenerCatalogoClientes() : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/Cliente/Get');
+    }
+
+    public async insertarCliente(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'api/Cliente/Add', propietario);
+    }
+
+    public async actualizarCliente(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'api/Cliente/Update', propietario);
+    }
+
+    public async deshabilitarCliente(propietario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'api/Cliente/Disable?id='+propietario);
+    }
+    /* Proveedor */
+    public async obtenerCatalogoProveedores() : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/Proveedor/Get');
+    }
+
+    public async insertarProveedor(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'api/Proveedor/Add', propietario);
+    }
+
+    public async actualizarProveedor(propietario: PropietarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'api/Proveedor/Update', propietario);
+    }
+
+    public async deshabilitarProveedor(propietario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'api/Proveedor/Disable?id='+propietario);
     }
 
 }

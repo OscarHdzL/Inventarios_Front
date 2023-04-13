@@ -14,15 +14,15 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
 import { PropietarioModel } from 'src/app/modelos/Inventarios/propietario.model';
-
-
+import { ModalProveedorComponent } from './modal-proveedor/modal-proveedor.component';
 
 @Component({
-  selector: 'vex-lista-propietarios',
-  templateUrl: './lista-propietarios.component.html',
-  styleUrls: ['./lista-propietarios.component.scss']
+  selector: 'vex-lista-proveedor',
+  templateUrl: './lista-proveedor.component.html',
+  styleUrls: ['./lista-proveedor.component.scss']
 })
-export class ListaPropietariosComponent implements OnInit {
+export class ListaProveedorComponent implements OnInit {
+
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,9 +30,9 @@ export class ListaPropietariosComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: PropietarioModel[] = [];
+  dataSourceOriginal: any[] = [];
   dataSourceTabla:any;
-  listaItems: PropietarioModel[] = [];
+  listaItems: any[] = [];
 
   public selectedVal: string = 'cards';
 
@@ -42,7 +42,7 @@ export class ListaPropietariosComponent implements OnInit {
   columns: TableColumn<any>[] = [
     { label: 'Razon Social', property: 'razonsocial', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'RFC', property: 'rfc', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Sigla', property: 'sigla', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Correo', property: 'correo', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -75,7 +75,7 @@ export class ListaPropietariosComponent implements OnInit {
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.razonsocial.toLowerCase().includes(filterValue) ||
         val.rfc.toLowerCase().includes(filterValue)||
-        val.sigla.toLowerCase().includes(filterValue)
+        val.correo.toLowerCase().includes(filterValue)
       );
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
       this.paginatorCards.length = this.listaItems.length;
@@ -115,12 +115,12 @@ export class ListaPropietariosComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Propietarios por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Proveedores por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
   public async obtenerPropietarios(){
-    const respuesta = await this.inventariosService.obtenerCatalogoPropietarios();
+    const respuesta = await this.inventariosService.obtenerCatalogoProveedores();
     return respuesta.exito ? respuesta.output : [];
   }
   onPageChanged(e) {
@@ -129,7 +129,7 @@ export class ListaPropietariosComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
   openModal(usuario: PropietarioModel){
-    this.dialog.open(ModalPropietarioComponent,{
+    this.dialog.open(ModalProveedorComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
@@ -144,7 +144,7 @@ export class ListaPropietariosComponent implements OnInit {
   public async EliminarPropietario(propietario){
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
-      const respuesta = await this.inventariosService.deshabilitarPropietario(propietario.id);
+      const respuesta = await this.inventariosService.deshabilitarProveedor(propietario.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();

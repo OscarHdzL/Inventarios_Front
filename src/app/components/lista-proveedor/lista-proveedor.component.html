@@ -4,8 +4,8 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Propietarios</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Propietarios']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Proveedores</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Proveedores']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
@@ -119,7 +119,7 @@
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Sigla: {{ item.sigla }}</div>
+                <div class="text-center">Correo: {{ item.correo }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
@@ -228,13 +228,13 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="sigla">
+          <ng-container matColumnDef="correo">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Sigla
+              Correo
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Sigla">
+            <mat-cell *matCellDef="let row" data-label="Correo">
               <div>
-                {{ row.sigla }}
+                {{ row.correo }}
               </div>
             </mat-cell>
           </ng-container>
@@ -305,3 +305,4 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
+
