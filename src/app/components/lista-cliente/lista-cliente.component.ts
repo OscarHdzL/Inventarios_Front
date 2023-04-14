@@ -92,17 +92,6 @@ export class ListaClienteComponent implements OnInit {
     console.log("Valor Selected");
     console.log(this.selectedVal);
   }
-  async deshabilitarPropietario(item){
-    console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarPropietario(item);
-    if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Propietario Deshabilitado");
-      this.ngOnInit();
-    }
-    else {
-      this.swalService.alertaPersonalizada(false, "Error al deshabilitar");
-    }
-  }
   async ngOnInit(): Promise<void> {
     this.dataSourceOriginal = [];
     this.dataSourceOriginal = await this.obtenerPropietarios();
@@ -132,7 +121,7 @@ export class ListaClienteComponent implements OnInit {
   }
   openModal(usuario: ClienteModel){
     this.dialog.open(ModalClienteCatalogoComponent,{
-      height: '80%',
+      height: '90%',
       width: '100%',
       autoFocus: true,
       data: usuario,

@@ -108,7 +108,7 @@ export class ModalProveedorComponent implements OnInit {
     });
   }
   async eliminarSubordinado(item: string){
-
+    this.listaSubs.splice(this.listaSubs.findIndex(x => x.id == item),1)
   }
   agregarContacto(){
     console.log("Contacto -> ");
@@ -132,7 +132,6 @@ export class ModalProveedorComponent implements OnInit {
 
   public async guardarPropietario(){
     //this.propietarioModel.id = 0;
-    debugger
     this.propietarioModel.razonSocial = this.razonSocial.value;
     this.propietarioModel.rfc = this.rfc.value;
     this.propietarioModel.correo = this.correo.value;

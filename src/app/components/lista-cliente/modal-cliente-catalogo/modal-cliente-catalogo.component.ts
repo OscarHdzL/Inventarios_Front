@@ -11,6 +11,7 @@ import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
 import { ClienteFormModel,  ClienteModel } from 'src/app/modelos/Inventarios/propietario.model';
 import { Observable, map, startWith } from 'rxjs';
 import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'vex-modal-cliente-catalogo',
@@ -24,12 +25,16 @@ export class ModalClienteCatalogoComponent implements OnInit {
   formPropietario: FormGroup;
   propietarioModel: ClienteFormModel = new ClienteFormModel();
   filteredPropietarios: Observable<ClienteModel[]>;
+  mapa: string;
+  public tamanoPantalla: boolean;
+  verMapa: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public propietario: ClienteModel,
               private dialogRef: MatDialogRef<ModalClienteCatalogoComponent>,
               private formBuilder: FormBuilder,
               private swalService: SwalServices,
-              private inventariosService: InventariosService
+              private inventariosService: InventariosService,
+              private sanitizer: DomSanitizer,
               ) {
                 let sesion = localStorage.getItem(KeysStorageEnum.USER);
                 this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
@@ -42,9 +47,12 @@ export class ModalClienteCatalogoComponent implements OnInit {
                   this.propietarioModel.latitud = this.propietario.latitud;
                   this.propietarioModel.longitud = this.propietario.longitud;
                   this.propietarioModel.direccion = this.propietario.direccion;
+                  this.mapa = "https://maps.google.com/?ll=" + this.propietario.longitud  + "," + this.propietario.latitud + "&z=14&t=m&output=embed";
+                  this.verMapa = true;
 
                 } else {
                   this.propietarioModel = new ClienteFormModel();
+                  this.verMapa = false;
                 }
 
                 //this.propietarioModel = this.propietario;
@@ -54,6 +62,12 @@ export class ModalClienteCatalogoComponent implements OnInit {
                }
 
   async ngOnInit() {
+    if (window.innerWidth >= 1280) {
+      this.tamanoPantalla = true;
+    }
+    else {
+      this.tamanoPantalla = false;
+    }
     //this.listaPropietarios = await this.obtenerAreas();
     // this.listaPropietarios = [{
     //   id: 1,
@@ -74,6 +88,17 @@ export class ModalClienteCatalogoComponent implements OnInit {
 
 
     this.inicializarForm();
+  }
+  urlMapa(mapa: string){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(mapa);
+  }
+  cargarMapa(){
+    console.log("blur");
+    if (this.latitud.value != 0 && this.longitud.value) {
+      this.verMapa = true;
+      this.mapa = "https://maps.google.com/?ll=" + this.longitud.value  + "," + this.latitud.value + "&z=14&t=m&output=embed";
+    }
+
   }
 
 

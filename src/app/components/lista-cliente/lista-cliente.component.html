@@ -134,7 +134,7 @@
                   RFC: {{ item.rfc }}
                 </div>
               </div>
-              <mat-divider></mat-divider>
+              <!-- <mat-divider></mat-divider>
               <div class="flex justify-between items-center mb-10">
                 <div>
                   Longitud: {{ item.longitud }}
@@ -142,7 +142,7 @@
                 <div>
                   Latitud: {{ item.latitud }}
                 </div>
-              </div>
+              </div> -->
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
@@ -219,7 +219,7 @@
         </div>
       </div>
       <!-- TABLA -->
-      <div class="py-4" [hidden]="group.value == 'cards'">
+      <div class="py-4 overflow-x-hidden" [hidden]="group.value == 'cards'">
         <table
           [dataSource]="this.dataSourceTabla"
           class="w-full"
