@@ -1,3 +1,4 @@
+import { CategoriaProductoModel } from './../../../modelos/Inventarios/propietario.model';
 import { MesaValidacionService } from './../../../servicios/mesa-validacion.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +12,8 @@ import { MatAccordion } from '@angular/material/expansion';
 
 import { ModalCaracteristicaProductoComponent } from '../modal-caracteristica-producto/modal-caracteristica-producto.component';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { FabricanteModel } from 'src/app/modelos/Inventarios/propietario.model';
 
 
 @Component({
@@ -22,10 +25,12 @@ export class ModalProductoComponent implements OnInit {
   app: MatFormFieldAppearance
   abierto = true;
   formProducto: FormGroup;
+  formCaracteristica: FormGroup;
   productoModel: ProductoFormModel = new ProductoFormModel();
-  listaCategoria: any[] = [];
-  listaFabricante: any[] = [];
-  listaProveedor: any[] = [];
+  listaCategoria: CategoriaProductoModel[] = [];
+  listaFabricante: FabricanteModel[] = [];
+  listaCaracteristicas: string[] = [];
+
   listaPropietario: any[] = [];
   panelOpenState = false;
   @ViewChild('accordion',{static:true}) Accordion: MatAccordion
@@ -36,13 +41,19 @@ export class ModalProductoComponent implements OnInit {
               private swalService: SwalServices,
               private mesaValidacionService: MesaValidacionService,
               private dialog: MatDialog,
+              private inventariosService: InventariosService,
               ) {
 
                 debugger
                 if(producto != null){
-                  this.productoModel.id = this.producto.id;
+                  this.productoModel.id = this.producto.idproducto;
+                  this.productoModel.catFabricanteId = this.producto.idfabricante;
+                  this.productoModel.catCategoriaProductoId = this.producto.idcategoria;
                   this.productoModel.modelo = this.producto.modelo;
-                  this.productoModel.fabricante = this.producto.fabricante;
+                  this.productoModel.anio = this.producto.anio;
+                  this.productoModel.vidautil = this.producto.vidautil;
+                  this.productoModel.nuevo= this.producto.nuevo;
+
                 } else {
                   this.productoModel = new ProductoFormModel();
                 }
@@ -53,6 +64,9 @@ export class ModalProductoComponent implements OnInit {
 
   async ngOnInit() {
 
+    this.listaFabricante = await this.obtenerFabricantes();
+    this.listaCategoria = await this.obtenerCategoriasProducto();
+
     this.inicializarForm();
   }
 
@@ -61,63 +75,62 @@ export class ModalProductoComponent implements OnInit {
   get categoria() { return this.formProducto.get('categoria')};
   get fabricante() { return this.formProducto.get('fabricante')};
   get nuevo() { return this.formProducto.get('nuevo')};
-  //get proveedor() { return this.formProducto.get('proveedor')};
-  //get propietario() { return this.formProducto.get('propietario')};
-  //get cantidad() { return this.formProducto.get('cantidad')};
-  //get valorUnitario() { return this.formProducto.get('valorUnitario')};
   get vidaUtil() { return this.formProducto.get('vidaUtil')};
-  //get observaciones() { return this.formProducto.get('observaciones')};
+  get caracteristica() { return this.formCaracteristica.get('caracteristica')};
+
+  public async obtenerFabricantes(){
+    const respuesta = await this.inventariosService.obtenerCatalogoFabricantes();
+    return respuesta.exito ? respuesta.output : [];
+  }
+
+  public async obtenerCategoriasProducto(){
+    const respuesta = await this.inventariosService.obtenerCategoriasProducto();
+    return respuesta.exito ? respuesta.output : [];
+  }
 
   public iniciarForm(){
-    debugger
+
     this.formProducto = this.formBuilder.group({
       modelo: ['', [Validators.required]],
       anio: ['', [Validators.required]],
       categoria: ['', [Validators.required]],
       fabricante: ['', [Validators.required]],
       nuevo: ['', [Validators.required]],
-     //proveedor: ['', [Validators.required]],
-     //propietario: ['', [Validators.required]],
-     //cantidad: ['', [Validators.required]],
-     //valorUnitario: ['', [Validators.required]],
       vidaUtil: ['', [Validators.required]],
-      //observaciones: ['', [Validators.required]],
-
     });
+
+    this.formCaracteristica = this.formBuilder.group({
+      caracteristica: ['',Validators.required]
+    });
+  }
+
+
+  public agregarCaracteristica(){
+    if(this.caracteristica.value){
+      this.listaCaracteristicas.push(this.caracteristica.value);
+      this.formCaracteristica.reset();
+    }
   }
 
   public inicializarForm() {
     this.modelo.setValue(this.productoModel.modelo);
-    this.fabricante.setValue(this.productoModel.fabricante);
+    this.fabricante.setValue(this.productoModel.catFabricanteId);
     this.anio.setValue(this.productoModel.anio)
-    this.categoria.setValue(this.productoModel.categoria)
-    /*this.fabricante.setValue(this.productoModel.fabricante)
-    this.proveedor.setValue(this.productoModel.proveedor)
-    this.propietario.setValue(this.productoModel.propietario)
-    this.cantidad.setValue(this.productoModel.cantidad)
-    this.valorUnitario.setValue(this.productoModel.valorUnitario) */
-    this.vidaUtil.setValue(this.productoModel.vidaUtil)
-    //this.observaciones.setValue(this.productoModel.observaciones)
+    this.categoria.setValue(this.productoModel.catCategoriaProductoId)
+    this.vidaUtil.setValue(this.productoModel.vidautil)
+    this.nuevo.setValue(this.productoModel.nuevo)
   }
 
   public async guardarProducto(){
-
     this.productoModel.modelo = this.modelo.value;
-    this.productoModel.fabricante = this.fabricante.value;
+    this.productoModel.catFabricanteId = this.fabricante.value;
     this.productoModel.anio = this.anio.value;
-    this.productoModel.categoria = this.categoria.value;
-/*     this.productoModel.fabricante = this.fabricante.value;
-    this.productoModel.proveedor = this.proveedor.value;
-    this.productoModel.cantidad = this.cantidad.value;
-    this.productoModel.valorUnitario = this.valorUnitario.value; */
-    this.productoModel.vidaUtil = this.vidaUtil.value;
-    //this.productoModel.observaciones = this.observaciones.value;
+    this.productoModel.catCategoriaProductoId = this.categoria.value;
+    this.productoModel.vidautil = this.vidaUtil.value;
+    this.productoModel.nuevo= this.nuevo.value;
 
-    const respuesta =  {
-      exito: true
-    }
-    //this.productoModel.id > 0 ? await this.mesaValidacionService.actualizarProducto(this.productoModel) : await this.mesaValidacionService.insertarProducto(this.productoModel);
 
+    const respuesta = this.productoModel.id > 0 ? await this.inventariosService.actualizarProducto(this.productoModel) : await this.inventariosService.insertarProducto(this.productoModel);
 
     if(respuesta.exito){
       this.swalService.alertaPersonalizada(true, 'Exito');
@@ -125,6 +138,12 @@ export class ModalProductoComponent implements OnInit {
     } else {
       this.swalService.alertaPersonalizada(false, 'Error');
     }
+
+  }
+
+  public eliminarCaracteristica(caracteristica: string ){
+    const index = this.listaCaracteristicas.indexOf(caracteristica);
+    const x =  this.listaCaracteristicas.splice(index, 1);
 
   }
 

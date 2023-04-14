@@ -26,7 +26,8 @@ export class AuthGuard implements CanActivate {
         localStorage.removeItem(KeysStorageEnum.USER);
         return this.router.navigate(['/login']).then(() => false);
       } else {
-        let obj = JSON.parse(this.user) as SesionModel
+          //DESCOMENTAR POSTERIORMENTE
+        /* let obj = JSON.parse(this.user) as SesionModel
         if(!obj.vigenciaSesion||obj.vigenciaSesion < new Date().getTime())
         {
           console.log(obj.vigenciaSesion + " se superó la vigencia de la sesión: " + new Date().getTime() )
@@ -37,7 +38,7 @@ export class AuthGuard implements CanActivate {
           });
 
         return this.router.navigate(['/login']).then(() => false);
-        }
+        } */
       }
     return true;
   }

@@ -83,6 +83,7 @@ import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-catalogo/modal-cliente-catalogo.component';
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal-proveedor.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [
@@ -172,7 +173,8 @@ import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal
     MatAutocompleteModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    NgxCurrencyModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},

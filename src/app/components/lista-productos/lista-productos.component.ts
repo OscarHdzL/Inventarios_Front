@@ -88,8 +88,8 @@ export class ListaProductosComponent implements OnInit {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.modelo.toLowerCase().includes(filterValue) ||
-        val.fabricante.toLowerCase().includes(filterValue)||
-        val.proveedor.toLowerCase().includes(filterValue)
+        val.fabricante.toLowerCase().includes(filterValue)
+        //val.proveedor.toLowerCase().includes(filterValue)
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
@@ -140,7 +140,7 @@ export class ListaProductosComponent implements OnInit {
     this.dataSourceOriginal = [];
 
     //this.dataSourceOriginal = await this.obtenerProductos();
-
+/*
     this.dataSourceOriginal = [
       {
         id: 1,
@@ -159,7 +159,7 @@ export class ListaProductosComponent implements OnInit {
         modelo: 'Ideapad 5-14ARE05',
         fabricante: 'Lenovo',
         proveedor: 'Amazon'
-      }];
+      }]; */
 
 
       if (window.innerWidth >= 1280) {

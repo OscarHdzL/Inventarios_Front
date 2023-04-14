@@ -8,6 +8,8 @@ import { AdquisicionFormModel, AdquisicionModel, ProductoAdquisicionFormModel } 
 import { MatAccordion } from '@angular/material/expansion';
 
 import { ModalProductoAdquisicionComponent } from '../modal-producto-adquisicion/modal-producto-adquisicion.component';
+import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { FileManagerService } from 'src/app/servicios/filemanager.service';
 
 
 @Component({
@@ -24,26 +26,29 @@ export class ModalAdquisicionComponent implements OnInit {
   listaProveedor: any[] = [];
   listaPropietario: any[] = [];
   panelOpenState = false;
+  listaProductosAdquisicion = new Array<ProductoAdquisicionFormModel>();
+
   @ViewChild('accordion',{static:true}) Accordion: MatAccordion
 
   constructor(@Inject(MAT_DIALOG_DATA) public adquisicion: AdquisicionModel,
               private dialogRef: MatDialogRef<ModalAdquisicionComponent>,
               private formBuilder: FormBuilder,
               private swalService: SwalServices,
-              private mesaValidacionService: MesaValidacionService,
+              private inventariosService: InventariosService,
               private dialog: MatDialog,
+              private filemanagerService: FileManagerService,
               ) {
 
                 if(adquisicion != null){
-                  this.adquisicionModel.iD = this.adquisicion.iD;
-                  this.adquisicionModel.cAT_PROVEEDOR_ID = this.adquisicion.cAT_PROVEEDOR_ID;
-                  this.adquisicionModel.cAT_PROPIETARIO_ID = this.adquisicion.cAT_PROPIETARIO_ID;
-                  this.adquisicionModel.mONTO = this.adquisicion.mONTO;
-                  this.adquisicionModel.iMPUESTO = this.adquisicion.iMPUESTO;
-                  this.adquisicionModel.aRTICULOS = this.adquisicion.aRTICULOS;
-                  this.adquisicionModel.fAC_PDF = this.adquisicion.fAC_PDF;
-                  this.adquisicionModel.fAC_XML = this.adquisicion.fAC_XML;
-                  this.adquisicionModel.fECHADECOMPRA = this.adquisicion.fECHADECOMPRA;
+                  this.adquisicionModel.id = this.adquisicion.iD;
+                  this.adquisicionModel.catproveedorid = this.adquisicion.cAT_PROVEEDOR_ID;
+                  this.adquisicionModel.catpropietarioid = this.adquisicion.cAT_PROPIETARIO_ID;
+                  this.adquisicionModel.monto = this.adquisicion.mONTO;
+                  this.adquisicionModel.impuesto = this.adquisicion.iMPUESTO;
+                  this.adquisicionModel.articulos = this.adquisicion.aRTICULOS;
+                  this.adquisicionModel.facpdf = this.adquisicion.fAC_PDF;
+                  this.adquisicionModel.facxml = this.adquisicion.fAC_XML;
+                  this.adquisicionModel.fechadecompra = this.adquisicion.fECHADECOMPRA;
                 } else {
                   this.adquisicionModel = new AdquisicionFormModel();
                 }
@@ -81,33 +86,30 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 
   public inicializarForm() {
-  this.proveedor.setValue(this.adquisicionModel.cAT_PROVEEDOR_ID);
-  this.propietario.setValue(this.adquisicionModel.cAT_PROPIETARIO_ID);
-  this.articulos.setValue(this.adquisicionModel.aRTICULOS);
-  this.monto.setValue(this.adquisicionModel.mONTO);
-  this.impuesto.setValue(this.adquisicionModel.iMPUESTO);
+  this.proveedor.setValue(this.adquisicionModel.catproveedorid);
+  this.propietario.setValue(this.adquisicionModel.catpropietarioid);
+  this.articulos.setValue(this.adquisicionModel.articulos);
+  this.monto.setValue(this.adquisicionModel.monto);
+  this.impuesto.setValue(this.adquisicionModel.impuesto);
 /*   this.facturaPDF.setValue(this.adquisicionModel.fAC_PDF);
   this.facturaXML.setValue(this.adquisicionModel.fAC_XML); */
-  this.fechaCompra.setValue(this.adquisicionModel.fECHADECOMPRA);
+  this.fechaCompra.setValue(this.adquisicionModel.fechadecompra);
   }
 
   public async guardarAdquisicion(){
 
 
-    this.adquisicionModel.cAT_PROVEEDOR_ID = this.proveedor.value;
-    this.adquisicionModel.cAT_PROPIETARIO_ID = this.propietario.value;
-    this.adquisicionModel.aRTICULOS = this.articulos.value;
-    this.adquisicionModel.mONTO = this.monto.value;
-    this.adquisicionModel.iMPUESTO = this.impuesto.value;
-    this.adquisicionModel.fAC_PDF = '' //this.facturaPDF.value;
-    this.adquisicionModel.fAC_XML = '' //this.facturaXML.value;
-    this.adquisicionModel.fECHADECOMPRA = this.fechaCompra.value;
+    this.adquisicionModel.catproveedorid = this.proveedor.value;
+    this.adquisicionModel.catpropietarioid = this.propietario.value;
+    this.adquisicionModel.articulos = this.articulos.value;
+    this.adquisicionModel.monto = this.monto.value;
+    this.adquisicionModel.impuesto = this.impuesto.value;
+    this.adquisicionModel.facpdf = 'tokenPrueba' //this.facturaPDF.value;
+    this.adquisicionModel.facxml = 'tokenPrueba' //this.facturaXML.value;
+    this.adquisicionModel.fechadecompra = this.fechaCompra.value;
 
 
-    const respuesta =  {
-      exito: true
-    }
-    //this.adquisicionModel.id > 0 ? await this.mesaValidacionService.actualizarAdquisicion(this.adquisicionModel) : await this.mesaValidacionService.insertarAdquisicion(this.adquisicionModel);
+    const respuesta =  this.adquisicionModel.id > 0 ? await this.inventariosService.actualizarAdquisicion(this.adquisicionModel) : await this.inventariosService.insertarAdquisicion(this.adquisicionModel);
 
 
     if(respuesta.exito){
@@ -133,10 +135,63 @@ export class ModalAdquisicionComponent implements OnInit {
       disableClose: true,
       maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
     }).afterClosed().subscribe(result => {
+      debugger
+      if(result){
+        if(result.iD > 0){ //edita
 
-      this.ngOnInit();
+        }
+        else{ // agrega
+          this.listaProductosAdquisicion.push(result)
+        }
+      }
+      //this.ngOnInit();
     });
 
   }
 
+
+
+  async pdfSeleccionado(event) {
+    debugger
+    if(event.target.files.length > 0)
+     {
+       const formData: any = new FormData();
+      formData.append('file', event.target.files[0]);
+
+      const respuesta = await this.filemanagerService.cargarArchivo(formData);
+
+      if(respuesta.exito){
+        this.adquisicionModel.facpdf = respuesta.anotacion;
+       /*  this.produc = event.target.files[0].name;
+        this.archivoEditableToken = respuesta.anotacion;
+        //this.archivoEditableToken = respuesta.respuesta;
+        this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
+        this.swalService.alertaPersonalizada(true, 'Carga de archivo correcta');
+      } else {
+        this.swalService.alertaPersonalizada(false, 'No se pudo cargar el archivo');
+      }
+     }
+   }
+
+  async xmlSeleccionado(event) {
+    debugger
+    if(event.target.files.length > 0)
+     {
+       const formData: any = new FormData();
+      formData.append('file', event.target.files[0]);
+
+      const respuesta = await this.filemanagerService.cargarArchivo(formData);
+
+      if(respuesta.exito){
+        this.adquisicionModel.facxml = respuesta.anotacion;
+       /*  this.produc = event.target.files[0].name;
+        this.archivoEditableToken = respuesta.anotacion;
+        //this.archivoEditableToken = respuesta.respuesta;
+        this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
+        this.swalService.alertaPersonalizada(true, 'Carga de archivo correcta');
+      } else {
+        this.swalService.alertaPersonalizada(false, 'No se pudo cargar el archivo');
+      }
+     }
+   }
 }

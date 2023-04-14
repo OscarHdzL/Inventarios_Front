@@ -1,44 +1,40 @@
 export class ProductoModel{
-  id?: number;
-  modelo?: string;
-  anio?: string;
-  categoria?: string;
-  fabricante?: string;
-  proveedor?: string;
-  propietario?: string;
-  cantidad?: number;
-  valorUnitario?: number;
-  vidaUtil?: string;
-  activo?: boolean;
+  idproducto: number
+  idfabricante: number
+  fabricante: string
+  modelo: string
+  idcategoria: number
+  categoria: string
+  esestatico: boolean
+  anio: number
+  nuevo: boolean
+  vidautil: number
+  caracteristicas: string
 }
 
 
+
+
 export class ProductoFormModel {
-  id?: number;
-  modelo?: string;
-  anio?: string;
-  categoria?: string;
-  fabricante?: string;
-  proveedor?: string;
-  propietario?: string;
-  cantidad?: number;
-  valorUnitario?: number;
-  vidaUtil?: string;
-  observaciones?: string;
-  activo?: boolean;
+  id: number
+  catCategoriaProductoId: number
+  catFabricanteId: number
+  modelo: string
+  anio: number
+  nuevo: boolean
+  vidautil: number
+  caracteristicas_: string[]
+
   constructor(){
     this.id = 0;
+    this.catCategoriaProductoId = 0;
+    this.catFabricanteId = 0;
     this.modelo = null;
     this.anio = null;
-    this.categoria = null;
-    this.fabricante = null;
-    this.proveedor = null;
-    this.propietario = null;
-    this.cantidad = null;
-    this.valorUnitario = null;
-    this.vidaUtil = null;
-    this.propietario = null;
-    this.activo = true;
+    this.nuevo = null;
+    this.vidautil = null;
+    this.caracteristicas_ = null;
+
   }
 }
 
@@ -62,4 +58,16 @@ export class CaracteristicaProductoFormModel {
     this.caracteristicaProducto = null;
 
   }
+  }
+
+
+
+
+  export class CategoriaProductoModel{
+    id: number
+    nombre: string
+    estatus: boolean
+    estatico: boolean
+    inclusion: string
+    catProductos: any[]
   }

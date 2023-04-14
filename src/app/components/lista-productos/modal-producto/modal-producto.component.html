@@ -67,7 +67,7 @@
               <mat-label>Categoria</mat-label>
               <mat-select formControlName="categoria">
                 <mat-option *ngFor="let cat of listaCategoria" [value]="cat.id"
-                  >{{ cat.descripcion }}
+                  >{{ cat.nombre }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="this.categoria.hasError('required')">
@@ -81,7 +81,7 @@
                   *ngFor="let fabricante of listaFabricante"
                   [value]="fabricante.id"
                 >
-                  {{ fabricante.descripcion }}</mat-option
+                  {{ fabricante.nombre }}</mat-option
                 >
               </mat-select>
               <mat-error *ngIf="this.fabricante.hasError('required')">
@@ -93,7 +93,8 @@
             <mat-form-field class="flex-auto">
               <mat-label>Vida útil</mat-label>
               <input
-                type="text"
+                type="number"
+                min="1"
                 matInput
                 formControlName="vidaUtil"
                 maxlength="4"
@@ -103,15 +104,18 @@
               >
             </mat-form-field>
 
-            <mat-form-field class="flex-auto" floatLabel="always" appearance="outline">
-
+            <mat-form-field
+              class="flex-auto"
+              floatLabel="always"
+              appearance="outline"
+            >
               Usado
               <mat-slide-toggle
-               formControlName="nuevo"
-                  [checked]="true"
-
-                ></mat-slide-toggle> Nuevo
-                <textarea matInput hidden></textarea>
+                formControlName="nuevo"
+                [checked]="true"
+              ></mat-slide-toggle>
+              Nuevo
+              <textarea matInput hidden></textarea>
               <mat-error *ngIf="this.nuevo.hasError('required')">
                 El campo es requerido</mat-error
               >
@@ -126,8 +130,6 @@
               </div>
               <div>Nuevo</div>
             </div> -->
-
-
           </div>
         </div>
       </form>
@@ -156,7 +158,7 @@
           ></mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="flex justify-end w-full">
+      <!--       <div class="flex justify-end w-full">
         <button
           (click)="openModalCaracteristica(null)"
           class="m-4"
@@ -167,27 +169,69 @@
         >
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
-      </div>
+      </div> -->
+
+      <form
+        role="form"
+        autocomplete="off"
+        [formGroup]="formCaracteristica"
+        (submit)="agregarCaracteristica()"
+        novalidate
+      >
+        <div class="flex flex-col">
+          <mat-form-field class="flex-auto">
+            <mat-label>Característica</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="caracteristica"
+              maxlength="2000"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              matTooltip="Agregar"
+              type="submit"
+              color="primary"
+            >
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+            <mat-error *ngIf="this.caracteristica.hasError('required')">
+              El campo es requerido</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </form>
+
       <div class="relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th colspan="3" class="px-6 py-3">
-                Características del artículo
-              </th>
+              <th class="px-6 py-3">Características del producto</th>
+              <th class="px-6 py-3">Acción</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b">
+            <tr *ngIf="listaCaracteristicas.length == 0">
+              <td colspan="2">
+                <div class="flex justify-center m-3">
+                  <p>NO SE HAN REGISTRADO CARACTERÍSTICAS</p>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="bg-white border-b"
+              *ngFor="let row of listaCaracteristicas"
+            >
               <th
                 scope="row"
                 class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
               >
-                Apple MacBook Pro 17"
+                {{ row }}
               </th>
-              <td class="px-3 py-2">Silver</td>
               <td class="px-3 py-2">
                 <a
+                  (click)="eliminarCaracteristica(row)"
                   matTooltip="Eliminar caracteristica"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button

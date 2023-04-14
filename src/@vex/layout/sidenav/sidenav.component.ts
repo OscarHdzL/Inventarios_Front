@@ -47,7 +47,7 @@ export class SidenavComponent implements OnInit {
               }
 
  async ngOnInit() {
-  debugger
+
     //this.sesionUsuarioActual.funciones = await this.obtenerFunciones();
     //SE SOBREESCRIBE EL VALOR POR SI HUBO CAMBIOS EN LAS FUNCIONES (SIDEBAR)
     localStorage.setItem(KeysStorageEnum.USER,JSON.stringify(this.sesionUsuarioActual));

@@ -39,15 +39,15 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     /* PRODUCTOS */
     public async obtenerCatalogoProductos() : Promise <any> {
-      return await this.getAsync(this.url_api + 'Productos');
+      return await this.getAsync(this.url_api + 'Producto/seleccionar/todos');
     }
 
     public async insertarProducto(usuario: ProductoFormModel) : Promise <any> {
-      return await this.postAsync(this.url_api + 'Productos', usuario);
+      return await this.postAsync(this.url_api + 'Producto/agregar', usuario);
     }
 
     public async actualizarProducto(usuario: ProductoFormModel) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Productos', usuario);
+      return await this.putAsync(this.url_api + 'Producto', usuario);
     }
 
     public async deshabilitarProducto(usuario: number) : Promise <any> {
@@ -55,7 +55,7 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
 
 
-    /* PRODUCTOS */
+    /* ADQUISICIONES */
     public async obtenerCatalogoAdquisiciones() : Promise <any> {
       return await this.getAsync(this.url_api + 'Adquisicion');
     }
@@ -169,6 +169,12 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     public async deshabilitarProveedor(propietario: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'api/Proveedor/Disable?id='+propietario);
+    }
+
+
+    /* CATEGORIA PRODUCTO */
+    public async obtenerCategoriasProducto() : Promise <any> {
+      return await this.getAsync(this.url_api + 'CategoriaProducto/Get');
     }
 
 }

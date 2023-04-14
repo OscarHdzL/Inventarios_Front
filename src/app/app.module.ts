@@ -14,6 +14,7 @@ import { LoaderInterceptor } from './loader.interceptor';
 import { NgxLoadingModule } from 'ngx-loading';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     VexModule,
     CustomLayoutModule,
     NgxLoadingModule.forRoot({}),
-    MatSnackBarModule
+    MatSnackBarModule,
+
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},
     {
