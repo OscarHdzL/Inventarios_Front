@@ -61,7 +61,11 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
 
     public async insertarAdquisicion(usuario: AdquisicionFormModel) : Promise <any> {
-      return await this.postAsync(this.url_api + 'Adquisicion', usuario);
+      return await this.postAsync(this.url_api + 'Adquisicion/agregar', usuario);
+    }
+
+    public async insertarProdcutoAdquisicion(usuario: AdquisicionFormModel[]) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Adquisicion/agregar/detalle', usuario);
     }
 
     public async actualizarAdquisicion(usuario: AdquisicionFormModel) : Promise <any> {

@@ -1,9 +1,14 @@
 export class ProveedorModel{
   id: number
-  nombre: string
-  estatus: boolean
-  estatico: boolean
-  inclusion: string
-  catProductos: any[]
+  razonsocial: string
+  correo: string
+  rfc: string
+  contacto: ContactoProveedor[]
 }
 
+export class ContactoProveedor {
+  id: number
+  nombre: string
+  correo: string
+  telefono: string
+}

@@ -48,7 +48,7 @@
                   *ngFor="let proveedor of listaProveedor"
                   [value]="proveedor.id"
                 >
-                  {{ proveedor.descripcion }}</mat-option
+                  {{ proveedor.razonsocial }}</mat-option
                 >
               </mat-select>
               <mat-error *ngIf="this.proveedor.hasError('required')">
@@ -62,7 +62,7 @@
                   *ngFor="let propietario of listaPropietario"
                   [value]="propietario.id"
                 >
-                  {{ propietario.descripcion }}</mat-option
+                  {{ propietario.razonsocial }}</mat-option
                 >
               </mat-select>
               <mat-error *ngIf="this.propietario.hasError('required')">
@@ -76,10 +76,10 @@
               <mat-label>Articulos</mat-label>
               <input
 
-                type="text"
+                type="number"
                 matInput
                 formControlName="articulos"
-                maxlength="2000"
+                min="0"
               />
               <mat-error *ngIf="this.articulos.hasError('required')">
                 El campo es requerido</mat-error
@@ -92,7 +92,7 @@
                 type="text"
                 matInput
                 formControlName="monto"
-                maxlength="4"
+                min="0"
               />
               <mat-error *ngIf="this.monto.hasError('required')">
                 El campo es requerido
@@ -105,7 +105,7 @@
                 type="text"
                 matInput
                 formControlName="impuesto"
-                maxlength="4"
+                min="0"
               />
               <mat-error *ngIf="this.impuesto.hasError('required')">
                 El campo es requerido
@@ -184,10 +184,8 @@
           {{ this.adquisicionModel.id > 0 ? "Editar" : "Agregar" }}
         </button>
       </div>
-
-      {{this.formAdquisicion.getRawValue() | json}}
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel [expanded]="true" *ngIf="this.adquisicionModel.id > 0">
       <mat-expansion-panel-header>
         <mat-panel-title> ADQUISICIÓN </mat-panel-title>
         <mat-panel-description>
@@ -200,7 +198,7 @@
       </mat-expansion-panel-header>
       <div class="flex justify-end w-full">
         <button
-          (click)="openModalCaracteristica(null)"
+          (click)="openModalProducto(null)"
           class="m-4"
           color="primary"
           mat-mini-fab
@@ -262,6 +260,17 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
+
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          (click)="guardarProductosAdquisicion()"
+        >
+          Guardar productos
+        </button>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

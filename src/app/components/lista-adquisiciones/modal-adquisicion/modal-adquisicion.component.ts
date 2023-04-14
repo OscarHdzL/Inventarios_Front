@@ -10,6 +10,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { ModalProductoAdquisicionComponent } from '../modal-producto-adquisicion/modal-producto-adquisicion.component';
 import { InventariosService } from 'src/app/servicios/inventarios.service';
 import { FileManagerService } from 'src/app/servicios/filemanager.service';
+import { PropietarioModel, ProveedorModel } from 'src/app/modelos/Inventarios/propietario.model';
 
 
 @Component({
@@ -23,8 +24,8 @@ export class ModalAdquisicionComponent implements OnInit {
   adquisicionModel: AdquisicionFormModel = new AdquisicionFormModel();
   listaCategoria: any[] = [];
   listaFabricante: any[] = [];
-  listaProveedor: any[] = [];
-  listaPropietario: any[] = [];
+  listaProveedor: ProveedorModel[] = [];
+  listaPropietario: PropietarioModel[] = [];
   panelOpenState = false;
   listaProductosAdquisicion = new Array<ProductoAdquisicionFormModel>();
 
@@ -52,13 +53,14 @@ export class ModalAdquisicionComponent implements OnInit {
                 } else {
                   this.adquisicionModel = new AdquisicionFormModel();
                 }
-
+                this.adquisicionModel = {"id":14,"catproveedorid":1,"catpropietarioid":6,"monto":12134.43,"impuesto":345.45,"articulos":20,"facpdf":"tokenPrueba","facxml":"tokenPrueba","fechadecompra":"2023-04-14","detalle":[]};
 
                 this.iniciarForm();
                }
 
   async ngOnInit() {
-
+    this.listaProveedor = await this.obtenerProveedores();
+    this.listaPropietario = await this.obtenerPropietarios();
     this.inicializarForm();
   }
 
@@ -71,6 +73,17 @@ export class ModalAdquisicionComponent implements OnInit {
   get facturaPDF() { return this.formAdquisicion.get('facturaPDF')};
   get facturaXML() { return this.formAdquisicion.get('facturaXML')};
   get fechaCompra() { return this.formAdquisicion.get('fechaCompra')};
+
+  public async obtenerProveedores(){
+    const respuesta = await this.inventariosService.obtenerCatalogoProveedores();
+    return respuesta ? respuesta.output : [];
+  }
+
+  public async obtenerPropietarios(){
+    const respuesta = await this.inventariosService.obtenerCatalogoPropietarios();
+    return respuesta ? respuesta.output : [];
+  }
+
 
   public iniciarForm(){
     this.formAdquisicion = this.formBuilder.group({
@@ -121,12 +134,33 @@ export class ModalAdquisicionComponent implements OnInit {
 
   }
 
+
+  public async guardarProductosAdquisicion(){
+
+
+    const respuesta =  await this.inventariosService.insertarProdcutoAdquisicion(this.listaProductosAdquisicion);
+
+    if(respuesta.exito){
+      this.swalService.alertaPersonalizada(true, 'Exito');
+      this.close(true);
+    } else {
+      this.swalService.alertaPersonalizada(false, 'Error');
+    }
+
+  }
+
   close(result: boolean) {
     this.dialogRef.close(result);
   }
 
 
-  openModalCaracteristica(producto: ProductoAdquisicionFormModel){
+  openModalProducto(producto: ProductoAdquisicionFormModel){
+    debugger
+    if(!producto){
+      producto = new ProductoAdquisicionFormModel();
+      producto.tblAdquisicionId = this.adquisicionModel.id;
+    }
+
     this.dialog.open(ModalProductoAdquisicionComponent,{
       height: '50%',
       width: '100%',

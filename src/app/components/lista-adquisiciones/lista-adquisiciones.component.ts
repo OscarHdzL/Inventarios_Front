@@ -136,9 +136,9 @@ export class ListaAdquisicionesComponent implements OnInit {
 
     this.dataSourceOriginal = [];
 
-    //this.dataSourceOriginal = await this.obtenerAdquisicions();
+    this.dataSourceOriginal = await this.obtenerAdquisicions();
 
-    this.dataSourceOriginal = [
+    /* this.dataSourceOriginal = [
       {
         iD: 1,
         mONTO: 1343.12,
@@ -156,7 +156,7 @@ export class ListaAdquisicionesComponent implements OnInit {
         mONTO: 1343.12,
         aRTICULOS: 4312,
         iMPUESTO: 43.43
-      }];
+      }]; */
 
 
       if (window.innerWidth >= 1280) {

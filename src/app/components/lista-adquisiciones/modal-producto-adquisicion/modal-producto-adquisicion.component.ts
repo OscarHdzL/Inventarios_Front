@@ -43,6 +43,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
                   this.productoModel.catProductoId = this.producto.catProductoId;
                   this.productoModel.cantidad = this.producto.cantidad;
                   this.productoModel.costosiunitario = this.producto.costosiunitario;
+                  this.productoModel.tblAdquisicionId = this.producto.tblAdquisicionId;
 
                 } else {
                   this.productoModel = new ProductoAdquisicionFormModel();
@@ -99,8 +100,10 @@ export class ModalProductoAdquisicionComponent implements OnInit {
     this.productoModel.cantidad = this.cantidad.value;
     this.productoModel.costosiunitario = this.costoUnitario.value;
 
-    const respuesta = {exito: true} //this.productoModel.id > 0 ? await this.mesaValidacionService.actualizarProducto(this.productoModel) : await this.mesaValidacionService.insertarProducto(this.productoModel);
+    //const respuesta = this.productoModel.id > 0 ? await this.inventariosService.actualizarProducto(this.productoModel) : await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
 
+    //const respuesta = await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
+    const respuesta = {exito: true}
     if(respuesta.exito){
       this.swalService.alertaPersonalizada(true, 'Exito');
       //this.close(true);
