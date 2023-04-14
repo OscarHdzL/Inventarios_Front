@@ -72,7 +72,7 @@ export class SidenavComponent implements OnInit {
           route: '/components/propietarios',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
-        },
+        }/* ,
         {
           type: 'link',
           label: 'Familia articulos',
@@ -86,7 +86,8 @@ export class SidenavComponent implements OnInit {
           route: '/components/articulos',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
-        },
+        } */
+        ,
         {
           type: 'link',
           label: 'Software',
