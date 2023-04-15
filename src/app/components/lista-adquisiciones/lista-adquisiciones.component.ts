@@ -84,9 +84,9 @@ export class ListaAdquisicionesComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.mONTO.toString().toLowerCase().includes(filterValue) ||
-        val.iMPUESTO.toString().toLowerCase().includes(filterValue)||
-        val.aRTICULOS.toString().toLowerCase().includes(filterValue)
+        val.monto.toString().toLowerCase().includes(filterValue) ||
+        val.impuesto.toString().toLowerCase().includes(filterValue)||
+        val.articulos.toString().toLowerCase().includes(filterValue)
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
@@ -184,7 +184,7 @@ export class ListaAdquisicionesComponent implements OnInit {
 
   public async obtenerAdquisicions(){
     const respuesta = await this.inventariosService.obtenerCatalogoAdquisiciones();
-    return respuesta.exito ? respuesta.respuesta : [];
+    return respuesta.exito ? respuesta.output : [];
   }
 
   onPageChanged(e) {

@@ -12,9 +12,10 @@ import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
 
 import { Observable, map, startWith } from 'rxjs';
 import { ProductoModel } from 'src/app/modelos/Inventarios/producto.model';
-import { ProductoAdquisicionFormModel } from 'src/app/modelos/Inventarios/adquisicion.model';
+
 import { ModalProductoComponent } from '../../lista-productos/modal-producto/modal-producto.component';
 import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { RelAdquisicionDetalle } from 'src/app/modelos/Inventarios/adquisicion.model';
 
 
 @Component({
@@ -26,10 +27,10 @@ export class ModalProductoAdquisicionComponent implements OnInit {
   sesionUsuarioActual: SesionModel;
   listaProductos: ProductoModel[] = [];
   formProducto: FormGroup;
-  productoModel: ProductoAdquisicionFormModel = new ProductoAdquisicionFormModel();
+  productoModel: RelAdquisicionDetalle = new RelAdquisicionDetalle();
   filteredProductos: Observable<ProductoModel[]>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public producto: ProductoAdquisicionFormModel,
+  constructor(@Inject(MAT_DIALOG_DATA) public producto: RelAdquisicionDetalle,
               private dialogRef: MatDialogRef<ModalProductoAdquisicionComponent>,
               private formBuilder: FormBuilder,
               private swalService: SwalServices,
@@ -46,7 +47,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
                   this.productoModel.tblAdquisicionId = this.producto.tblAdquisicionId;
 
                 } else {
-                  this.productoModel = new ProductoAdquisicionFormModel();
+                  this.productoModel = new RelAdquisicionDetalle();
                 }
 
                 //this.productoModel = this.producto;
@@ -94,13 +95,27 @@ export class ModalProductoAdquisicionComponent implements OnInit {
   }
 
   public async guardarProducto(){
-
+debugger
     //SE ACTUALIZA EL ID CUANDO SE SELECCIONA O ENCUENTRA EL RESULTADO EN EL AUTOCOMPLETE
     //this.productoModel.cAT_PRODUCTO_ID = this.producto_.value;
     this.productoModel.cantidad = this.cantidad.value;
     this.productoModel.costosiunitario = this.costoUnitario.value;
 
-    //const respuesta = this.productoModel.id > 0 ? await this.inventariosService.actualizarProducto(this.productoModel) : await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
+    let lista = [];
+    lista.push(this.productoModel);
+
+    const respuesta = await this.inventariosService.insertarAdquisicionDetalle(
+      this.productoModel
+    );
+
+    if (respuesta.exito) {
+      this.swalService.alertaPersonalizada(true, "Exito");
+      this.close(true);
+    } else {
+      this.swalService.alertaPersonalizada(false, "Error");
+    }
+
+    /* //const respuesta = this.productoModel.id > 0 ? await this.inventariosService.actualizarProducto(this.productoModel) : await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
 
     //const respuesta = await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
     const respuesta = {exito: true}
@@ -111,7 +126,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
 
     } else {
       this.swalService.alertaPersonalizada(false, 'Error');
-    }
+    } */
   }
 
   close(result: boolean) {
@@ -136,7 +151,7 @@ private _normalizeValue(value: string): string {
   return value.toLowerCase().replace(/\s/g, '');
 }
 
-openModalProducto(producto: ProductoAdquisicionFormModel){
+openModalProducto(producto: RelAdquisicionDetalle){
   this.dialog.open(ModalProductoComponent,{
     height: '80%',
     width: '100%',
@@ -147,7 +162,6 @@ openModalProducto(producto: ProductoAdquisicionFormModel){
   }).afterClosed().subscribe(result => {
 
   });
-
 }
 
 }

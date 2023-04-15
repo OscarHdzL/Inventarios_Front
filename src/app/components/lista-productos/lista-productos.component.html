@@ -146,16 +146,22 @@
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
+              <div class="flex justify-center items-center mb-5">
                 <div class="text-center">Modelo: {{ item.modelo }}</div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
+              <div class="flex justify-center items-center mb-5">
                 <div class="text-center">Fabricante: {{ item.fabricante }}</div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Proveedor: {{  ''}}</div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center">Categoría: {{ item.categoria }}</div>
+              </div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center">Nuevo: {{ item.nuevo ? 'Si':'No' }}</div>
+              </div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center">Año: {{ item.anio }}</div>
               </div>
               <mat-divider></mat-divider>
               <!-- <div class="flex justify-between items-center mb-10">
@@ -210,53 +216,9 @@
                   </button>
                 </div>
                 <div class="mr-5">
-                  <!-- <button (click)="openModalGraficas(item)" class=" " color="basic" mat-mini-fab matTooltip="Gráficas"
-                    type="button">
-                    <mat-icon svgIcon="mat:signal_cellular_alt"></mat-icon>
-                  </button> -->
-                  <!-- <button
-                    (click)="openModalGraficas(item)"
-                    matTooltip="Gráficas"
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-                  >
-                    <svg
-                      class="fill-current w-5 h-5"
-                      fill="#000000"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                      preserveAspectRatio="xMidYMid"
-                    >
-                      <path
-                        class="st0"
-                        d="M70.697,395.352h80.633c5.658,0,10.246-4.252,10.246-9.498v-143.72c0-5.246-4.588-9.499-10.246-9.499H70.697
-                      c-5.658,0-10.246,4.253-10.246,9.499v143.72C60.451,391.1,65.039,395.352,70.697,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M215.684,395.352h80.631c5.658,0,10.248-4.252,10.248-9.498V141.117c0-5.246-4.59-9.498-10.248-9.498h-80.631
-                      c-5.66,0-10.248,4.252-10.248,9.498v244.736C205.436,391.1,210.024,395.352,215.684,395.352z"
-                      />
-                      <path
-                        class="st0"
-                        d="M360.668,395.352h80.631c5.66,0,10.248-4.252,10.248-9.498V25.964c0-5.246-4.588-9.499-10.248-9.499h-80.631
-                      c-5.66,0-10.248,4.253-10.248,9.499v359.89C350.42,391.1,355.008,395.352,360.668,395.352z"
-                      />
-                      <polygon
-                        class="st0"
-                        points="495.426,438.633 16.574,438.633 0,438.633 0,495.535 16.574,495.535 495.426,495.535 512,495.535
-                      512,438.633 	"
-                      />
-                    </svg>
-                  </button> -->
+
                 </div>
                 <div class="mr-5">
-                  <!-- <button color="basic" mat-mini-fab matTooltip="Descargar documentación"
-                    type="button">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
-                  <!-- <button matTooltip="Descargar documentación" class="justify-items-center  w-10 h-10 bg-gray-400 hover:bg-gray-600 text-white font-bold rounded-full shadow-sm-light ">
-                    <mat-icon svgIcon="mat:cloud_download"></mat-icon>
-                  </button> -->
                   <button
                     matTooltip="Descargar documentación"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -315,19 +277,39 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Fabricante
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="fabricante">
+            <mat-cell *matCellDef="let row" data-label="Fabricante">
               <div>
                 {{ row.fabricante }}
               </div>
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="proveedor">
+          <ng-container matColumnDef="categoria">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Proveedor
+              Categoría
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="proveedor">
+            <mat-cell *matCellDef="let row" data-label="Categoría">
               <div>
-                {{ row.proveedor }}
+                {{ row.categoria }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="nuevo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nuevo
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Nuevo">
+              <div>
+                {{ row.nuevo ? 'Si' : 'No' }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="anio">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Año
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Año">
+              <div>
+                {{ row.anio}}
               </div>
             </mat-cell>
           </ng-container>

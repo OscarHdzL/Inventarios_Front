@@ -7,7 +7,7 @@ import { ArticuloFormModel } from '../modelos/Inventarios/articulo.model';
 import { SoftwareFormModel } from '../modelos/Inventarios/software.model';
 import { PropietarioFormModel } from '../modelos/Inventarios/propietario.model';
 import { ProductoFormModel } from '../modelos/Inventarios/producto.model';
-import { AdquisicionFormModel } from '../modelos/Inventarios/adquisicion.model';
+import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventarios/adquisicion.model';
 
 
 @Injectable({
@@ -56,24 +56,35 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
 
     /* ADQUISICIONES */
+    public async obtenerAdquisicion(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Adquisicion/seleccionar?id='+ id);
+    }
     public async obtenerCatalogoAdquisiciones() : Promise <any> {
-      return await this.getAsync(this.url_api + 'Adquisicion');
+      return await this.getAsync(this.url_api + 'Adquisicion/seleccionar');
     }
 
     public async insertarAdquisicion(usuario: AdquisicionFormModel) : Promise <any> {
       return await this.postAsync(this.url_api + 'Adquisicion/agregar', usuario);
     }
 
-    public async insertarProdcutoAdquisicion(usuario: AdquisicionFormModel[]) : Promise <any> {
+    public async insertarAdquisicionDetalle(usuario: RelAdquisicionDetalle) : Promise <any> {
       return await this.postAsync(this.url_api + 'Adquisicion/agregar/detalle', usuario);
     }
 
     public async actualizarAdquisicion(usuario: AdquisicionFormModel) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Adquisicion', usuario);
+      return await this.putAsync(this.url_api + 'Adquisicion/editar', usuario);
+    }
+
+    public async actualizarAdquisicionDetalle(usuario: RelAdquisicionDetalle) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Adquisicion/editar/detalle', usuario);
     }
 
     public async deshabilitarAdquisicion(usuario: number) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Adquisicion/Disable/'+usuario, {});
+      return await this.deleteAsync(this.url_api + 'Adquisicion/eliminar?id='+usuario);
+    }
+
+    public async deshabilitarAdquisicionDetalle(usuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Adquisicion/eliminar/detalle?id='+usuario);
     }
 
 

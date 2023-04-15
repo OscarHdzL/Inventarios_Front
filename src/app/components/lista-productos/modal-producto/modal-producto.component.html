@@ -52,10 +52,12 @@
             <mat-form-field class="flex-auto">
               <mat-label>Año</mat-label>
               <input
-                type="text"
+                type="number"
                 matInput
                 formControlName="anio"
+                minlength="4"
                 maxlength="4"
+                min="2000"
               />
               <mat-error *ngIf="this.anio.hasError('required')">
                 El campo es requerido</mat-error
@@ -133,44 +135,8 @@
           </div>
         </div>
       </form>
-      <!-- TERMINA FORMULARIO PRODUCTO -->
-      <div class="flex justify-end">
-        <button type="button" mat-button mat-dialog-close>Cancelar</button>
-        <button
-          type="submit"
-          mat-flat-button
-          color="primary"
-          (click)="guardarProducto()"
-          [disabled]="formProducto.invalid"
-        >
-          {{ this.productoModel.id > 0 ? "Editar" : "Agregar" }}
-        </button>
-      </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> PRODUCTO </mat-panel-title>
-        <mat-panel-description>
-          Características
-          <mat-icon
-            class="icon-sm"
-            svgIcon="mat:keyboard_arrow_down"
-          ></mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <!--       <div class="flex justify-end w-full">
-        <button
-          (click)="openModalCaracteristica(null)"
-          class="m-4"
-          color="primary"
-          mat-mini-fab
-          matTooltip="Agregar característica"
-          type="button"
-        >
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
-      </div> -->
 
+      <!-- CARACTERISTICAS -->
       <form
         role="form"
         autocomplete="off"
@@ -246,6 +212,123 @@
           </tbody>
         </table>
       </div>
+
+      {{this.formProducto.getRawValue() | json}}
+<br>
+{{this.listaCaracteristicas | json}}
+      <!-- TERMINA FORMULARIO PRODUCTO -->
+      <div class="flex justify-end mt-5">
+        <button type="button" mat-button mat-dialog-close>Cancelar</button>
+        <button
+          type="submit"
+          mat-flat-button
+          color="primary"
+          (click)="guardarProducto()"
+          [disabled]="formProducto.invalid"
+        >
+          {{ this.productoModel.id > 0 ? "Editar" : "Agregar" }}
+        </button>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> PRODUCTO </mat-panel-title>
+        <mat-panel-description>
+          Características
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <!--       <div class="flex justify-end w-full">
+        <button
+          (click)="openModalCaracteristica(null)"
+          class="m-4"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Agregar característica"
+          type="button"
+        >
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div> -->
+
+      <!--       <form
+        role="form"
+        autocomplete="off"
+        [formGroup]="formCaracteristica"
+        (submit)="agregarCaracteristica()"
+        novalidate
+      >
+        <div class="flex flex-col">
+          <mat-form-field class="flex-auto">
+            <mat-label>Característica</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="caracteristica"
+              maxlength="2000"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              matTooltip="Agregar"
+              type="submit"
+              color="primary"
+            >
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+            <mat-error *ngIf="this.caracteristica.hasError('required')">
+              El campo es requerido</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th class="px-6 py-3">Características del producto</th>
+              <th class="px-6 py-3">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="listaCaracteristicas.length == 0">
+              <td colspan="2">
+                <div class="flex justify-center m-3">
+                  <p>NO SE HAN REGISTRADO CARACTERÍSTICAS</p>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="bg-white border-b"
+              *ngFor="let row of listaCaracteristicas"
+            >
+              <th
+                scope="row"
+                class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{ row }}
+              </th>
+              <td class="px-3 py-2">
+                <a
+                  (click)="eliminarCaracteristica(row)"
+                  matTooltip="Eliminar caracteristica"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
     </mat-expansion-panel>
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>

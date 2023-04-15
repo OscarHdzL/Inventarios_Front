@@ -50,7 +50,9 @@ export class ListaProductosComponent implements OnInit {
   columns: TableColumn<any>[] = [
     { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Proveedor', property: 'proveedor', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Nuevo', property: 'nuevo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Año', property: 'anio', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -66,7 +68,55 @@ export class ListaProductosComponent implements OnInit {
    }
 
 
-   get visibleColumns() {
+
+  async ngOnInit(){
+    debugger
+    this.dataSourceOriginal = await this.obtenerProductos();
+/*
+    this.dataSourceOriginal = [
+      {
+        id: 1,
+        modelo: 'HP 15-EF2024NR',
+        fabricante: 'HP',
+        proveedor: 'Amazon '
+      },
+      {
+        id: 4,
+        modelo: 'X515JA-EJ2558W',
+        fabricante: 'ASUS',
+        proveedor: 'Amazon'
+      },
+      {
+        id: 6,
+        modelo: 'Ideapad 5-14ARE05',
+        fabricante: 'Lenovo',
+        proveedor: 'Amazon'
+      }]; */
+
+
+      if (window.innerWidth >= 1280) {
+        this.tamanoPantalla = true;
+      }
+      else {
+        this.tamanoPantalla = false;
+      }
+
+      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+      this.paginatorCards.length = this.listaItems.length;
+
+
+    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+    this.dataSourceTabla.paginator = this.paginator;
+    this.dataSourceTabla.sort = this.sort;
+
+
+    this.matPaginatorIntl.itemsPerPageLabel = "Productos por página";
+    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
+  }
+
+
+  get visibleColumns() {
     return this.columns.filter(column => column.visible).map(column => column.property);
   }
 
@@ -135,59 +185,9 @@ export class ListaProductosComponent implements OnInit {
     }
   }
 
-  async ngOnInit(): Promise<void> {
-
-    this.dataSourceOriginal = [];
-
-    //this.dataSourceOriginal = await this.obtenerProductos();
-/*
-    this.dataSourceOriginal = [
-      {
-        id: 1,
-        modelo: 'HP 15-EF2024NR',
-        fabricante: 'HP',
-        proveedor: 'Amazon '
-      },
-      {
-        id: 4,
-        modelo: 'X515JA-EJ2558W',
-        fabricante: 'ASUS',
-        proveedor: 'Amazon'
-      },
-      {
-        id: 6,
-        modelo: 'Ideapad 5-14ARE05',
-        fabricante: 'Lenovo',
-        proveedor: 'Amazon'
-      }]; */
-
-
-      if (window.innerWidth >= 1280) {
-        this.tamanoPantalla = true;
-      }
-      else {
-        this.tamanoPantalla = false;
-      }
-
-      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      this.paginatorCards.length = this.listaItems.length;
-
-
-    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
-    this.dataSourceTabla.paginator = this.paginator;
-    this.dataSourceTabla.sort = this.sort;
-
-
-    this.matPaginatorIntl.itemsPerPageLabel = "Productos por página";
-    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
-    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
-  }
-
-
-
   public async obtenerProductos(){
     const respuesta = await this.inventariosService.obtenerCatalogoProductos();
-    return respuesta.exito ? respuesta.respuesta : [];
+    return respuesta ? respuesta : [];
   }
 
   onPageChanged(e) {

@@ -75,7 +75,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Articulos</mat-label>
               <input
-
+                readonly
                 type="number"
                 matInput
                 formControlName="articulos"
@@ -88,6 +88,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Monto</mat-label>
               <input
+              readonly
                 currencyMask
                 type="text"
                 matInput
@@ -101,6 +102,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Impuesto</mat-label>
               <input
+              readonly
                 currencyMask
                 type="text"
                 matInput
@@ -247,6 +249,7 @@
               </td>
               <td class="px-3 py-2">
                 <a
+                (click)="eliminarProducto(row)"
                   matTooltip="Eliminar producto"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
@@ -261,7 +264,7 @@
           </tbody>
         </table>
       </div>
-      <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
+     <!--  <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
 
         <button
           type="submit"
@@ -271,7 +274,7 @@
         >
           Guardar productos
         </button>
-      </div>
+      </div> -->
     </mat-expansion-panel>
   </mat-accordion>
 </mat-dialog-content>
