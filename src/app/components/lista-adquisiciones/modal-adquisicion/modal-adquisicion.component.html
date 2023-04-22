@@ -5,7 +5,7 @@
         ? "Editar adquisición "
         : "Agregar adquisición "
     }}
-    <b>{{ this.adquisicionModel.id }}</b>
+    <!-- <b>{{ this.adquisicionModel.id }}</b> -->
   </h2>
   <button></button>
   <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
@@ -75,7 +75,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Articulos</mat-label>
               <input
-                readonly
+
                 type="number"
                 matInput
                 formControlName="articulos"
@@ -88,7 +88,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Monto</mat-label>
               <input
-              readonly
+
                 currencyMask
                 type="text"
                 matInput
@@ -102,7 +102,7 @@
             <mat-form-field class="flex-auto">
               <mat-label>Impuesto</mat-label>
               <input
-              readonly
+
                 currencyMask
                 type="text"
                 matInput
@@ -130,7 +130,7 @@
             </div>
           </div>
           <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-            <div class="lg:w-1/2 md:w-1/2 w-full">
+            <div class="lg:w-1/2 md:w-1/2 w-full" >
               <label
                 class="block mb-2 text-sm font-medium text-gray-900"
                 for="file_input"
@@ -140,10 +140,12 @@
                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="file_input_help"
                 id="file_input"
-
+                (change)="pdfSeleccionado($event)"
                 type="file"
               />
               <a
+                *ngIf="adquisicionModel.facpdf!=''"
+                (click)="abrirDocumento(adquisicionModel.facpdf)"
                 href="javascript: void(0)"
                 class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
                 id="file_input_help"
@@ -160,10 +162,12 @@
                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="file_input_help"
                 id="file_input2"
-
+                (change)="xmlSeleccionado($event)"
                 type="file"
               />
               <a
+              *ngIf="adquisicionModel.facxml!=''"
+              (click)="abrirDocumento(adquisicionModel.facxml)"
                 href="javascript: void(0)"
                 class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
                 id="file_input_help"
@@ -174,7 +178,7 @@
         </div>
       </form>
       <!-- TERMINA FORMULARIO ADQUISICION -->
-      <div class="flex justify-end">
+      <div class="flex justify-end" *ngIf="this.adquisicionModel.id > 0">
         <button type="button" mat-button mat-dialog-close>Cancelar</button>
         <button
           type="submit"
@@ -187,7 +191,7 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true" *ngIf="this.adquisicionModel.id > 0">
+    <mat-expansion-panel [expanded]="true" >
       <mat-expansion-panel-header>
         <mat-panel-title> ADQUISICIÓN </mat-panel-title>
         <mat-panel-description>
@@ -210,8 +214,8 @@
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
-      <div class="relative shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500">
+      <div class="relative shadow-md sm:rounded-lg overflow-x-auto">
+        <!-- <table class="w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th class="px-6 py-3">Producto</th>
@@ -239,7 +243,7 @@
                 scope="row"
                 class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
               >
-                {{ row.catProductoId }}
+                {{ row.modelo }}
               </th>
               <td class="px-3 py-2">
                 {{ row.cantidad }}
@@ -262,6 +266,56 @@
               </td>
             </tr>
           </tbody>
+        </table> -->
+        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg  sm:shadow-lg my-5">
+          <thead class="text-white">
+            <tr class="bg-teal-400 flex flex-col flex-no wrap md:table-row rounded-l-lg sm:rounded-none mb-1"  *ngFor="let row of listaProductosAdquisicion">
+              <th class="p-3 text-left">Producto</th>
+              <th class="p-3 text-left">Cantidad</th>
+              <th class="p-3 text-left">Costo</th>
+              <th class="p-3 text-left" width="110px">Acción</th>
+            </tr>
+          </thead>
+          <tbody class="flex-1 md:flex-none">
+            <tr class="flex flex-col flex-no wrap md:table-row mb-1" *ngFor="let row of listaProductosAdquisicion">
+              <td class="border-grey-light border hover:bg-gray-100 p-3  truncate">  {{ row.modelo }}</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ row.cantidad }}</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ row.costosiunitario }}</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+                 <a
+                (click)="eliminarProducto(row)"
+                  matTooltip="Eliminar producto"
+                  class="w-5 h-5 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+            <!-- <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border-grey-light border hover:bg-gray-100 p-3">John Covv</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+            </tr>
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border-grey-light border hover:bg-gray-100 p-3">Michael Jackson</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">m_jackson@mail.com</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+            </tr> -->
+            <!-- <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                <td class="border-grey-light border hover:bg-gray-100 p-3">Julia</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
+                <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+            </tr>
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+              <td class="border-grey-light border hover:bg-gray-100 p-3">Martin Madrazo</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">martin.madrazo@mail.com</td>
+              <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+            </tr> -->
+          </tbody>
         </table>
       </div>
      <!--  <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
@@ -278,6 +332,17 @@
     </mat-expansion-panel>
   </mat-accordion>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+<mat-dialog-actions align="end" *ngIf="this.adquisicionModel.id == 0">
+  <div class="flex justify-end" >
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="guardarAdquisicion()"
+      [disabled]="formAdquisicion.invalid"
+    >
+      {{ this.adquisicionModel.id > 0 ? "Editar" : "Agregar" }}
+    </button>
+  </div>
 </mat-dialog-actions>

@@ -15,16 +15,18 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 import { MatAccordion } from '@angular/material/expansion';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalProductoComponent } from './modal-producto/modal-producto.component';
-import { ProductoModel } from 'src/app/modelos/Inventarios/producto.model';
+
+import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
+import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
+
 
 
 @Component({
-  selector: 'vex-lista-productos',
-  templateUrl: './lista-productos.component.html',
-  styleUrls: ['./lista-productos.component.scss']
+  selector: 'vex-lista-inventario',
+  templateUrl: './lista-inventario.component.html',
+  styleUrls: ['./lista-inventario.component.scss']
 })
-export class ListaProductosComponent implements OnInit {
+export class ListaInventarioComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,9 +34,9 @@ export class ListaProductosComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: ProductoModel[] = [];
+  dataSourceOriginal: InventarioModel[] = [];
   dataSourceTabla:any;
-  listaItems: ProductoModel[] = [];
+  listaItems: InventarioModel[] = [];
   listaMarca: any[] = [{id: 1, descripcion: 'Marca 1'}];
   listaModelo: any[] = [{id: 1, descripcion: 'Modelo 1'}];
   listaPropietario: any[] = [{id: 1, descripcion: 'Propietario 1'}];
@@ -52,7 +54,10 @@ export class ListaProductosComponent implements OnInit {
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Nuevo', property: 'nuevo', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Año', property: 'anio', type: 'text', visible: true, cssClasses: ['font-medium'] },
+//    { label: 'Año', property: 'anio', type: 'text', visible: true, cssClasses: ['font-medium'] },
+//    { label: 'Estatus', property: 'catEstatusinventario', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Numero serie', property: 'numerodeserie', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Clave', property: 'inventarioclv', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -67,32 +72,9 @@ export class ListaProductosComponent implements OnInit {
       this.iniciarForm()
    }
 
-
-
   async ngOnInit(){
 
-    this.dataSourceOriginal = await this.obtenerProductos();
-/*
-    this.dataSourceOriginal = [
-      {
-        id: 1,
-        modelo: 'HP 15-EF2024NR',
-        fabricante: 'HP',
-        proveedor: 'Amazon '
-      },
-      {
-        id: 4,
-        modelo: 'X515JA-EJ2558W',
-        fabricante: 'ASUS',
-        proveedor: 'Amazon'
-      },
-      {
-        id: 6,
-        modelo: 'Ideapad 5-14ARE05',
-        fabricante: 'Lenovo',
-        proveedor: 'Amazon'
-      }]; */
-
+    this.dataSourceOriginal = await this.obtenerInventarios();
 
       if (window.innerWidth >= 1280) {
         this.tamanoPantalla = true;
@@ -109,8 +91,7 @@ export class ListaProductosComponent implements OnInit {
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
 
-
-    this.matPaginatorIntl.itemsPerPageLabel = "Productos por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -138,8 +119,11 @@ export class ListaProductosComponent implements OnInit {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.modelo.toLowerCase().includes(filterValue) ||
-        val.fabricante.toLowerCase().includes(filterValue)
-        //val.proveedor.toLowerCase().includes(filterValue)
+        val.fabricante.toLowerCase().includes(filterValue) ||
+        val.categoria.toLowerCase().includes(filterValue) ||
+        val.numerodeserie.toLowerCase().includes(filterValue) ||
+        val.inventarioclv.toLowerCase().includes(filterValue)
+
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
@@ -155,12 +139,12 @@ export class ListaProductosComponent implements OnInit {
   }
 
   public iniciarForm(){
-    this.formFiltros = this.formBuilder.group({
+/*     this.formFiltros = this.formBuilder.group({
       marca: [''],
       modelo: [''],
       propietario: ['']
 
-    });
+    }); */
   }
 
   get marca() { return this.formFiltros.get('marca')};
@@ -173,11 +157,11 @@ export class ListaProductosComponent implements OnInit {
     console.log(this.selectedVal);
   }
 
-  async deshabilitarProducto(item){
+  async deshabilitarInventario(item){
     console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarProducto(item);
+    let res = {exito: true} //await this.servicios.deshabilitarInventario(item);
     if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Producto Deshabilitado");
+      this.swalService.alertaPersonalizada(true, "Inventario Deshabilitado");
       this.ngOnInit();
     }
     else {
@@ -185,8 +169,8 @@ export class ListaProductosComponent implements OnInit {
     }
   }
 
-  public async obtenerProductos(){
-    const respuesta = await this.inventariosService.obtenerCatalogoProductos();
+  public async obtenerInventarios(){
+    const respuesta = await this.inventariosService.obtenerInventarios();
     return respuesta ? respuesta : [];
   }
 
@@ -196,9 +180,9 @@ export class ListaProductosComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
 
-  openModal(usuario: ProductoModel){
+  openModal(usuario: InventarioModel){
 
-    this.dialog.open(ModalProductoComponent,{
+    this.dialog.open(ModalInventarioComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
@@ -212,29 +196,13 @@ export class ListaProductosComponent implements OnInit {
 
   }
 
- /*  openModalGraficas(producto){
 
-    this.dialog.open(ModalGraficasProductoComponent,{
-      height: '80%',
-      width: '100%',
-      autoFocus: true,
-      data: producto,
-      disableClose: true,
-      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
-    }).afterClosed().subscribe(result => {
-
-      this.ngOnInit();
-    });
-
-  } */
-
-
-  public async EliminarProducto(producto){
+  public async EliminarInventario(inventario){
 
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
-      producto.activo = false;
+      inventario.activo = false;
       const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
@@ -244,5 +212,6 @@ export class ListaProductosComponent implements OnInit {
       }
     }
   }
+
 
 }

@@ -50,19 +50,31 @@ export class ModalAdquisicionComponent implements OnInit {
     private dialog: MatDialog,
     private filemanagerService: FileManagerService
   ) {
+
     if (adquisicion != null) {
-      this.llenarFormModel(this.adquisicion);
+      //this.llenarFormModel(this.adquisicion);
     } else {
       this.adquisicionModel = new AdquisicionFormModel();
     }
     //this.adquisicionModel = {"id":14,"catproveedorid":1,"catpropietarioid":6,"monto":12134.43,"impuesto":345.45,"articulos":20,"facpdf":"tokenPrueba","facxml":"tokenPrueba","fechadecompra":"2023-04-14","detalle":[]};
 
+
+
     this.iniciarForm();
   }
 
   async ngOnInit() {
-    debugger
-    let AdquisicionModel = await this.obtenerAdquisicion();
+
+
+/*     if( this.adquisicion){
+      let AdquisicionModel = await this.obtenerAdquisicion();
+    } else{
+      let AdquisicionModel = new AdquisicionFormModel();
+    } */
+
+    const AdquisicionModel = this.adquisicion ? await this.obtenerAdquisicion() : new AdquisicionFormModel();
+
+    console.log('AdquisicionModel: ', AdquisicionModel);
     this.llenarFormModel(AdquisicionModel);
 
     this.listaProveedor = await this.obtenerProveedores();
@@ -71,24 +83,27 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 
 
-  public llenarFormModel(adquisicion_){
+  public async llenarFormModel(adquisicion_){
 
     this.adquisicionModel.id = adquisicion_.id;
     this.adquisicionModel.catProveedorId = adquisicion_.catProveedorId;
     this.adquisicionModel.catPropietarioId =
       adquisicion_.catPropietarioId;
-    this.adquisicionModel.monto = adquisicion_.monto;
-    this.adquisicionModel.impuesto = adquisicion_.impuesto;
-    this.adquisicionModel.articulos = adquisicion_.articulos;
-    this.adquisicionModel.facpdf = adquisicion_.facPdf;
-    this.adquisicionModel.facxml = adquisicion_.facXml;
+    this.adquisicionModel.monto = adquisicion_.monto ? adquisicion_.monto : 0;
+    this.adquisicionModel.impuesto = adquisicion_.impuesto ? adquisicion_.impuesto : 0;
+    this.adquisicionModel.articulos = adquisicion_.articulos ? adquisicion_.articulos : 0;
+    this.adquisicionModel.facpdf = adquisicion_.facPdf ? adquisicion_.facPdf : '';
+    this.adquisicionModel.facxml = adquisicion_.facXml ? adquisicion_.facXml: '';
     this.adquisicionModel.fechadecompra =
-      adquisicion_.fechadecompra.split("T")[0];
+    adquisicion_.fechadecompra ? adquisicion_.fechadecompra.split("T")[0]: null;
 
-    this.adquisicionModel.detalle = adquisicion_.relAdquisicionDetalles;
+    this.adquisicionModel.detalle = adquisicion_.relAdquisicionDetalles ? adquisicion_.relAdquisicionDetalles : [];
 
-    this.listaProductosAdquisicion = this.adquisicionModel.detalle;
+    //this.listaProductosAdquisicion = this.adquisicionModel.detalle;
 
+    this.listaProductosAdquisicion = await this.obtenerProductosAdquisiciones();
+
+    //await this.calcularMontoImpuestoArticulos();
   }
 
   get proveedor() {
@@ -106,7 +121,6 @@ export class ModalAdquisicionComponent implements OnInit {
   get impuesto() {
     return this.formAdquisicion.get("impuesto");
   }
-
   get facturaPDF() {
     return this.formAdquisicion.get("facturaPDF");
   }
@@ -115,6 +129,14 @@ export class ModalAdquisicionComponent implements OnInit {
   }
   get fechaCompra() {
     return this.formAdquisicion.get("fechaCompra");
+  }
+
+
+  public async obtenerProductosAdquisiciones() {
+    const respuesta = await this.inventariosService.obtenerProductosAdquisiciones(
+      this.adquisicion.id
+    );
+    return respuesta ? respuesta : [];
   }
 
   public async obtenerAdquisicion() {
@@ -140,17 +162,24 @@ export class ModalAdquisicionComponent implements OnInit {
     this.formAdquisicion = this.formBuilder.group({
       proveedor: ["", [Validators.required]],
       propietario: ["", [Validators.required]],
-      articulos: [""],
-      monto: [""],
-      impuesto: [""],
+      articulos: ["", [Validators.required]],
+      monto: ["", [Validators.required]],
+      impuesto: ["", [Validators.required]],
       /* facturaPDF: [''],
       facturaXML: [''], */
-      fechaCompra: [""],
+      fechaCompra: ["", [Validators.required]],
+    });
+
+    this.formAdquisicion.get('monto').valueChanges.subscribe((monto)=> {
+      if(monto){
+        const impuesto = monto * 0.16;
+        this.formAdquisicion.get('impuesto').setValue(impuesto);
+      }
     });
   }
 
   public inicializarForm() {
-    debugger
+
     this.proveedor.setValue(this.adquisicionModel.catProveedorId);
     this.propietario.setValue(this.adquisicionModel.catPropietarioId);
     this.articulos.setValue(this.adquisicionModel.articulos);
@@ -162,7 +191,7 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 
   public async guardarAdquisicion() {
-    debugger;
+    ;
     this.adquisicionModel.catProveedorId = this.proveedor.value;
     this.adquisicionModel.catPropietarioId = this.propietario.value;
     this.adquisicionModel.articulos = this.articulos.value;
@@ -184,7 +213,10 @@ export class ModalAdquisicionComponent implements OnInit {
 
     if (respuesta.exito) {
       this.swalService.alertaPersonalizada(true, "Exito");
-      this.close(true);
+      //this.close(true);
+      this.adquisicion = new AdquisicionModel();
+      this.adquisicion.id = respuesta.id;
+      this.ngOnInit();
     } else {
       this.swalService.alertaPersonalizada(false, "Error");
     }
@@ -207,8 +239,17 @@ export class ModalAdquisicionComponent implements OnInit {
     this.dialogRef.close(result);
   }
 
+
+  public calcularImpuesto(monto){
+
+    if(monto){
+      const impuesto = (monto * 0.16);
+      this.impuesto.setValue(impuesto)
+    }
+  }
+
   openModalProducto(producto: RelAdquisicionDetalle) {
-    debugger;
+
     if (!producto) {
       producto = new RelAdquisicionDetalle();
       producto.tblAdquisicionId = this.adquisicionModel.id;
@@ -216,26 +257,28 @@ export class ModalAdquisicionComponent implements OnInit {
 
     this.dialog
       .open(ModalProductoAdquisicionComponent, {
-        height: "50%",
+        height: window.innerWidth >= 1280 ? "30%" : "60%",
         width: "100%",
         autoFocus: true,
         data: producto,
         disableClose: true,
         maxWidth: window.innerWidth >= 1280 ? "80vw" : "100vw",
+
       })
       .afterClosed()
       .subscribe((result) => {
-       /*  debugger;
+        ;
         if (result) {
           if (result.iD > 0) {
             //edita
+            this.ngOnInit();
           } else {
             // agrega
             this.listaProductosAdquisicion.push(result);
-            this.calcularMontoImpuestoArticulos();
+            //this.calcularMontoImpuestoArticulos();
           }
-        } */
-        this.ngOnInit();
+        }
+        //this.ngOnInit();
       });
   }
 
@@ -262,12 +305,12 @@ export class ModalAdquisicionComponent implements OnInit {
     } else {
       const index = this.listaProductosAdquisicion.indexOf(producto);
       this.listaProductosAdquisicion.splice(index, 1);
-      this.calcularMontoImpuestoArticulos();
+      //this.calcularMontoImpuestoArticulos();
     }
   }
 
   async pdfSeleccionado(event) {
-    debugger;
+    ;
     if (event.target.files.length > 0) {
       const formData: any = new FormData();
       formData.append("file", event.target.files[0]);
@@ -291,7 +334,7 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 
   async xmlSeleccionado(event) {
-    debugger;
+    ;
     if (event.target.files.length > 0) {
       const formData: any = new FormData();
       formData.append("file", event.target.files[0]);
@@ -315,7 +358,7 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 
   public async calcularMontoImpuestoArticulos() {
-    debugger;
+    ;
     this.adquisicionModel.monto = 0;
     this.adquisicionModel.articulos = 0;
     this.adquisicionModel.impuesto = 0;
@@ -339,4 +382,10 @@ export class ModalAdquisicionComponent implements OnInit {
       });
     }
   }
+
+  async abrirDocumento(token: string){
+    let url = await this.filemanagerService.obtenerRutaArchivo(token);
+    window.open(url,'_blank');
+   }
+
 }

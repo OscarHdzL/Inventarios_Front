@@ -1,0 +1,26 @@
+/* ESTILOS PARA LA TABLA INLINE */
+
+
+@media (min-width: 960px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+td:not(:last-child) {
+  border-bottom: 0;
+  //word-break: break-all;
+}
+
+th:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, .1);
+}
+
+
+/*  td {
+  word-break: break-all;
+} */

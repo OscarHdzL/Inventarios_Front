@@ -103,7 +103,9 @@
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
-            <h1 class="title text-3xl">No hay registros</h1>
+          <h1 class="m-10 title" style="text-align: center">
+            No se encontraron registros
+          </h1>
           </div>
           <div
             *ngIf="this.listaItems.length != 0"
@@ -293,9 +295,9 @@
           *ngIf="this.listaItems.length == 0"
           class="flex-auto items-center justify-center"
         >
-          <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron propietarios registrados
-          </h1>
+        <h1 class="m-10 title" style="text-align: center">
+          No se encontraron registros
+        </h1>
         </div>
         <mat-paginator
           #paginator

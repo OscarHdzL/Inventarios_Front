@@ -22,6 +22,8 @@ export class RelAdquisicionDetalle {
   tblAdquisicionId: number
   catProductoId: number
   costosiunitario: number
+  accionAuxiliar: string
+  modelo?:string;
   constructor(){
     this.id = 0;
     this.cantidad = 0;

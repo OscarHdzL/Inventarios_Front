@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
 import { ArticuloFormModel } from '../modelos/Inventarios/articulo.model';
 import { SoftwareFormModel } from '../modelos/Inventarios/software.model';
 import { PropietarioFormModel } from '../modelos/Inventarios/propietario.model';
-import { ProductoFormModel } from '../modelos/Inventarios/producto.model';
+import { CaracteristicaProductoFormModel_, ProductoFormModel } from '../modelos/Inventarios/producto.model';
 import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventarios/adquisicion.model';
+import { AccesorioInventario, InventarioFormModel } from '../modelos/Inventarios/inventario.model';
 
 
 @Injectable({
@@ -42,18 +43,31 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.getAsync(this.url_api + 'Producto/seleccionar/todos');
     }
 
-    public async insertarProducto(usuario: ProductoFormModel) : Promise <any> {
-      return await this.postAsync(this.url_api + 'Producto/agregar', usuario);
+
+    public async obtenerCaracteristicasProducto(idProducto: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Producto/seleccionarCaracteristicas/' + idProducto);
     }
 
-    public async actualizarProducto(usuario: ProductoFormModel) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Producto', usuario);
+
+    public async insertarProducto(prod: ProductoFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Producto/agregar', prod);
     }
 
-    public async deshabilitarProducto(usuario: number) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Productos/Disable/'+usuario, {});
+    public async insertarCaracteristicaProducto(prod: CaracteristicaProductoFormModel_) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Producto/agregar/caracteristica', prod);
     }
 
+    public async actualizarProducto(prod: ProductoFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Producto/editar', prod);
+    }
+
+    public async deshabilitarProducto(prod: number) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Producto/eliminar?id='+prod, {});
+    }
+
+    public async deshabilitarCaracteristicaProducto(prod: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Producto/eliminar/caracteristica?id='+prod);
+    }
 
     /* ADQUISICIONES */
     public async obtenerAdquisicion(id: number) : Promise <any> {
@@ -61,6 +75,10 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
     public async obtenerCatalogoAdquisiciones() : Promise <any> {
       return await this.getAsync(this.url_api + 'Adquisicion/seleccionar');
+    }
+
+    public async obtenerProductosAdquisiciones(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Adquisicion/seleccionar/productos?id=' + id);
     }
 
     public async insertarAdquisicion(usuario: AdquisicionFormModel) : Promise <any> {
@@ -191,5 +209,45 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async obtenerCategoriasProducto() : Promise <any> {
       return await this.getAsync(this.url_api + 'CategoriaProducto/Get');
     }
+
+
+     /* Inventario */
+     public async obtenerInventarios() : Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionar/todos');
+    }
+
+    public async obtenerInventarioAccesorios(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionarAccesorios/' + id);
+    }
+
+
+    public async obtenerEstatusInventario() : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/EstatusInventario/Get');
+    }
+
+    public async obtenerInventarioId(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionar/' + id);
+    }
+
+    public async insertarInventario(Inventario: InventarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Inventario/agregar', Inventario);
+    }
+
+    public async insertarAccesorioInventario(Inventario: AccesorioInventario[]) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Inventario/agregar/accesorio', Inventario);
+    }
+
+    public async actualizarInventario(Inventario: InventarioFormModel[]) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Inventario/editar', Inventario);
+    }
+
+    public async deshabilitarInventario(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar?id='+Inventario);
+    }
+
+    public async deshabilitarAccesorioInventario(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario);
+    }
+
 
 }

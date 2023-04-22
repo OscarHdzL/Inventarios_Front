@@ -121,7 +121,7 @@ export class ListaClienteComponent implements OnInit {
   }
   openModal(usuario: ClienteModel){
     this.dialog.open(ModalClienteCatalogoComponent,{
-      height: '90%',
+      height: '50%',
       width: '100%',
       autoFocus: true,
       data: usuario,

@@ -21,7 +21,6 @@ import { DocumentosProyectoFormModel } from '../modelos/DocumentosProyecto.model
 })
 export class FileManagerService extends ConfiguracionEndpointsService {
 
-
   constructor(public http: HttpClient) {
     super(http);
   }
@@ -30,11 +29,11 @@ export class FileManagerService extends ConfiguracionEndpointsService {
   /* FILEMANAGER */
 
   public async obtenerArchivo(token: string) : Promise <any> {
-    return await this.getAsync(this.url_filemanager + 'api/Archivos/DescargarArchivo/D2185557-67E6-40F0-9450-5B0B3AFFF7F0/' + token);
+    return await this.getAsync(this.url_filemanager + 'api/Archivos/DescargarArchivo/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55/' + token);
   }
 
   public async cargarArchivo(archivo: any) : Promise <any> {
-    return await this.postAsync(this.url_filemanager + 'api/Archivos/CargarArchivos/D2185557-67E6-40F0-9450-5B0B3AFFF7F0', archivo);
+    return await this.postAsync(this.url_filemanager + 'api/Archivos/CargarArchivos/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55', archivo);
   }
 
 /*
@@ -47,11 +46,11 @@ export class FileManagerService extends ConfiguracionEndpointsService {
   } */
 
   public async eliminarArchivo(token: string) : Promise <any> {
-    return await this.postAsync(this.url_filemanager + 'api/Archivos/EliminarArchivo/D2185557-67E6-40F0-9450-5B0B3AFFF7F0/' + token, {});
+    return await this.postAsync(this.url_filemanager + 'api/Archivos/EliminarArchivo/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55/' + token, {});
   }
 
   public async obtenerRutaArchivo(token: string): Promise <string>{
-    return this.url_filemanager + 'api/Archivos/DescargarArchivo/D2185557-67E6-40F0-9450-5B0B3AFFF7F0/' + token;
+    return this.url_filemanager + 'api/Archivos/DescargarArchivo/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55/' + token;
   }
 
 /*   public async obtenerRutaArchivo(token: string): Promise <string>{

@@ -126,7 +126,7 @@ export class ListaFabricantesComponent implements OnInit {
   }
   openModal(usuario: any){
     this.dialog.open(ModalFabricanteComponent,{
-      height: '80%',
+      height: '35%',
       width: '100%',
       autoFocus: true,
       data: usuario,

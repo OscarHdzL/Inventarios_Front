@@ -122,7 +122,7 @@ export class ModalCaracteristicaComponent implements OnInit {
 
 public async caracteristicaSeleccionado(caracteristica: CaracteristicaModel){
 
-debugger
+
 console.log('caracteristica: ');
 console.log(caracteristica);
 

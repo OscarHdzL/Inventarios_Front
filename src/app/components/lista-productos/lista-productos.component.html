@@ -90,44 +90,6 @@
         </div>
       </div>
 
-      <!--  -->
-      <div>
-        <form role="form" autocomplete="off" [formGroup]="formFiltros" novalidate>
-          <div class="mt-4 flex flex-col gap-2  m-2">
-              <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-                <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                  <mat-label>Marca</mat-label>
-                  <mat-select formControlName="marca" placeholder="Seleccione una opción">
-                    <mat-option *ngFor="let marca of listaMarca" [value]="marca.id">{{marca.descripcion}}
-                    </mat-option>
-                </mat-select>
-                  <mat-error *ngIf="this.marca.hasError('required')"> El campo es requerido</mat-error>
-              </mat-form-field>
-                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                      <mat-label>Modelo</mat-label>
-                      <mat-select formControlName="modelo" placeholder="Seleccione una opción">
-                        <mat-option *ngFor="let modelo of listaModelo" [value]="modelo.id">{{modelo.descripcion}}
-                        </mat-option>
-                    </mat-select>
-                      <mat-error *ngIf="this.modelo.hasError('required')"> El campo es requerido</mat-error>
-                  </mat-form-field>
-                  <mat-form-field class="flex-auto" [floatLabel]="'always'" appearance="fill">
-                      <mat-label>Propietario</mat-label>
-                      <mat-select formControlName="propietario" placeholder="Seleccione una opción">
-                        <mat-option *ngFor="let propietario of listaPropietario" [value]="propietario.id">{{propietario.descripcion}}
-                        </mat-option>
-                    </mat-select>
-                      <mat-error *ngIf="this.propietario.hasError('required')"> El campo es requerido</mat-error>
-                  </mat-form-field>
-
-              </div>
-
-
-          </div>
-      </form>
-      </div>
-
-
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
@@ -135,7 +97,9 @@
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
-            <h1 class="title text-3xl">No hay registros</h1>
+          <h1 class="m-10 title" style="text-align: center">
+            No se encontraron registros
+          </h1>
           </div>
           <div
             *ngIf="this.listaItems.length != 0"
@@ -164,21 +128,9 @@
                 <div class="text-center">Año: {{ item.anio }}</div>
               </div>
               <mat-divider></mat-divider>
-              <!-- <div class="flex justify-between items-center mb-10">
-                <div>
-                  Cuenta:
-                </div>
-                <div>
-                  Rol:
-                </div>
-              </div> -->
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
-                  <!--   <button (click)="openModal(item)" color="basic" mat-mini-fab matTooltip="Editar"
-                    type="button">
-                    <mat-icon svgIcon="mat:edit"></mat-icon>
-                  </button> -->
                   <button
                     (click)="openModal(item)"
                     matTooltip="Editar"
@@ -215,10 +167,8 @@
                     </svg>
                   </button>
                 </div>
-                <div class="mr-5">
 
-                </div>
-                <div class="mr-5">
+               <!--  <div class="mr-5">
                   <button
                     matTooltip="Descargar documentación"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -231,7 +181,7 @@
                       <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                     </svg>
                   </button>
-                </div>
+                </div> -->
                 <div class="mt-3.5 flex flex-col justify-center">
                   <div class="flex justify-center">
                     <mat-slide-toggle
@@ -358,9 +308,9 @@
           *ngIf="this.listaItems.length == 0"
           class="flex-auto items-center justify-center"
         >
-          <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron productos registrados
-          </h1>
+        <h1 class="m-10 title" style="text-align: center">
+          No se encontraron registros
+        </h1>
         </div>
         <mat-paginator
           #paginator

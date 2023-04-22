@@ -45,9 +45,11 @@ export class ListaAdquisicionesComponent implements OnInit {
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Monto', property: 'mONTO', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Impuesto', property: 'iMPUESTO', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Articulos', property: 'aRTICULOS', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Proveedor', property: 'proveedor', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Propietario', property: 'propietario', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Monto', property: 'monto', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Impuesto', property: 'impuesto', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Articulos', property: 'articulos', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -175,7 +177,7 @@ export class ListaAdquisicionesComponent implements OnInit {
     this.dataSourceTabla.sort = this.sort;
 
 
-    this.matPaginatorIntl.itemsPerPageLabel = "Adquisicions por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -232,7 +234,7 @@ export class ListaAdquisicionesComponent implements OnInit {
 
     if(confirmacion){
       adquisicion.activo = false;
-      const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
+      const respuesta = await this.inventariosService.deshabilitarAdquisicion(adquisicion.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();

@@ -50,6 +50,8 @@ export class ModalProductoAdquisicionComponent implements OnInit {
                   this.productoModel = new RelAdquisicionDetalle();
                 }
 
+                this.productoModel.accionAuxiliar = this.producto.accionAuxiliar;
+
                 //this.productoModel = this.producto;
 
 
@@ -95,7 +97,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
   }
 
   public async guardarProducto(){
-debugger
+
     //SE ACTUALIZA EL ID CUANDO SE SELECCIONA O ENCUENTRA EL RESULTADO EN EL AUTOCOMPLETE
     //this.productoModel.cAT_PRODUCTO_ID = this.producto_.value;
     this.productoModel.cantidad = this.cantidad.value;
@@ -104,13 +106,13 @@ debugger
     let lista = [];
     lista.push(this.productoModel);
 
-    const respuesta = await this.inventariosService.insertarAdquisicionDetalle(
+    const respuesta =   this.productoModel.tblAdquisicionId == 0 ? { exito: true} : await this.inventariosService.insertarAdquisicionDetalle(
       this.productoModel
     );
 
     if (respuesta.exito) {
       this.swalService.alertaPersonalizada(true, "Exito");
-      this.close(true);
+      this.close(this.productoModel);
     } else {
       this.swalService.alertaPersonalizada(false, "Error");
     }
@@ -129,16 +131,17 @@ debugger
     } */
   }
 
-  close(result: boolean) {
-    this.dialogRef.close(null);
+  close(result: any) {
+    this.dialogRef.close(result);
   }
 
 
 
 public async productoSeleccionado(producto: ProductoModel){
   console.log('Producto seleccionado: ');
-console.log(producto);
-this.productoModel.catProductoId = producto.idproducto;
+  console.log(producto);
+  this.productoModel.catProductoId = producto.idproducto;
+  this.productoModel.modelo = producto.modelo;
 }
 
 
@@ -153,14 +156,14 @@ private _normalizeValue(value: string): string {
 
 openModalProducto(producto: RelAdquisicionDetalle){
   this.dialog.open(ModalProductoComponent,{
-    height: '80%',
+    height: '70%',
     width: '100%',
     autoFocus: true,
     data: producto,
     disableClose: true,
     maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
-  }).afterClosed().subscribe(result => {
-
+  }).afterClosed().subscribe(async result => {
+    this.ngOnInit();
   });
 }
 

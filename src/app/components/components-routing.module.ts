@@ -20,6 +20,7 @@ import { ListaFabricantesComponent } from './lista-fabricantes/lista-fabricantes
 import { ListaCategoriaProductoComponent } from './lista-categoria-producto/lista-categoria-producto.component';
 import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
+import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 
 const routes: Routes = [
   {
@@ -86,6 +87,11 @@ const routes: Routes = [
   {
     path: 'proveedor',
     component: ListaProveedorComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'inventario',
+    component: ListaInventarioComponent,
     canActivate: [AuthGuard]
   }
 

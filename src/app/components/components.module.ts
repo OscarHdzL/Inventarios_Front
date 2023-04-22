@@ -1,3 +1,4 @@
+import {MatChipList, MatChipsModule} from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -84,6 +85,8 @@ import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-cat
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal-proveedor.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
+import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +146,9 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ListaClienteComponent,
     ModalClienteCatalogoComponent,
     ListaProveedorComponent,
-    ModalProveedorComponent
+    ModalProveedorComponent,
+    ListaInventarioComponent,
+    ModalInventarioComponent
   ],
   imports: [
     CommonModule,
@@ -174,7 +179,10 @@ import { NgxCurrencyModule } from 'ngx-currency';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatButtonToggleModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    MatChipsModule,
+
+
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},

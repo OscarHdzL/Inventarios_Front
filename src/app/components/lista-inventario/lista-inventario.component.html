@@ -4,27 +4,22 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Categoria Producto</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Categoria Producto']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Inventarios</h1>
+        <vex-breadcrumbs [crumbs]="['Catálogos','Inventarios']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
-
 
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
       <div
         class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
       >
-        <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
-          <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Fabricante" type="button">
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button> -->
+        <!-- <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Fabricante"
+            matTooltip="Agregar Inventario"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -63,14 +58,9 @@
               </g>
             </svg>
           </button>
-        </div>
+        </div> -->
 
         <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
-          <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
-          <mat-label>Buscador</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
-          <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
-        </mat-form-field> -->
           <form>
             <input
               type="text"
@@ -99,14 +89,21 @@
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
-          <div
+        <!--   <div
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
+            <h1 class="title text-3xl">No hay registros</h1>
+          </div> -->
+
+          <div
+          *ngIf="this.listaItems.length == 0"
+          class="flex-auto items-center justify-center"
+        >
           <h1 class="m-10 title" style="text-align: center">
-            No se encontraron registros
+            No se encontraron inventarios registrados
           </h1>
-          </div>
+        </div>
           <div
             *ngIf="this.listaItems.length != 0"
             class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
@@ -116,13 +113,34 @@
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Nombre: {{ item.nombre }}</div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Modelo:</b> {{ item.modelo }}</div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Estatico: {{ item.estatico }}</div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Fabricante:</b> {{ item.fabricante }}</div>
               </div>
+              <mat-divider></mat-divider>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Categoría:</b> {{ item.categoria }}</div>
+              </div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Nuevo:</b> {{ item.nuevo ? 'Si':'No' }}</div>
+              </div>
+<!--               <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Año:</b> {{ item.anio }}</div>
+              </div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Estatus:</b> {{ item.catEstatusinventario }}</div>
+              </div> -->
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Número serie:</b> {{ item.numerodeserie }}</div>
+              </div>
+              <div class="flex justify-center items-center mb-5">
+                <div class="text-center"><b>Clave:</b> {{ item.inventarioclv }}</div>
+              </div>
+
+              <mat-divider></mat-divider>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
                 <div class="mr-5">
@@ -162,6 +180,7 @@
                     </svg>
                   </button>
                 </div>
+
                 <!-- <div class="mr-5">
                   <button
                     matTooltip="Descargar documentación"
@@ -180,7 +199,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarFabricante(item)"
+                      (change)="EliminarInventario(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -201,31 +220,95 @@
       <!-- TABLA -->
       <div class="py-4" [hidden]="group.value == 'cards'">
         <table
+        width="100%"
           [dataSource]="this.dataSourceTabla"
           class="w-full"
           mat-table
           matSort
         >
-          <ng-container matColumnDef="nombre">
+          <ng-container matColumnDef="modelo">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Nombre
+              Modelo
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Nombre">
+            <mat-cell *matCellDef="let row" data-label="Modelo">
               <div>
-                {{ row.nombre }}
+                {{ row.modelo }}
               </div>
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="estatico">
+
+          <ng-container matColumnDef="fabricante">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Estatico
+              Fabricante
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Estatico">
+            <mat-cell *matCellDef="let row" data-label="Fabricante">
               <div>
-                {{ row.estatico }}
+                {{ row.fabricante }}
               </div>
             </mat-cell>
           </ng-container>
+          <ng-container matColumnDef="categoria">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Categoría
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Categoría">
+              <div>
+                {{ row.categoria }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="nuevo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nuevo
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Nuevo">
+              <div>
+                {{ row.nuevo ? 'Si' : 'No' }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <!-- <ng-container matColumnDef="anio">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Año
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Año">
+              <div>
+                {{ row.anio}}
+              </div>
+            </mat-cell>
+          </ng-container> -->
+<!--           <ng-container matColumnDef="catEstatusinventario">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Estatus
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Estatus">
+              <div>
+                {{ row.catEstatusinventario}}
+              </div>
+            </mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="numerodeserie">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              # de Serie
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="# de Serie">
+              <div>
+                {{ row.numerodeserie}}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="inventarioclv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Clave
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Clave">
+              <div>
+                {{ row.inventarioclv}}
+              </div>
+            </mat-cell>
+          </ng-container>
+
+
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Acción
@@ -234,23 +317,23 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar Fabricante"
+                  matTooltip="Editar inventario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
                 </a>
-                <!-- <a
+                <a
                   (click)="openModal(row)"
                   matTooltip="Ver funciones"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
-                </a> -->
+                </a>
                 <a
-                  (click)="EliminarFabricante(row)"
-                  matTooltip="Eliminar Fabricante"
+                  (click)="EliminarInventario(row)"
+                  matTooltip="Eliminar inventario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -271,7 +354,7 @@
           class="flex-auto items-center justify-center"
         >
           <h1 class="m-10 title" style="text-align: center">
-            No se encontraron registros
+            No se encontraron inventarios registrados
           </h1>
         </div>
         <mat-paginator
@@ -282,5 +365,3 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
-
-
