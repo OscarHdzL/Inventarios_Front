@@ -87,6 +87,7 @@ import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
+import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asignar-inventario/modal-asignar-inventario.component';
 
 @NgModule({
   declarations: [
@@ -148,7 +149,8 @@ import { ModalInventarioComponent } from './lista-inventario/modal-inventario/mo
     ListaProveedorComponent,
     ModalProveedorComponent,
     ListaInventarioComponent,
-    ModalInventarioComponent
+    ModalInventarioComponent,
+    ModalAsignarInventarioComponent
   ],
   imports: [
     CommonModule,

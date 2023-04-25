@@ -111,7 +111,7 @@ export class ListaFabricantesComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Fabricantes por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -126,7 +126,7 @@ export class ListaFabricantesComponent implements OnInit {
   }
   openModal(usuario: any){
     this.dialog.open(ModalFabricanteComponent,{
-      height: '35%',
+      height: window.innerWidth >= 1280 ? "25%" : "25%",
       width: '100%',
       autoFocus: true,
       data: usuario,

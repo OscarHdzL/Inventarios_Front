@@ -13,7 +13,7 @@
       <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
         <mat-form-field class="flex-auto">
           <mat-label>Categoría</mat-label>
-          <input type="text" matInput formControlName="nombre" maxlength="2000">
+          <input type="text" matInput formControlName="nombre" maxlength="500">
           <mat-error *ngIf="this.nombre.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
         <div>

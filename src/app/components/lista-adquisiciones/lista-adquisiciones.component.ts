@@ -161,15 +161,15 @@ export class ListaAdquisicionesComponent implements OnInit {
       }]; */
 
 
-      if (window.innerWidth >= 1280) {
-        this.tamanoPantalla = true;
-      }
-      else {
-        this.tamanoPantalla = false;
-      }
+    if (window.innerWidth >= 1280) {
+      this.tamanoPantalla = true;
+    }
+    else {
+      this.tamanoPantalla = false;
+    }
 
-      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      this.paginatorCards.length = this.listaItems.length;
+    this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+    this.paginatorCards.length = this.listaItems.length;
 
 
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
@@ -195,13 +195,13 @@ export class ListaAdquisicionesComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
 
-  openModal(usuario: AdquisicionModel){
+  openModal(adq: AdquisicionModel){
 
     this.dialog.open(ModalAdquisicionComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
-      data: usuario,
+      data: adq,
       disableClose: true,
       maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
     }).afterClosed().subscribe(result => {

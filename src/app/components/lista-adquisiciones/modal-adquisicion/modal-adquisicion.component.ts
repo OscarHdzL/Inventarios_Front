@@ -101,7 +101,13 @@ export class ModalAdquisicionComponent implements OnInit {
 
     //this.listaProductosAdquisicion = this.adquisicionModel.detalle;
 
-    this.listaProductosAdquisicion = await this.obtenerProductosAdquisiciones();
+    if(this.adquisicion.id == 0){
+      this.listaProductosAdquisicion = [];
+    }else{
+      this.listaProductosAdquisicion = await this.obtenerProductosAdquisiciones();
+    }
+
+
 
     //await this.calcularMontoImpuestoArticulos();
   }

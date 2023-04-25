@@ -106,7 +106,7 @@ export class ListaClienteComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Propietarios por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -121,7 +121,8 @@ export class ListaClienteComponent implements OnInit {
   }
   openModal(usuario: ClienteModel){
     this.dialog.open(ModalClienteCatalogoComponent,{
-      height: '50%',
+      //height: '50%',
+      height: window.innerWidth >= 1280 ? "65%" : "80%",
       width: '100%',
       autoFocus: true,
       data: usuario,

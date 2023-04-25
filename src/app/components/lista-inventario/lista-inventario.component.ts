@@ -18,6 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
+import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
 
 
 
@@ -194,6 +195,20 @@ export class ListaInventarioComponent implements OnInit {
       this.ngOnInit();
     });
 
+  }
+
+  openModalAsignacion(usuario: InventarioModel){
+    this.dialog.open(ModalAsignarInventarioComponent,{
+      height: '30%',
+      width: '100%',
+      autoFocus: true,
+      data: usuario,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+
+      this.ngOnInit();
+    });
   }
 
 

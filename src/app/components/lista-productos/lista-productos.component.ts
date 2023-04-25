@@ -110,7 +110,7 @@ export class ListaProductosComponent implements OnInit {
     this.dataSourceTabla.sort = this.sort;
 
 
-    this.matPaginatorIntl.itemsPerPageLabel = "Productos por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }

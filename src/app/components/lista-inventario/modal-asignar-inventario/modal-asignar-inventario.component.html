@@ -1,0 +1,34 @@
+<form role="form" autocomplete="off" [formGroup]="formProducto" novalidate>
+  <div class="flex items-center " style="border: none !important" mat-dialog-title >
+    <h2 class="headline m-0 flex-auto">{{this.productoModel.id > 0 ? 'Editar asignación ' : 'Asignar inventario'}} </h2>
+    <button></button>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+        <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-dialog-content class="px-1 ">
+    <div class="mt-4 flex flex-col gap-2  m-2">
+      <div  class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Asignado a: </mat-label>
+          <input type="text" matInput formControlName="producto" maxlength="2000" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let producto of filteredProductos | async" [value]="producto.modelo" (onSelectionChange)="productoSeleccionado(producto)">
+              {{producto.modelo}}
+            </mat-option>
+
+          </mat-autocomplete>
+          <mat-error *ngIf="this.producto_.hasError('required')"> El campo es requerido</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+<!-- {{this. formProducto.getRawValue() | json}} -->
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button class="m-2"  type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button type="submit" mat-flat-button color="primary" (click)="guardarProducto()" [disabled]=" formProducto.invalid ">{{this.productoModel.id > 0 ? 'Editar' : 'Agregar'}}</button>
+  </mat-dialog-actions>
+
+  </form>

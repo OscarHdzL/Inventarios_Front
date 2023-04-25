@@ -115,7 +115,7 @@ export class ListaPropietariosComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Propietarios por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -130,7 +130,7 @@ export class ListaPropietariosComponent implements OnInit {
   }
   openModal(usuario: PropietarioModel){
     this.dialog.open(ModalPropietarioComponent,{
-      height: '35%',
+      height: window.innerWidth >= 1280 ? "25%" : "35%",
       width: '100%',
       autoFocus: true,
       data: usuario,
