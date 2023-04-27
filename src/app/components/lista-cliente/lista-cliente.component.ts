@@ -27,8 +27,8 @@ export class ListaClienteComponent implements OnInit {
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 3;
-  pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
+  pageSize = 6;
+  pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: ClienteModel[] = [];
   dataSourceTabla:any;
@@ -77,7 +77,9 @@ export class ListaClienteComponent implements OnInit {
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.razonsocial.toLowerCase().includes(filterValue) ||
         val.rfc.toLowerCase().includes(filterValue)||
-        val.sigla.toLowerCase().includes(filterValue)
+        val.sigla.toLowerCase().includes(filterValue)||
+        val.nombre.toLowerCase().includes(filterValue)||
+        val.direccion.toLowerCase().includes(filterValue)
       );
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
       this.paginatorCards.length = this.listaItems.length;

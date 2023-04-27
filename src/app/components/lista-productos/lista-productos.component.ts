@@ -29,8 +29,8 @@ export class ListaProductosComponent implements OnInit {
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 3;
-  pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
+  pageSize = 6;
+  pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: ProductoModel[] = [];
   dataSourceTabla:any;
@@ -138,8 +138,9 @@ export class ListaProductosComponent implements OnInit {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.modelo.toLowerCase().includes(filterValue) ||
-        val.fabricante.toLowerCase().includes(filterValue)
-        //val.proveedor.toLowerCase().includes(filterValue)
+        val.fabricante.toLowerCase().includes(filterValue) ||
+        val.anio.toString().includes(filterValue) ||
+        val.categoria.toLowerCase().includes(filterValue)
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS

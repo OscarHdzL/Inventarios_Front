@@ -26,8 +26,8 @@ export class ListaAdquisicionesComponent implements OnInit {
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 3;
-  pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
+  pageSize = 6;
+  pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: AdquisicionModel[] = [];
   dataSourceTabla:any;
@@ -88,6 +88,8 @@ export class ListaAdquisicionesComponent implements OnInit {
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.monto.toString().toLowerCase().includes(filterValue) ||
         val.impuesto.toString().toLowerCase().includes(filterValue)||
+        val.propietario.toString().toLowerCase().includes(filterValue)||
+        val.proveedor.toString().toLowerCase().includes(filterValue)||
         val.articulos.toString().toLowerCase().includes(filterValue)
         );
 

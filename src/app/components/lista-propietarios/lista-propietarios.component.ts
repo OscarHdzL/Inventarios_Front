@@ -27,8 +27,8 @@ export class ListaPropietariosComponent implements OnInit {
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 3;
-  pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
+  pageSize = 6;
+  pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: PropietarioModel[] = [];
   dataSourceTabla:any;
