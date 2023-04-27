@@ -20,7 +20,7 @@ export class CustomLayoutComponent implements OnInit {
   sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
   isFooterVisible$ = this.configService.config$.pipe(map(config => config.footer.visible));
   isDesktop$ = this.layoutService.isDesktop$;
-
+  public tamanoPantalla: boolean;
   toolbarShadowEnabled$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     startWith(null),
@@ -35,6 +35,12 @@ export class CustomLayoutComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    if (window.innerWidth >= 1280) {
+      this.tamanoPantalla = true;
+    }
+    else {
+      this.tamanoPantalla = false;
+    }
     this.layoutService.configpanelOpen$.pipe(
       untilDestroyed(this)
     ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());

@@ -43,16 +43,16 @@
   }
 }
 
-// .is-mobile {
-//   ::ng-deep .vex-toolbar {
-//     position: fixed;
-//     width: 100%;
-//   }
+.is-mobile {
+  ::ng-deep .vex-toolbar {
+    position: fixed;
+    width: 100%;
+  }
 
-//   .content {
-//     margin-top: var(--toolbar-height);
-//   }
-// }
+  .content {
+    margin-top: var(--toolbar-height);
+  }
+}
 
 .sidenav-container {
   background: var(--background-base);
