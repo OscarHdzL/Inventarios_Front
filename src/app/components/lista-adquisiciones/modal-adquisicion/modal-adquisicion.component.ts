@@ -238,7 +238,7 @@ async xmlSeleccionado2(file: File) {
 
 
   public async obtenerProductosAdquisiciones() {
-    
+
     const respuesta = await this.inventariosService.obtenerProductosAdquisiciones(
       this.adquisicion.id
     );
