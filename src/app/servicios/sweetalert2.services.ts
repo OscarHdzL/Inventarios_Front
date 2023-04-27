@@ -39,6 +39,15 @@ export class SwalServices {
     );
   }
 
+  public alertaPunto(){
+    this.swalEjecucuin("Primer Punto Seleccionado", "Selecciona la siguiente esquina en diagonal", this.type[3])
+  }
+
+  public alertaNombre(obj){
+    let valor = this.swalInput("Segundo Punto Seleccionado", "Ingresa el nombre de esta sección", this.type[3], obj)
+    return valor
+  }
+
   public alertaPersonalizadoInfo(mensaje: string) {
     this.swalEjecucuin(this.title[1], this.casoAlerta[6], this.type[3]);
   }
@@ -89,6 +98,20 @@ export class SwalServices {
       text: text,
       timer: 2000,
       icon: type,
+    });
+  }
+  public swalInput(title, text, type, obj){
+    Swal.fire({
+        title: title,
+        text: text,
+        input: 'text',
+        icon: type,
+        showCancelButton: true
+    }).then(result => {
+        if (result.value) {
+            obj.nombre = result.value
+            console.log("Result: ", obj);
+        }
     });
   }
 

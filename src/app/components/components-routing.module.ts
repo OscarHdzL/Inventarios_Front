@@ -20,6 +20,8 @@ import { ListaFabricantesComponent } from './lista-fabricantes/lista-fabricantes
 import { ListaCategoriaProductoComponent } from './lista-categoria-producto/lista-categoria-producto.component';
 import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
+import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
+import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 
 const routes: Routes = [
   {
@@ -86,6 +88,16 @@ const routes: Routes = [
   {
     path: 'proveedor',
     component: ListaProveedorComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'plano',
+    component: PlanoInteractivoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'crear-plano',
+    component: CrearPlanoComponent,
     canActivate: [AuthGuard]
   }
 

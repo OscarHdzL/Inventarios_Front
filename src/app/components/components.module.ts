@@ -84,6 +84,10 @@ import { ModalClienteCatalogoComponent } from './lista-cliente/modal-cliente-cat
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal-proveedor.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
+import { ModalPlanoComponent } from './plano-interactivo/modal-plano/modal-plano.component';
+import { ImageMapComponent } from './plano-interactivo/image-map/image-map.component';
+import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +147,11 @@ import { NgxCurrencyModule } from 'ngx-currency';
     ListaClienteComponent,
     ModalClienteCatalogoComponent,
     ListaProveedorComponent,
-    ModalProveedorComponent
+    ModalProveedorComponent,
+    PlanoInteractivoComponent,
+    ModalPlanoComponent,
+    ImageMapComponent,
+    CrearPlanoComponent
   ],
   imports: [
     CommonModule,

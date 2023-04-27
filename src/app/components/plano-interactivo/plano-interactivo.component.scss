@@ -1,0 +1,49 @@
+
+.body {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.areaReact{
+  border-color: red;
+  border-width: 5px;
+}
+.areaReact:hover{
+  background-color: red;
+  border-width: 5px;
+}
+.coordinates-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+
+}
+.area {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.1s;
+  &:hover{
+    border: 3px solid red;
+    box-shadow: 0 0px 5px darkgray;
+  }
+}
+.clikeado {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.1s;
+    background-color: gray;
+    opacity: 0.5;
+    &:hover{
+      border: 3px solid red;
+      box-shadow: 0 0px 5px darkgray;
+    }
+}
+
+#image-container {
+  position: relative;
+}
+
