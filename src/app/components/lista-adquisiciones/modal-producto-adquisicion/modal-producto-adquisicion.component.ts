@@ -29,6 +29,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
   formProducto: FormGroup;
   productoModel: RelAdquisicionDetalle = new RelAdquisicionDetalle();
   filteredProductos: Observable<ProductoModel[]>;
+  categoriaSelect: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public producto: RelAdquisicionDetalle,
               private dialogRef: MatDialogRef<ModalProductoAdquisicionComponent>,
@@ -142,6 +143,7 @@ public async productoSeleccionado(producto: ProductoModel){
   console.log(producto);
   this.productoModel.catProductoId = producto.idproducto;
   this.productoModel.modelo = producto.modelo;
+  this.categoriaSelect = producto.categoria;
 }
 
 

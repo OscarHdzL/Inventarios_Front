@@ -238,7 +238,6 @@ async xmlSeleccionado2(file: File) {
 
 
   public async obtenerProductosAdquisiciones() {
-    debugger
     const respuesta = await this.inventariosService.obtenerProductosAdquisiciones(
       this.adquisicion.id
     );
