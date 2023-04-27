@@ -115,7 +115,7 @@ export class ListaProveedorComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Proveedores por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -130,7 +130,8 @@ export class ListaProveedorComponent implements OnInit {
   }
   openModal(usuario: PropietarioModel){
     this.dialog.open(ModalProveedorComponent,{
-      height: '80%',
+      //height: '80%',
+      height: (window.innerWidth >= 1280) ? '65%': '80%',
       width: '100%',
       autoFocus: true,
       data: usuario,

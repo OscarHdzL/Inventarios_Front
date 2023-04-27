@@ -19,11 +19,11 @@ import { RelAdquisicionDetalle } from 'src/app/modelos/Inventarios/adquisicion.m
 
 
 @Component({
-  selector: 'vex-modal-producto-adquisicion',
-  templateUrl: './modal-producto-adquisicion.component.html',
-  styleUrls: ['./modal-producto-adquisicion.component.scss']
+  selector: 'vex-modal-asignar-inventario',
+  templateUrl: './modal-asignar-inventario.component.html',
+  styleUrls: ['./modal-asignar-inventario.component.scss']
 })
-export class ModalProductoAdquisicionComponent implements OnInit {
+export class ModalAsignarInventarioComponent implements OnInit {
   sesionUsuarioActual: SesionModel;
   listaProductos: ProductoModel[] = [];
   formProducto: FormGroup;
@@ -31,7 +31,7 @@ export class ModalProductoAdquisicionComponent implements OnInit {
   filteredProductos: Observable<ProductoModel[]>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public producto: RelAdquisicionDetalle,
-              private dialogRef: MatDialogRef<ModalProductoAdquisicionComponent>,
+              private dialogRef: MatDialogRef<ModalAsignarInventarioComponent>,
               private formBuilder: FormBuilder,
               private swalService: SwalServices,
               private inventariosService: InventariosService,
@@ -42,9 +42,6 @@ export class ModalProductoAdquisicionComponent implements OnInit {
                 if(producto != null){
                   this.productoModel.id = this.producto.id;
                   this.productoModel.catProductoId = this.producto.catProductoId;
-                  this.productoModel.cantidad = this.producto.cantidad;
-                  this.productoModel.costosiunitario = this.producto.costosiunitario;
-                  this.productoModel.tblAdquisicionId = this.producto.tblAdquisicionId;
 
                 } else {
                   this.productoModel = new RelAdquisicionDetalle();
@@ -78,15 +75,9 @@ export class ModalProductoAdquisicionComponent implements OnInit {
 
 
   get producto_() { return this.formProducto.get('producto') }
-  get cantidad() { return this.formProducto.get('cantidad') }
-  get costoUnitario() { return this.formProducto.get('costoUnitario') }
-
-
   public iniciarForm(){
     this.formProducto = this.formBuilder.group({
-      producto: ['', [Validators.required]],
-      cantidad: ['', [Validators.required]],
-      costoUnitario: ['', [Validators.required]],
+      producto: ['', [Validators.required]]
     });
   }
 
@@ -100,8 +91,6 @@ export class ModalProductoAdquisicionComponent implements OnInit {
 
     //SE ACTUALIZA EL ID CUANDO SE SELECCIONA O ENCUENTRA EL RESULTADO EN EL AUTOCOMPLETE
     //this.productoModel.cAT_PRODUCTO_ID = this.producto_.value;
-    this.productoModel.cantidad = this.cantidad.value;
-    this.productoModel.costosiunitario = this.costoUnitario.value;
 
     let lista = [];
     lista.push(this.productoModel);
@@ -116,19 +105,6 @@ export class ModalProductoAdquisicionComponent implements OnInit {
     } else {
       this.swalService.alertaPersonalizada(false, "Error");
     }
-
-    /* //const respuesta = this.productoModel.id > 0 ? await this.inventariosService.actualizarProducto(this.productoModel) : await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
-
-    //const respuesta = await this.inventariosService.insertarProdcutoAdquisicion(this.productoModel);
-    const respuesta = {exito: true}
-    if(respuesta.exito){
-      this.swalService.alertaPersonalizada(true, 'Exito');
-      //this.close(true);
-      this.dialogRef.close(this.productoModel);
-
-    } else {
-      this.swalService.alertaPersonalizada(false, 'Error');
-    } */
   }
 
   close(result: any) {

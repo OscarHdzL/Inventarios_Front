@@ -24,7 +24,7 @@
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Fabricante"
+            matTooltip="Agregar"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -103,7 +103,9 @@
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
-            <h1 class="title text-3xl">No hay registros</h1>
+          <h1 class="m-10 title" style="text-align: center">
+            No se encontraron registros
+          </h1>
           </div>
           <div
             *ngIf="this.listaItems.length != 0"
@@ -254,9 +256,9 @@
           *ngIf="this.listaItems.length == 0"
           class="flex-auto items-center justify-center"
         >
-          <h1 class="m-10 headline2" style="text-align: center">
-            No se encontraron Fabricantes registrados
-          </h1>
+        <h1 class="m-10 title" style="text-align: center">
+          No se encontraron registros
+        </h1>
         </div>
         <mat-paginator
           #paginator

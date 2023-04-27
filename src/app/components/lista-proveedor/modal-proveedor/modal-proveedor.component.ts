@@ -23,6 +23,7 @@ export class ModalProveedorComponent implements OnInit {
   sesionUsuarioActual: SesionModel;
   listaPropietarios: ProveedorModel[] = [];
   formPropietario: FormGroup;
+  formContacto: FormGroup;
   propietarioModel: ProveedorFormModel = new ProveedorFormModel();
   filteredPropietarios: Observable<ProveedorModel[]>;
   listaSubs: any[] = [];
@@ -91,26 +92,36 @@ export class ModalProveedorComponent implements OnInit {
   get razonSocial() { return this.formPropietario.get('razonSocial') }
   get rfc() { return this.formPropietario.get('rfc') }
   get correo() { return this.formPropietario.get('correo') }
-  get correoCon() { return this.formPropietario.get('correoCon') }
-  get nombreCon() { return this.formPropietario.get('nombreCon') }
-  get telefonoCon() { return this.formPropietario.get('telefonoCon') }
+  get correoCon() { return this.formContacto.get('correoCon') }
+  get nombreCon() { return this.formContacto.get('nombreCon') }
+  get telefonoCon() { return this.formContacto.get('telefonoCon') }
 
 
   public iniciarForm(){
     this.formPropietario = this.formBuilder.group({
       razonSocial: ['', [Validators.required]],
       rfc: ['', [Validators.required]],
-      correo: ['', [Validators.required]],
-      correoCon: ['',],
-      nombreCon: ['',],
-      telefonoCon: ['',],
-
+      correo: ['', [Validators.required, Validators.email]]
+    });
+    this.formContacto = this.formBuilder.group({
+      correoCon: ['',[Validators.email]],
+      nombreCon: ['',[Validators.required]],
+      telefonoCon: ['',]
     });
   }
   async eliminarSubordinado(item: string){
     this.listaSubs.splice(this.listaSubs.findIndex(x => x.id == item),1)
   }
   agregarContacto(){
+
+    debugger
+    var val = this.nombreCon.value;
+
+    if(this.nombreCon.value && !this.correoCon.value && !this.telefonoCon.value){
+      this.swalService.alertaPersonalizada(false, 'Se requiere de un teléfono o correo electrónico')
+      return;
+    }
+
     console.log("Contacto -> ");
     this.listaSubs.push({
       id: 0,

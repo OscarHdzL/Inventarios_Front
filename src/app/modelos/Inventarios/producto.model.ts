@@ -31,9 +31,9 @@ export class ProductoFormModel {
     this.catFabricanteId = 0;
     this.modelo = null;
     this.anio = null;
-    this.nuevo = null;
+    this.nuevo = false;
     this.vidautil = null;
-    this.caracteristicas_ = null;
+    this.caracteristicas_ = [];
 
   }
 }
@@ -71,3 +71,15 @@ export class CaracteristicaProductoFormModel {
     inclusion: string
     catProductos: any[]
   }
+
+
+  export class CaracteristicaProductoFormModel_ {
+    id?: number;
+    catProductoId?: number;
+    nombre?: string;
+    constructor(){
+      this.id = 0;
+      this.catProductoId = 0;
+      this.nombre = null;
+    }
+    }

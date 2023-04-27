@@ -70,7 +70,7 @@ export class ListaProductosComponent implements OnInit {
 
 
   async ngOnInit(){
-    debugger
+
     this.dataSourceOriginal = await this.obtenerProductos();
 /*
     this.dataSourceOriginal = [
@@ -102,7 +102,7 @@ export class ListaProductosComponent implements OnInit {
       }
 
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      this.paginatorCards.length = this.listaItems.length;
+      //this.paginatorCards.length = this.listaItems.length;
 
 
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
@@ -110,7 +110,7 @@ export class ListaProductosComponent implements OnInit {
     this.dataSourceTabla.sort = this.sort;
 
 
-    this.matPaginatorIntl.itemsPerPageLabel = "Productos por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }

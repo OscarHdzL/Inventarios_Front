@@ -61,8 +61,22 @@ export class SidenavComponent implements OnInit {
       children: [
         {
           type: 'link',
+          label: 'Categoría producto',
+          route: '/components/categoria-producto',
+          icon: 'mat:list',
+          routerLinkActiveOptions: { exact: false }
+        },
+        {
+          type: 'link',
           label: 'Clientes',
-          route: '/components/clientes',
+          route: '/components/cliente',
+          icon: 'mat:list',
+          routerLinkActiveOptions: { exact: false }
+        },
+        {
+          type: 'link',
+          label: 'Fabricante',
+          route: '/components/fabricantes',
           icon: 'mat:list',
           routerLinkActiveOptions: { exact: false }
         },
@@ -72,29 +86,23 @@ export class SidenavComponent implements OnInit {
           route: '/components/propietarios',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
-        }/* ,
-        {
-          type: 'link',
-          label: 'Familia articulos',
-          route: '/components/articulos-general',
-          icon: 'mat:file_copy',
-          routerLinkActiveOptions: { exact: true }
         },
         {
           type: 'link',
-          label: 'Articulos',
-          route: '/components/articulos',
+          label: 'Proveedor',
+          route: '/components/proveedor',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
-        } */
+        }
         ,
-        {
+
+        /* {
           type: 'link',
           label: 'Software',
           route: '/components/software',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
-        },
+        }, */
         {
           type: 'link',
           label: 'Productos',
@@ -106,6 +114,13 @@ export class SidenavComponent implements OnInit {
           type: 'link',
           label: 'Adquisiciones',
           route: '/components/adquisiciones',
+          icon: 'mat:file_copy',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Inventario',
+          route: '/components/inventario',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         }

@@ -7,13 +7,13 @@
         <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
-  <mat-divider class="-mx-6 text-border"></mat-divider>
+  <mat-divider class="mx-6 text-border"></mat-divider>
   <mat-dialog-content class="px-1 ">
     <div class="mt-4 flex flex-col gap-2  m-2">
       <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
         <mat-form-field class="flex-auto">
-          <mat-label>Razón social</mat-label>
-          <input type="text" matInput formControlName="nombre" maxlength="2000">
+          <mat-label>Categoría</mat-label>
+          <input type="text" matInput formControlName="nombre" maxlength="500">
           <mat-error *ngIf="this.nombre.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
         <div>

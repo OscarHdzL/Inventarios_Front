@@ -13,17 +13,17 @@
       <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
         <mat-form-field class="flex-auto">
           <mat-label>Razón social</mat-label>
-          <input type="text" matInput formControlName="razonSocial" maxlength="2000">
+          <input type="text" matInput formControlName="razonSocial" maxlength="500">
           <mat-error *ngIf="this.razonSocial.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
         <mat-form-field class="flex-auto">
           <mat-label>RFC</mat-label>
-          <input type="text" matInput formControlName="rfc">
+          <input type="text" matInput formControlName="rfc" maxlength="13">
           <mat-error *ngIf="this.rfc.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
         <mat-form-field class="flex-auto">
           <mat-label>Sigla</mat-label>
-          <input type="text" matInput formControlName="sigla" maxlength="2000">
+          <input type="text" matInput formControlName="sigla" maxlength="50">
           <mat-error *ngIf="this.sigla.hasError('required')"> El campo es requerido</mat-error>
         </mat-form-field>
       </div>

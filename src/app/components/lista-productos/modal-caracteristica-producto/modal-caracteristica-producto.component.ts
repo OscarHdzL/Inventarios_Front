@@ -123,7 +123,7 @@ export class ModalCaracteristicaProductoComponent implements OnInit {
 
 public async caracteristicaSeleccionado(caracteristica: CaracteristicaProductoModel){
 
-debugger
+
 console.log('caracteristica: ');
 console.log(caracteristica);
 

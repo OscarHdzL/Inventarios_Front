@@ -1,0 +1,167 @@
+<div class="flex items-center" style="border: none !important" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    {{
+      this.inventarioModel.id > 0 ? "Editar inventario " : "Agregar inventario "
+    }}
+    <b>{{ this.inventarioModel.numerodeserie }}</b>
+  </h2>
+  <button></button>
+  <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1">
+  <form role="form" autocomplete="off" [formGroup]="formInventario" novalidate>
+    <div class="mt-4 flex flex-col gap-2 m-2">
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Número de serie</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="numerodeserie"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.numerodeserie.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Clave</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="inventarioclv"
+            maxlength="2000"
+          />
+          <mat-error *ngIf="this.inventarioclv.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="flex-auto">
+          <mat-label>Estatus</mat-label>
+          <mat-select formControlName="estatus">
+            <mat-option
+              *ngFor="let estatus of listaEstatusInventario"
+              [value]="estatus.id"
+            >
+              {{ estatus.estatus }}</mat-option
+            >
+          </mat-select>
+          <mat-error *ngIf="this.numerodeserie.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Notas</mat-label>
+          <textarea
+            type="text"
+            matInput
+            formControlName="notas"
+            maxlength="2000"
+          ></textarea>
+          <mat-error *ngIf="this.notas.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <form
+    role="form"
+    autocomplete="off"
+    [formGroup]="formAccesorio"
+    (submit)="agregarAccesorio()"
+    novalidate
+  >
+    <div class="mt-4 flex flex-col gap-2 m-2">
+      <div class="flex flex-row gap-4">
+        <mat-form-field class="flex-auto">
+          <mat-label>Accesorio</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="accesorio"
+            maxlength="2000"
+          />
+
+          <!-- <mat-icon matSuffix svgIcon="mat:add"></mat-icon> -->
+          <mat-error *ngIf="this.accesorio.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field>
+        <button
+        class="mx-1 "
+        color="primary"
+        mat-mini-fab
+        matTooltip="Agregar accesorio"
+        type="submit"
+      >
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+      </div>
+    </div>
+  </form>
+  <div class="mt-4 flex flex-col gap-2 m-2">
+    <div class="relative shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+          <tr>
+            <th class="px-6 py-3">Accesorios incluidos</th>
+            <th class="px-6 py-3">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="listaAccesorios.length == 0">
+            <td colspan="2">
+              <div class="flex justify-center m-3">
+                <p>NO SE HAN REGISTRADO ACCESORIOS</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="bg-white border-b" *ngFor="let row of listaAccesorios">
+            <th
+              scope="row"
+              class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+            >
+              {{ row.nombre }}
+            </th>
+            <td class="px-3 py-2">
+              <a
+
+                (click)="eliminarAccesorio(row)"
+                matTooltip="Eliminar Accesorio"
+                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                mat-icon-button
+              >
+                <mat-icon
+                  class="icon-sm"
+                  svgIcon="mat:delete_forever"
+                ></mat-icon>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="flex justify-end mt-5">
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="guardarInventario()"
+      [disabled]="formInventario.invalid"
+    >
+      {{ this.inventarioModel.id > 0 ? "Editar" : "Agregar" }}
+    </button>
+  </div>
+</mat-dialog-actions>

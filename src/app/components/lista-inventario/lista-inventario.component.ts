@@ -5,23 +5,29 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+
 import { SwalServices } from 'src/app/servicios/sweetalert2.services';
 import { TableColumn } from 'src/@vex/interfaces/table-column.interface';
+
 import { InventariosService } from 'src/app/servicios/inventarios.service';
+
+
 import { MatAccordion } from '@angular/material/expansion';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AdquisicionModel } from 'src/app/modelos/Inventarios/adquisicion.model';
-import { ModalAdquisicionComponent } from './modal-adquisicion/modal-adquisicion.component';
+import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
+import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
+import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
+
 
 
 @Component({
-  selector: 'vex-lista-adquisiciones',
-  templateUrl: './lista-adquisiciones.component.html',
-  styleUrls: ['./lista-adquisiciones.component.scss']
+  selector: 'vex-lista-inventario',
+  templateUrl: './lista-inventario.component.html',
+  styleUrls: ['./lista-inventario.component.scss']
 })
-export class ListaAdquisicionesComponent implements OnInit {
+export class ListaInventarioComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,9 +35,9 @@ export class ListaAdquisicionesComponent implements OnInit {
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
   pageEvent: PageEvent;
-  dataSourceOriginal: AdquisicionModel[] = [];
+  dataSourceOriginal: InventarioModel[] = [];
   dataSourceTabla:any;
-  listaItems: AdquisicionModel[] = [];
+  listaItems: InventarioModel[] = [];
   listaMarca: any[] = [{id: 1, descripcion: 'Marca 1'}];
   listaModelo: any[] = [{id: 1, descripcion: 'Modelo 1'}];
   listaPropietario: any[] = [{id: 1, descripcion: 'Propietario 1'}];
@@ -45,11 +51,14 @@ export class ListaAdquisicionesComponent implements OnInit {
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Proveedor', property: 'proveedor', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Propietario', property: 'propietario', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Monto', property: 'monto', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Impuesto', property: 'impuesto', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Articulos', property: 'articulos', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Nuevo', property: 'nuevo', type: 'text', visible: true, cssClasses: ['font-medium'] },
+//    { label: 'Año', property: 'anio', type: 'text', visible: true, cssClasses: ['font-medium'] },
+//    { label: 'Estatus', property: 'catEstatusinventario', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Numero serie', property: 'numerodeserie', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Clave', property: 'inventarioclv', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -64,8 +73,32 @@ export class ListaAdquisicionesComponent implements OnInit {
       this.iniciarForm()
    }
 
+  async ngOnInit(){
 
-   get visibleColumns() {
+    this.dataSourceOriginal = await this.obtenerInventarios();
+
+      if (window.innerWidth >= 1280) {
+        this.tamanoPantalla = true;
+      }
+      else {
+        this.tamanoPantalla = false;
+      }
+
+      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+      //this.paginatorCards.length = this.listaItems.length;
+
+
+    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+    this.dataSourceTabla.paginator = this.paginator;
+    this.dataSourceTabla.sort = this.sort;
+
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
+    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
+  }
+
+
+  get visibleColumns() {
     return this.columns.filter(column => column.visible).map(column => column.property);
   }
 
@@ -86,9 +119,12 @@ export class ListaAdquisicionesComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.monto.toString().toLowerCase().includes(filterValue) ||
-        val.impuesto.toString().toLowerCase().includes(filterValue)||
-        val.articulos.toString().toLowerCase().includes(filterValue)
+        val.modelo.toLowerCase().includes(filterValue) ||
+        val.fabricante.toLowerCase().includes(filterValue) ||
+        val.categoria.toLowerCase().includes(filterValue) ||
+        val.numerodeserie.toLowerCase().includes(filterValue) ||
+        val.inventarioclv.toLowerCase().includes(filterValue)
+
         );
 
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
@@ -104,12 +140,12 @@ export class ListaAdquisicionesComponent implements OnInit {
   }
 
   public iniciarForm(){
-    this.formFiltros = this.formBuilder.group({
+/*     this.formFiltros = this.formBuilder.group({
       marca: [''],
       modelo: [''],
       propietario: ['']
 
-    });
+    }); */
   }
 
   get marca() { return this.formFiltros.get('marca')};
@@ -122,11 +158,11 @@ export class ListaAdquisicionesComponent implements OnInit {
     console.log(this.selectedVal);
   }
 
-  async deshabilitarAdquisicion(item){
+  async deshabilitarInventario(item){
     console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarAdquisicion(item);
+    let res = {exito: true} //await this.servicios.deshabilitarInventario(item);
     if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Adquisicion Deshabilitado");
+      this.swalService.alertaPersonalizada(true, "Inventario Deshabilitado");
       this.ngOnInit();
     }
     else {
@@ -134,59 +170,9 @@ export class ListaAdquisicionesComponent implements OnInit {
     }
   }
 
-  async ngOnInit(): Promise<void> {
-
-    this.dataSourceOriginal = [];
-
-    this.dataSourceOriginal = await this.obtenerAdquisicions();
-
-    /* this.dataSourceOriginal = [
-      {
-        iD: 1,
-        mONTO: 1343.12,
-        aRTICULOS: 4312,
-        iMPUESTO: 43.43
-      },
-      {
-        iD: 2,
-        mONTO: 1343.12,
-        aRTICULOS: 4312,
-        iMPUESTO: 43.43
-      },
-      {
-        iD: 3,
-        mONTO: 1343.12,
-        aRTICULOS: 4312,
-        iMPUESTO: 43.43
-      }]; */
-
-
-    if (window.innerWidth >= 1280) {
-      this.tamanoPantalla = true;
-    }
-    else {
-      this.tamanoPantalla = false;
-    }
-
-    this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-    this.paginatorCards.length = this.listaItems.length;
-
-
-    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
-    this.dataSourceTabla.paginator = this.paginator;
-    this.dataSourceTabla.sort = this.sort;
-
-
-    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
-    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
-    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
-  }
-
-
-
-  public async obtenerAdquisicions(){
-    const respuesta = await this.inventariosService.obtenerCatalogoAdquisiciones();
-    return respuesta.exito ? respuesta.output : [];
+  public async obtenerInventarios(){
+    const respuesta = await this.inventariosService.obtenerInventarios();
+    return respuesta ? respuesta : [];
   }
 
   onPageChanged(e) {
@@ -195,13 +181,13 @@ export class ListaAdquisicionesComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
 
-  openModal(adq: AdquisicionModel){
+  openModal(usuario: InventarioModel){
 
-    this.dialog.open(ModalAdquisicionComponent,{
+    this.dialog.open(ModalInventarioComponent,{
       height: '80%',
       width: '100%',
       autoFocus: true,
-      data: adq,
+      data: usuario,
       disableClose: true,
       maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
     }).afterClosed().subscribe(result => {
@@ -211,30 +197,28 @@ export class ListaAdquisicionesComponent implements OnInit {
 
   }
 
- /*  openModalGraficas(adquisicion){
-
-    this.dialog.open(ModalGraficasAdquisicionComponent,{
-      height: '80%',
+  openModalAsignacion(usuario: InventarioModel){
+    this.dialog.open(ModalAsignarInventarioComponent,{
+      height: '30%',
       width: '100%',
       autoFocus: true,
-      data: adquisicion,
+      data: usuario,
       disableClose: true,
       maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
     }).afterClosed().subscribe(result => {
 
       this.ngOnInit();
     });
+  }
 
-  } */
 
-
-  public async EliminarAdquisicion(adquisicion){
+  public async EliminarInventario(inventario){
 
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
-      adquisicion.activo = false;
-      const respuesta = await this.inventariosService.deshabilitarAdquisicion(adquisicion.id);
+      inventario.activo = false;
+      const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();
@@ -243,5 +227,6 @@ export class ListaAdquisicionesComponent implements OnInit {
       }
     }
   }
+
 
 }

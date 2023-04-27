@@ -111,7 +111,7 @@ export class ListaCategoriaProductoComponent implements OnInit {
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
-    this.matPaginatorIntl.itemsPerPageLabel = "Fabricantes por página";
+    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
@@ -126,8 +126,9 @@ export class ListaCategoriaProductoComponent implements OnInit {
   }
   openModal(usuario: any){
     this.dialog.open(ModalCategoriaProductoComponent,{
-      height: '80%',
-      width: '100%',
+
+      height: window.innerWidth >= 1280 ? "25%" : "35%",
+      width: '80%',
       autoFocus: true,
       data: usuario,
       disableClose: true,

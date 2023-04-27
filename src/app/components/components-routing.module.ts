@@ -22,6 +22,7 @@ import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.component';
 import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
+import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 
 const routes: Routes = [
   {
@@ -93,14 +94,16 @@ const routes: Routes = [
   {
     path: 'plano',
     component: PlanoInteractivoComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'crear-plano',
     component: CrearPlanoComponent,
+  },
+  {
+    path: 'inventario',
+    component: ListaInventarioComponent,
     canActivate: [AuthGuard]
   }
-
 
 /*   {
     path: 'home',

@@ -1,3 +1,4 @@
+import {MatChipList, MatChipsModule} from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -88,6 +89,9 @@ import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo
 import { ModalPlanoComponent } from './plano-interactivo/modal-plano/modal-plano.component';
 import { ImageMapComponent } from './plano-interactivo/image-map/image-map.component';
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
+import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
+import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
+import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asignar-inventario/modal-asignar-inventario.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +155,10 @@ import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
     PlanoInteractivoComponent,
     ModalPlanoComponent,
     ImageMapComponent,
-    CrearPlanoComponent
+    CrearPlanoComponent,
+    ListaInventarioComponent,
+    ModalInventarioComponent,
+    ModalAsignarInventarioComponent
   ],
   imports: [
     CommonModule,
@@ -182,7 +189,10 @@ import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatButtonToggleModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    MatChipsModule,
+
+
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
