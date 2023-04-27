@@ -109,23 +109,32 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Modelo: {{ item.modelo }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Modelo</span>: {{ item.modelo }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Fabricante: {{ item.fabricante }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Fabricante</span>: {{ item.fabricante }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Categoría: {{ item.categoria }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Categoría</span>: {{ item.categoria }}
+                </div>
               </div>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Nuevo: {{ item.nuevo ? 'Si':'No' }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Nuevo</span>: {{ item.nuevo ? 'Si':'No' }}
+                </div>
               </div>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Año: {{ item.anio }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Año</span>: {{ item.anio }}
+                </div>
               </div>
               <mat-divider></mat-divider>
               <mat-divider></mat-divider>

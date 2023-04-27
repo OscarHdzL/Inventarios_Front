@@ -115,23 +115,32 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Proveedor: {{ item.proveedor }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Proveedor</span>: {{ item.proveedor }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Propietario: {{ item.propietario }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Propietario</span>: {{ item.propietario }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-5">
-                <div class="text-center">Fecha de compra: {{ item.fechadecompra }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Fecha de compra</span>: {{ item.fechadecompra }}
+                </div>
               </div>
               <mat-divider></mat-divider>
 
               <div class="flex justify-between items-center mb-10">
-                <div class="text-center">Articulos: {{ item.articulos }}</div>
-                <div class="text-center">Monto: {{ item.monto | currency }}</div>
+                <div class="text-center">
+                  <span class="font-bold">Articulos</span>: {{ item.articulos }}
+                </div>
+                <div class="text-center">
+                  <span class="font-bold">Monto</span>: {{ item.monto | currency }}
+                </div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
