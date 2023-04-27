@@ -238,6 +238,7 @@ async xmlSeleccionado2(file: File) {
 
 
   public async obtenerProductosAdquisiciones() {
+
     const respuesta = await this.inventariosService.obtenerProductosAdquisiciones(
       this.adquisicion.id
     );
@@ -305,7 +306,8 @@ async xmlSeleccionado2(file: File) {
     //this.adquisicionModel.facpdf = "tokenPrueba"; //this.facturaPDF.value;
     //this.adquisicionModel.facxml = "tokenPrueba"; //this.facturaXML.value;
     this.adquisicionModel.fechadecompra = this.fechaCompra.value;
-    this.adquisicionModel.detalle = this.listaProductosAdquisicion;
+    //this.adquisicionModel.detalle = this.listaProductosAdquisicion;
+    this.adquisicionModel.detalle =null
 
     const respuesta =
       this.adquisicionModel.id > 0
