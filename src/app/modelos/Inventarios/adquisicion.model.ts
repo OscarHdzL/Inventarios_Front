@@ -24,6 +24,7 @@ export class RelAdquisicionDetalle {
   costosiunitario: number
   accionAuxiliar: string
   modelo?:string;
+  categoria?:string;
   constructor(){
     this.id = 0;
     this.cantidad = 0;

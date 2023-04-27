@@ -223,9 +223,8 @@
               Estatico
             </mat-header-cell>
             <mat-cell *matCellDef="let row" data-label="Estatico">
-              <div>
-                {{ row.estatico }}
-              </div>
+              <div *ngIf="row.estatico == true">Esta categoria es para productos portatiles</div>
+              <div *ngIf="row.estatico == false">Esta categoria es para productos estaticos</div>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="actions">

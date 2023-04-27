@@ -98,7 +98,7 @@ public dropped(files: NgxFileDropEntry[]) {
         if(file.type =='application/pdf'){
           this.pdfSeleccionado2(file)
         }else{ this.xmlSeleccionado2(file)}
-        
+
 
         /**
         // You could upload it like this:
@@ -135,7 +135,7 @@ public fileLeave(event){
 
 async pdfSeleccionado2(file: File) {
   ;
-  
+
     const formData: any = new FormData();
     formData.append("file", file);
 
@@ -154,11 +154,11 @@ async pdfSeleccionado2(file: File) {
         "No se pudo cargar el archivo"
       );
     }
-  
+
 }
 async xmlSeleccionado2(file: File) {
   ;
-  
+
     const formData: any = new FormData();
     formData.append("file", file);
 
@@ -177,7 +177,7 @@ async xmlSeleccionado2(file: File) {
         "No se pudo cargar el archivo"
       );
     }
-  
+
 }
 
 ///end drag
@@ -238,6 +238,7 @@ async xmlSeleccionado2(file: File) {
 
 
   public async obtenerProductosAdquisiciones() {
+    debugger
     const respuesta = await this.inventariosService.obtenerProductosAdquisiciones(
       this.adquisicion.id
     );
@@ -362,7 +363,7 @@ async xmlSeleccionado2(file: File) {
 
     this.dialog
       .open(ModalProductoAdquisicionComponent, {
-        height: window.innerWidth >= 1280 ? "30%" : "60%",
+        height: 'auto',
         width: "100%",
         autoFocus: true,
         data: producto,
