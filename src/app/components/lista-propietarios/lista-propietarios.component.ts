@@ -130,7 +130,7 @@ export class ListaPropietariosComponent implements OnInit {
   }
   openModal(usuario: PropietarioModel){
     this.dialog.open(ModalPropietarioComponent,{
-      height: window.innerWidth >= 1280 ? "25%" : "35%",
+      height: 'auto',
       width: '100%',
       autoFocus: true,
       data: usuario,

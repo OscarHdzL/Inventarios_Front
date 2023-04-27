@@ -43,16 +43,16 @@
   }
 }
 
-.is-mobile {
-  ::ng-deep .vex-toolbar {
-    position: fixed;
-    width: 100%;
-  }
+// .is-mobile {
+//   ::ng-deep .vex-toolbar {
+//     position: fixed;
+//     width: 100%;
+//   }
 
-  .content {
-    margin-top: var(--toolbar-height);
-  }
-}
+//   .content {
+//     margin-top: var(--toolbar-height);
+//   }
+// }
 
 .sidenav-container {
   background: var(--background-base);
@@ -78,17 +78,17 @@
   }
 }
 
-.toolbar-fixed {
-  ::ng-deep .vex-toolbar {
-    position: fixed;
-    width: var(--toolbar-width);
-    z-index: 50;
-  }
+// .toolbar-fixed {
+//   ::ng-deep .vex-toolbar {
+//     position: fixed;
+//     width: var(--toolbar-width);
+//     z-index: 50;
+//   }
 
-  .content {
-    margin-top: calc(var(--toolbar-height) + var(--navigation-height));
-  }
-}
+//   .content {
+//     margin-top: calc(var(--toolbar-height) + var(--navigation-height));
+//   }
+// }
 
 .has-fixed-footer {
   ::ng-deep .vex-footer {

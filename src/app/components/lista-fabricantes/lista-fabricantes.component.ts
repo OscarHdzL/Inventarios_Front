@@ -126,7 +126,7 @@ export class ListaFabricantesComponent implements OnInit {
   }
   openModal(usuario: any){
     this.dialog.open(ModalFabricanteComponent,{
-      height: window.innerWidth >= 1280 ? "25%" : "25%",
+      height: 'auto',
       width: '100%',
       autoFocus: true,
       data: usuario,

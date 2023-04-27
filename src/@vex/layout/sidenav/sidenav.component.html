@@ -4,9 +4,23 @@
      [class.open]="collapsed && collapsedOpen$ | async"
      class="sidenav flex flex-col">
   <div class="vex-sidenav-toolbar__container">
-    <div class="sidenav-toolbar flex-none flex items-center">
-      <img [src]="imageUrl$ | async" alt="Logo" class="w-6 select-none flex-auto"/>
- <!--      <h2 class="vex-sidenav-toolbar__headline flex-auto">{{ title$ | async }}</h2> -->
+    <div *ngIf="!collapsed" class="sidenav-toolbar flex-none flex items-center m-3">
+      <img style="width: 85%; height: auto;" [src]="imageUrl$ | async" alt="Logo" class="select-none"/>
+      <button (click)="toggleCollapse()"
+              *ngIf="showCollapsePin$ | async"
+              class="w-8 h-8 -mr-2 leading-none flex-none hidden lg:block"
+              mat-icon-button
+              type="button">
+        <mat-icon *ngIf="!collapsed"
+                  class="text-[0.875rem] w-[0.875rem] h-[0.875rem]"
+                  svgIcon="mat:radio_button_checked"></mat-icon>
+        <mat-icon *ngIf="collapsed"
+                  class="text-[0.875rem] w-[0.875rem] h-[0.875rem]"
+                  svgIcon="mat:radio_button_unchecked"></mat-icon>
+      </button>
+    </div>
+    <div *ngIf="collapsed" class="sidenav-toolbar flex-none flex items-center">
+    <img style="width: 25px; height: 25px;" [src]="'../../../assets/img/grupopm_ch.png'" alt="Logo" class="select-none"/>
       <button (click)="toggleCollapse()"
               *ngIf="showCollapsePin$ | async"
               class="w-8 h-8 -mr-2 leading-none flex-none hidden lg:block"
@@ -42,9 +56,9 @@
                         [level]="0"></vex-sidenav-item>
     </div>
 
-    <div class="vex-sidenav-footer flex items-center justify-center opacity-20 px-6 py-6 select-none flex-none">
+    <!-- <div class="vex-sidenav-footer flex items-center justify-center opacity-20 px-6 py-6 select-none flex-none">
       <img [src]="imageUrl$ | async" alt="Logo" class="w-8 select-none"/>
-    </div>
+    </div> -->
   </vex-scrollbar>
 
   <div *ngIf="userVisible$ | async"

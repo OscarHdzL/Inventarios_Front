@@ -126,8 +126,7 @@ export class ListaCategoriaProductoComponent implements OnInit {
   }
   openModal(usuario: any){
     this.dialog.open(ModalCategoriaProductoComponent,{
-
-      height: window.innerWidth >= 1280 ? "25%" : "35%",
+      height: 'auto',
       width: '80%',
       autoFocus: true,
       data: usuario,

@@ -27,7 +27,7 @@ const defaultConfig: VexConfig = {
   sidenav: {
     //TITULO EN EL SIDENAV
     title: '',
-    imageUrl: 'assets/img/logo_2023.jpg',
+    imageUrl: 'assets/img/logoGPM.png',
     showCollapsePin: true,
     user: {
       visible: true

@@ -121,7 +121,8 @@
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Estatico: {{ item.estatico }}</div>
+                <div *ngIf="item.estatico == true" class="text-center">Esta categoria es para productos portatiles</div>
+                <div *ngIf="item.estatico == false" class="text-center">Esta categoria es para productos estaticos</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">

@@ -131,7 +131,7 @@ export class ListaProveedorComponent implements OnInit {
   openModal(usuario: PropietarioModel){
     this.dialog.open(ModalProveedorComponent,{
       //height: '80%',
-      height: (window.innerWidth >= 1280) ? '65%': '80%',
+      height: 'auto',
       width: '100%',
       autoFocus: true,
       data: usuario,
