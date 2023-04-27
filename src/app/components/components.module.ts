@@ -92,6 +92,7 @@ import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asignar-inventario/modal-asignar-inventario.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -191,6 +192,7 @@ import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asigna
     MatButtonToggleModule,
     NgxCurrencyModule,
     MatChipsModule,
+    NgxFileDropModule
 
 
   ],

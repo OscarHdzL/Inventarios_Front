@@ -115,9 +115,10 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Nombre: {{ item.nombre }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Nombre</span>: {{ item.nombre }}
+                </div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-10">

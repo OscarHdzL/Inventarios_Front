@@ -115,17 +115,22 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Razon Social: {{ item.razonsocial }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Razon Social</span>: {{ item.razonsocial }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">Sigla: {{ item.sigla }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Sigla</span>: {{ item.sigla }}
+                </div>
               </div>
               <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-10">
-                <div class="text-center">RFC: {{ item.rfc }}</div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">RFC</span>:: {{ item.rfc }}
+                </div>
               </div>
               <mat-divider></mat-divider>
               <!-- <div class="flex justify-between items-center mb-10">
