@@ -141,6 +141,17 @@ export class ListaAdquisicionesComponent implements OnInit {
     this.dataSourceOriginal = [];
 
     this.dataSourceOriginal = await this.obtenerAdquisicions();
+console.log('this.dataSourceOriginal',this.dataSourceOriginal)
+   if(this.dataSourceOriginal.length>0)
+   {
+     for(let i=0; i<this.dataSourceOriginal.length; i++){
+
+      let fecha= this.dataSourceOriginal[i].fechadecompra.substring(8,10) + '-' + this.dataSourceOriginal[i].fechadecompra.substring(5,7)   +
+       '-' + this.dataSourceOriginal[i].fechadecompra.substring(0,4)
+       this.dataSourceOriginal[i].fechadecompra=fecha
+      console.log('fecha',fecha)
+     }
+   }
 
     /* this.dataSourceOriginal = [
       {
@@ -188,6 +199,7 @@ export class ListaAdquisicionesComponent implements OnInit {
 
   public async obtenerAdquisicions(){
     const respuesta = await this.inventariosService.obtenerCatalogoAdquisiciones();
+    console.log('adquisiciones',respuesta)
     return respuesta.exito ? respuesta.output : [];
   }
 
