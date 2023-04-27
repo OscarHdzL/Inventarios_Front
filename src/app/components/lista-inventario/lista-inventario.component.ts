@@ -103,7 +103,7 @@ export class ListaInventarioComponent implements OnInit {
   }
 
    applyFilter(event: any) {
-    let filterValue = event.target.value
+    let filterValue = event.target.value.toLowerCase();
     if (filterValue == "") {
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
 
@@ -184,7 +184,7 @@ export class ListaInventarioComponent implements OnInit {
   openModal(usuario: InventarioModel){
 
     this.dialog.open(ModalInventarioComponent,{
-      height: '80%',
+      height: 'auto',
       width: '100%',
       autoFocus: true,
       data: usuario,
@@ -199,7 +199,7 @@ export class ListaInventarioComponent implements OnInit {
 
   openModalAsignacion(usuario: InventarioModel){
     this.dialog.open(ModalAsignarInventarioComponent,{
-      height: '30%',
+      height: 'auto',
       width: '100%',
       autoFocus: true,
       data: usuario,

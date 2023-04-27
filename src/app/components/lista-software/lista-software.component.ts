@@ -57,7 +57,7 @@ export class ListaSoftwareComponent implements OnInit {
   }
 
    applyFilter(event: any) {
-    let filterValue = event.target.value
+    let filterValue = event.target.value.toLowerCase();
     if (filterValue == "") {
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
 

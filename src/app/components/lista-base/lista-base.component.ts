@@ -21,7 +21,7 @@ import { ModalBaseComponent } from './modal-base/modal-base.component';
 export class ListaBaseComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
-  
+
   @ViewChild(MatSort) sort: MatSort;
   pageSize = 3;
   pageSizeOptions: number[] = [this.pageSize, 6, 12, 24];
@@ -55,12 +55,12 @@ export class ListaBaseComponent implements OnInit {
    get visibleColumns() {
     return this.columns.filter(column => column.visible).map(column => column.property);
   }
-  
+
    applyFilter(event: any) {
-    let filterValue = event.target.value
+    let filterValue = event.target.value.toLowerCase();
     if (filterValue == "") {
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      
+
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
       this.paginatorCards.length = this.dataSourceOriginal.length;
 
@@ -68,7 +68,7 @@ export class ListaBaseComponent implements OnInit {
       this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
       this.dataSourceTabla.paginator = this.paginator;
       this.dataSourceTabla.sort = this.sort;
-      
+
     }
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
@@ -84,7 +84,7 @@ export class ListaBaseComponent implements OnInit {
       this.dataSourceTabla = new MatTableDataSource<any>(this.listaItems);
       this.dataSourceTabla.paginator = this.paginator;
       this.dataSourceTabla.sort = this.sort;
- 
+
     }
 
   }
@@ -121,15 +121,15 @@ export class ListaBaseComponent implements OnInit {
       else {
         this.tamanoPantalla = false;
       }
-      
+
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
       this.paginatorCards.length = this.listaItems.length;
-    
-    
+
+
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
     this.dataSourceTabla.paginator = this.paginator;
     this.dataSourceTabla.sort = this.sort;
- 
+
 
     this.matPaginatorIntl.itemsPerPageLabel = "Usuarios por página";
     this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
@@ -163,7 +163,7 @@ export class ListaBaseComponent implements OnInit {
 
       this.ngOnInit();
     });
-    
+
   }
 
 }
