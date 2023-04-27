@@ -34,6 +34,7 @@
     "luxon": "~2.3.0",
     "ngx-currency": "^3.0.0",
     "ngx-doc-viewer": "^14.0.0",
+    "ngx-file-drop": "^15.0.0",
     "ngx-loading": "^14.0.0",
     "ngx-quicklink": "~0.2.7",
     "ngx-quill": "~17.0.0",
