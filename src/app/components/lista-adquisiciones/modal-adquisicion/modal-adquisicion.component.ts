@@ -22,6 +22,7 @@ import {
   PropietarioModel,
   ProveedorModel,
 } from "src/app/modelos/Inventarios/propietario.model";
+import { NgxFileDropEntry } from "ngx-file-drop";
 
 @Component({
   selector: "vex-modal-adquisicion",
@@ -38,6 +39,7 @@ export class ModalAdquisicionComponent implements OnInit {
   listaPropietario: PropietarioModel[] = [];
   panelOpenState = false;
   listaProductosAdquisicion = new Array<RelAdquisicionDetalle>();
+  public files: NgxFileDropEntry[] = [];
 
   @ViewChild("accordion", { static: true }) Accordion: MatAccordion;
 
@@ -81,7 +83,104 @@ export class ModalAdquisicionComponent implements OnInit {
     this.listaPropietario = await this.obtenerPropietarios();
     this.inicializarForm();
   }
+///drag drop
+public dropped(files: NgxFileDropEntry[]) {
+  this.files = files;
+  for (const droppedFile of files) {
 
+    // Is it a file?
+    if (droppedFile.fileEntry.isFile) {
+      const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+      fileEntry.file((file: File) => {
+ console.log('dropped',file.type)
+        // Here you can access the real file
+        console.log(droppedFile.relativePath, file);
+        if(file.type =='application/pdf'){
+          this.pdfSeleccionado2(file)
+        }else{ this.xmlSeleccionado2(file)}
+        
+
+        /**
+        // You could upload it like this:
+        const formData = new FormData()
+        formData.append('logo', file, relativePath)
+
+        // Headers
+        const headers = new HttpHeaders({
+          'security-token': 'mytoken'
+        })
+
+        this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
+        .subscribe(data => {
+          // Sanitized logo returned from backend
+        })
+        **/
+
+      });
+    } else {
+      // It was a directory (empty directories are added, otherwise only files)
+      const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+      console.log(droppedFile.relativePath, fileEntry);
+    }
+  }
+}
+
+public fileOver(event){
+  console.log(event);
+}
+
+public fileLeave(event){
+  console.log(event);
+}
+
+async pdfSeleccionado2(file: File) {
+  ;
+  
+    const formData: any = new FormData();
+    formData.append("file", file);
+
+    const respuesta = await this.filemanagerService.cargarArchivo(formData);
+
+    if (respuesta.exito) {
+      this.adquisicionModel.facpdf = respuesta.anotacion;
+      /*  this.produc = event.target.files[0].name;
+      this.archivoEditableToken = respuesta.anotacion;
+      //this.archivoEditableToken = respuesta.respuesta;
+      this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
+      this.swalService.alertaPersonalizada(true, "Carga de archivo correcta");
+    } else {
+      this.swalService.alertaPersonalizada(
+        false,
+        "No se pudo cargar el archivo"
+      );
+    }
+  
+}
+async xmlSeleccionado2(file: File) {
+  ;
+  
+    const formData: any = new FormData();
+    formData.append("file", file);
+
+    const respuesta = await this.filemanagerService.cargarArchivo(formData);
+
+    if (respuesta.exito) {
+      this.adquisicionModel.facxml = respuesta.anotacion;
+      /*  this.produc = event.target.files[0].name;
+      this.archivoEditableToken = respuesta.anotacion;
+      //this.archivoEditableToken = respuesta.respuesta;
+      this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
+      this.swalService.alertaPersonalizada(true, "Carga de archivo correcta");
+    } else {
+      this.swalService.alertaPersonalizada(
+        false,
+        "No se pudo cargar el archivo"
+      );
+    }
+  
+}
+
+///end drag
 
   public async llenarFormModel(adquisicion_){
 

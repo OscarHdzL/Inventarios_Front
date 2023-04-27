@@ -15,6 +15,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     CustomLayoutModule,
     NgxLoadingModule.forRoot({}),
     MatSnackBarModule,
+    NgxFileDropModule
 
   ],
   providers: [{provide:LocationStrategy, useClass:HashLocationStrategy},
