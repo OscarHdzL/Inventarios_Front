@@ -36,19 +36,19 @@ export class MesaValidacionService extends ConfiguracionEndpointsService {
     return await this.postAsync(this.url_api + 'Login/Login', loginModel);
   }
 
-  public async ResetPassword(emailParam: string) : Promise <any> {
-    let usuario = this.encryptService.Encrypt(emailParam)
-    let password = ''
-    return await this.postAsync(this.url_api + 'Login/ResetPassword', {usuario, password});
-  }
+  // public async ResetPassword(emailParam: string) : Promise <any> {
+  //   let usuario = this.encryptService.Encrypt(emailParam)
+  //   let password = ''
+  //   return await this.postAsync(this.url_api + 'Login/ResetPassword', {usuario, password});
+  // }
 
-  public async GetUserById(id: any) : Promise<any> {
-    return await this.getAsync(this.url_api + 'Login/ResetPassword/' + id);
-  }
+  // public async GetUserById(id: any) : Promise<any> {
+  //   return await this.getAsync(this.url_api + 'Login/ResetPassword/' + id);
+  // }
 
-  public async updatePassword(nuevoUsuario: any) : Promise <any> {
-    return await this.putAsync(this.url_api + 'Login/UpdatePassword', nuevoUsuario);
-  }
+  // public async updatePassword(nuevoUsuario: any) : Promise <any> {
+  //   return await this.putAsync(this.url_api + 'Login/UpdatePassword', nuevoUsuario);
+  // }
 
 
 

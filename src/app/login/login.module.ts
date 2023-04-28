@@ -12,10 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoginComponent } from './login.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, ResetPasswordComponent],
+  declarations: [LoginComponent, ResetPasswordComponent, UpdatePasswordComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,
