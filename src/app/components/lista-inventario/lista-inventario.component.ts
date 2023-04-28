@@ -19,8 +19,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
-import {Event, RouterEvent, Router} from '@angular/router';
+import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
+import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
 
 
 @Component({
@@ -81,8 +82,8 @@ export class ListaInventarioComponent implements OnInit {
   async ngOnInit(){
     //console.log("Param URL -> ", this.rutaActiva.snapshot.params.producto);
     this.router.events.pipe(
-      filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
-      ).subscribe((e: RouterEvent) => {
+      filter((e: Event): e is NavigationStart => e instanceof NavigationStart)
+      ).subscribe((e: NavigationStart) => {
         console.log("URL -> ",e.url.split('/')[3]);
 
       if (e.url.split('/')[3] == "asignar") {
@@ -218,6 +219,19 @@ export class ListaInventarioComponent implements OnInit {
 
   openModalAsignacion(usuario: InventarioModel){
     this.dialog.open(ModalAsignarInventarioComponent,{
+      height: 'auto',
+      width: '100%',
+      autoFocus: true,
+      data: usuario,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+
+      this.ngOnInit();
+    });
+  }
+  openModalLoadImage(usuario: InventarioModel){
+    this.dialog.open(ModalLoadImageComponent,{
       height: 'auto',
       width: '100%',
       autoFocus: true,

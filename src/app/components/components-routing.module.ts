@@ -23,6 +23,7 @@ import { ListaProveedorComponent } from './lista-proveedor/lista-proveedor.compo
 import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
+import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 
 const routes: Routes = [
   {
@@ -102,6 +103,11 @@ const routes: Routes = [
   {
     path: 'inventario/:producto',
     component: ListaInventarioComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'ubicaciones',
+    component: ListaUbicacionesComponent,
     canActivate: [AuthGuard]
   }
 
