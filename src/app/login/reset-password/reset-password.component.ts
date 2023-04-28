@@ -17,7 +17,6 @@ export class ResetPasswordComponent implements OnInit {
   inputType = 'password';
   visible = false;
 
-
   constructor(
     private router: Router,
     private fb: UntypedFormBuilder,
@@ -28,40 +27,31 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      user: ['', [Validators.required, Validators.email]],
-      password: ['']
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  async login() {
-
-
-
+  async resetPassword() {
     try {
-      let res = await this.authService.ResetPassword(this.form.value as LoginModel)
-
+      let res = await this.authService.ResetPassword(this.form.value.email as string)
+      
       if(res.exito == true) {
-
+        this.snackbar.open(res.mensaje, null, {
+          duration: 3000
+        });
         this.router.navigate(['/login']);
-        this.snackbar.open(res.mensaje, null, {
-          duration: 3000
-        });
       } else {
-
         this.snackbar.open(res.mensaje, null, {
           duration: 3000
         });
+        this.router.navigate(['/login']);
         return
       }
     } catch (error) {
-
       this.snackbar.open(error.error, null, {
         duration: 3000
       });
       return
     }
-
-
   }
-
 }
