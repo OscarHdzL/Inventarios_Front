@@ -27,8 +27,10 @@ export class CrearPlanoComponent implements OnInit {
   }
   async ngAfterViewInit() {
     this.ctx = this.canvasRef.nativeElement.getContext('2d');
+    this.ctx.font = "italic 600 30px Comic Sans MS";
+    this.ctx.fillStyle = "#FF4418";
+    this.ctx.textAlign = "center";
     this.ctx.drawImage(this.image, 0, 0, (this.image.width*92)/100, (this.image.height*92)/100);
-    this.ctx.fillText("Hola",10,10)
     console.log("Width -> " + this.image.width + " Height -> " + this.image.height);
     // this.ctx = this.canvasRef.nativeElement.getContext('2d');
     // const mouseDownStream = fromEvent(this.canvasRef.nativeElement, 'mousedown');
@@ -79,9 +81,6 @@ export class CrearPlanoComponent implements OnInit {
         this.coordenadas.x1 = event.offsetX
         this.coordenadas.y1 = event.offsetY
         this.ctx.lineWidth = 3;
-        this.ctx.strokeStyle = "red";
-        this.ctx.rect(this.coordenadas.x0, this.coordenadas.y0, this.coordenadas.x1 - this.coordenadas.x0, this.coordenadas.y1 - this.coordenadas.y0)
-        this.ctx.stroke();
         //this.swalService.alertaNombre(this.coordenadas);
         Swal.fire({
             title: "Segundo Punto Seleccionado",
@@ -95,6 +94,10 @@ export class CrearPlanoComponent implements OnInit {
                 this.coordenadas.width = this.coordenadas.x1 - this.coordenadas.x0;
                 this.coordenadas.height = this.coordenadas.y1 - this.coordenadas.y0;
                 console.log("Result: ", this.coordenadas);
+                this.ctx.strokeStyle = "#093F97";
+                this.ctx.rect(this.coordenadas.x0, this.coordenadas.y0, this.coordenadas.x1 - this.coordenadas.x0, this.coordenadas.y1 - this.coordenadas.y0)
+                this.ctx.stroke();
+                this.ctx.fillText(result.value,(this.coordenadas.x0 + this.coordenadas.x1)/2,(this.coordenadas.y0 + this.coordenadas.y1)/2)
                 this.swalService.alertaPersonalizada(true,"Seccion Guardada")
             }
         });

@@ -19,7 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
-import {Event, RouterEvent, Router} from '@angular/router';
+import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
 
 
@@ -81,8 +81,8 @@ export class ListaInventarioComponent implements OnInit {
   async ngOnInit(){
     //console.log("Param URL -> ", this.rutaActiva.snapshot.params.producto);
     this.router.events.pipe(
-      filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
-      ).subscribe((e: RouterEvent) => {
+      filter((e: Event): e is NavigationStart => e instanceof NavigationStart)
+      ).subscribe((e: NavigationStart) => {
         console.log("URL -> ",e.url.split('/')[3]);
 
       if (e.url.split('/')[3] == "asignar") {

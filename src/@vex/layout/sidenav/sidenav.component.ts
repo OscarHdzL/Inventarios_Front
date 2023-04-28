@@ -139,6 +139,13 @@ export class SidenavComponent implements OnInit {
       icon: 'mat:assessment',
       routerLinkActiveOptions: { exact: true }
     });
+    children.push({
+      type: 'link',
+      label: 'Ubicaciones',
+      route: '/components/ubicaciones',
+      icon: 'mat:map',
+      routerLinkActiveOptions: { exact: true }
+    });
 
 
 

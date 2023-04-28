@@ -93,6 +93,8 @@ import { ListaInventarioComponent } from './lista-inventario/lista-inventario.co
 import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asignar-inventario/modal-asignar-inventario.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
+import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones/modal-ubicaciones.component';
 
 @NgModule({
   declarations: [
@@ -159,7 +161,9 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     CrearPlanoComponent,
     ListaInventarioComponent,
     ModalInventarioComponent,
-    ModalAsignarInventarioComponent
+    ModalAsignarInventarioComponent,
+    ListaUbicacionesComponent,
+    ModalUbicacionesComponent
   ],
   imports: [
     CommonModule,
