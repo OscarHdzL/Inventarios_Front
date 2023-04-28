@@ -95,6 +95,10 @@ import { ModalAsignarInventarioComponent } from './lista-inventario/modal-asigna
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones/modal-ubicaciones.component';
+import { ModalLoadImageComponent } from './lista-inventario/modal-load-image/modal-load-image.component';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+
+
 
 @NgModule({
   declarations: [
@@ -164,6 +168,7 @@ import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones
     ModalAsignarInventarioComponent,
     ListaUbicacionesComponent,
     ModalUbicacionesComponent
+    ModalLoadImageComponent
   ],
   imports: [
     CommonModule,
@@ -196,7 +201,9 @@ import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones
     MatButtonToggleModule,
     NgxCurrencyModule,
     MatChipsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    IvyCarouselModule
+    
 
 
   ],
