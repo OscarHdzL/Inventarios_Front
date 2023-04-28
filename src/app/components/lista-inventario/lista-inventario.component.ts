@@ -21,6 +21,7 @@ import { ModalInventarioComponent } from './modal-inventario/modal-inventario.co
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
 import {Event, RouterEvent, Router} from '@angular/router';
 import { filter } from 'rxjs';
+import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
 
 
 @Component({
@@ -218,6 +219,19 @@ export class ListaInventarioComponent implements OnInit {
 
   openModalAsignacion(usuario: InventarioModel){
     this.dialog.open(ModalAsignarInventarioComponent,{
+      height: 'auto',
+      width: '100%',
+      autoFocus: true,
+      data: usuario,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+
+      this.ngOnInit();
+    });
+  }
+  openModalLoadImage(usuario: InventarioModel){
+    this.dialog.open(ModalLoadImageComponent,{
       height: 'auto',
       width: '100%',
       autoFocus: true,
