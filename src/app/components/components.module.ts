@@ -167,7 +167,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     ModalInventarioComponent,
     ModalAsignarInventarioComponent,
     ListaUbicacionesComponent,
-    ModalUbicacionesComponent
+    ModalUbicacionesComponent,
     ModalLoadImageComponent
   ],
   imports: [
