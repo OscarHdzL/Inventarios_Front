@@ -15,6 +15,7 @@ import { ProcesoUsuarioFormModel } from '../modelos/proceso-usuario.model';
 import { DocumentosProyectoFormModel } from '../modelos/DocumentosProyecto.model';
 import { ComentarioDocumentoProyectoFormModel } from '../modelos/ComentarioDocumentoProyecto.model';
 import { LoginModel } from '../modelos/login.model';
+import { EncriptarService } from './encriptar.service';
 
 
 
@@ -24,17 +25,29 @@ import { LoginModel } from '../modelos/login.model';
 export class MesaValidacionService extends ConfiguracionEndpointsService {
 
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, private encryptService: EncriptarService) {
     super(http);
   }
 
 
   public async Login(loginModel: LoginModel) : Promise <any> {
-    return await this.postAsync(this.url_api + 'Sesion/Login', loginModel);
+    let passwordEncrypt = this.encryptService.Encrypt(loginModel.password)
+    loginModel.password = passwordEncrypt
+    return await this.postAsync(this.url_api + 'Login/Login', loginModel);
   }
 
-  public async ResetPassword(loginModel: LoginModel) : Promise <any> {
-    return await this.postAsync(this.url_api + 'Sesion/ResetPass', loginModel);
+  public async ResetPassword(emailParam: string) : Promise <any> {
+    let usuario = this.encryptService.Encrypt(emailParam)
+    let password = ''
+    return await this.postAsync(this.url_api + 'Login/ResetPassword', {usuario, password});
+  }
+
+  public async GetUserById(id: any) : Promise<any> {
+    return await this.getAsync(this.url_api + 'Login/ResetPassword/' + id);
+  }
+
+  public async updatePassword(nuevoUsuario: any) : Promise <any> {
+    return await this.putAsync(this.url_api + 'Login/UpdatePassword', nuevoUsuario);
   }
 
 
