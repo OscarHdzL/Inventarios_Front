@@ -53,7 +53,6 @@ export class SidenavComponent implements OnInit {
     localStorage.setItem(KeysStorageEnum.USER,JSON.stringify(this.sesionUsuarioActual));
 
     let children = [];
-
     children.push({
       type: 'dropdown',
       label: 'Catálogos',
@@ -110,21 +109,35 @@ export class SidenavComponent implements OnInit {
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         },
+      ]
+    });
+    children.push({
+      type: 'dropdown',
+      label: 'Inventario',
+      icon: 'mat:assignment',
+      children: [
         {
           type: 'link',
-          label: 'Adquisiciones',
-          route: '/components/adquisiciones',
+          label: 'Productos sin asignar',
+          route: '/components/inventario/asignar',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         },
         {
           type: 'link',
-          label: 'Inventario',
-          route: '/components/inventario',
+          label: 'Productos asignados',
+          route: '/components/inventario/asignados',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         }
       ]
+    });
+    children.push({
+      type: 'link',
+      label: 'Adquisiciones',
+      route: '/components/adquisiciones',
+      icon: 'mat:assessment',
+      routerLinkActiveOptions: { exact: true }
     });
 
 

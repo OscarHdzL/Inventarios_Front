@@ -100,7 +100,7 @@ const routes: Routes = [
     component: CrearPlanoComponent,
   },
   {
-    path: 'inventario',
+    path: 'inventario/:producto',
     component: ListaInventarioComponent,
     canActivate: [AuthGuard]
   }

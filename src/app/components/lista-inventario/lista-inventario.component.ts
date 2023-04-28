@@ -19,7 +19,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
-
+import {Event, RouterEvent, Router} from '@angular/router';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class ListaInventarioComponent implements OnInit {
   public selectedVal: string = 'cards';
 
   public tamanoPantalla: boolean;
+  public productosAsignar: boolean;
   formFiltros: FormGroup;
 
 
@@ -69,11 +71,28 @@ export class ListaInventarioComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef,
     private inventariosService: InventariosService,
     private formBuilder: FormBuilder,
+    private router: Router
     ) {
+
       this.iniciarForm()
+
    }
 
   async ngOnInit(){
+    //console.log("Param URL -> ", this.rutaActiva.snapshot.params.producto);
+    this.router.events.pipe(
+      filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
+      ).subscribe((e: RouterEvent) => {
+        console.log("URL -> ",e.url.split('/')[3]);
+
+      if (e.url.split('/')[3] == "asignar") {
+        this.productosAsignar = true;
+      }
+      else {
+        this.productosAsignar = false;
+      };
+
+    });
 
     this.dataSourceOriginal = await this.obtenerInventarios();
 
