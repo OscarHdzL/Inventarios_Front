@@ -27,7 +27,7 @@ export class ListaFabricantesComponent implements OnInit {
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 9;
+  pageSize = 10;
   pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: any[] = [];

@@ -83,38 +83,59 @@ export class ListaInventarioComponent implements OnInit {
     //console.log("Param URL -> ", this.rutaActiva.snapshot.params.producto);
     this.router.events.pipe(
       filter((e: Event): e is NavigationStart => e instanceof NavigationStart)
-      ).subscribe((e: NavigationStart) => {
+      ).subscribe(async (e: NavigationStart) => {
         console.log("URL -> ",e.url.split('/')[3]);
-
-      if (e.url.split('/')[3] == "asignar") {
+        this.listaItems = []
+      if (e.url.split('/')[3] == "registrados") {
         this.productosAsignar = true;
+        this.dataSourceOriginal = await this.obtenerInventarios();
+
+        if (window.innerWidth >= 1280) {
+          this.tamanoPantalla = true;
+        }
+        else {
+          this.tamanoPantalla = false;
+        }
+
+        this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+        //this.paginatorCards.length = this.listaItems.length;
+
+
+        this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+        this.dataSourceTabla.paginator = this.paginator;
+        this.dataSourceTabla.sort = this.sort;
+
+        this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
+        this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+        this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
       }
       else {
         this.productosAsignar = false;
+        this.dataSourceOriginal = await this.obtenerInventarios();
+
+        if (window.innerWidth >= 1280) {
+          this.tamanoPantalla = true;
+        }
+        else {
+          this.tamanoPantalla = false;
+        }
+
+        this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+        //this.paginatorCards.length = this.listaItems.length;
+
+
+        this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+        this.dataSourceTabla.paginator = this.paginator;
+        this.dataSourceTabla.sort = this.sort;
+
+        this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
+        this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+        this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
       };
 
     });
 
-    this.dataSourceOriginal = await this.obtenerInventarios();
 
-      if (window.innerWidth >= 1280) {
-        this.tamanoPantalla = true;
-      }
-      else {
-        this.tamanoPantalla = false;
-      }
-
-      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      //this.paginatorCards.length = this.listaItems.length;
-
-
-    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
-    this.dataSourceTabla.paginator = this.paginator;
-    this.dataSourceTabla.sort = this.sort;
-
-    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
-    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
-    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
 
 
@@ -191,7 +212,7 @@ export class ListaInventarioComponent implements OnInit {
   }
 
   public async obtenerInventarios(){
-    const respuesta = await this.inventariosService.obtenerInventarios();
+    const respuesta = await this.inventariosService.obtenerInventariosAsignados(this.productosAsignar);
     return respuesta ? respuesta : [];
   }
 
