@@ -3,8 +3,8 @@
 <vex-page-layout>
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
-      <div>>
-        <h1 class="title mt-0 mb-1">Productos sin registrar</h1>
+      <div>
+        <h1 class="title mt-0 mb-1">Productos registrados</h1>
         <vex-breadcrumbs [crumbs]="['Productos']"></vex-breadcrumbs>
       </div>
     </div>
@@ -117,7 +117,7 @@
                 <span
                   class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
                 >
-                  Productos sin registar
+                  Productos registrados
                 </span>
               </div>
                 <div class="text-center"><b>Modelo:</b> {{ item.modelo }}</div>
@@ -200,7 +200,7 @@
                     </svg>
                   </button>
                 </div>
-                <!-- <div *ngIf="productosAsignar==true" class="mr-5">
+                <div class="mr-5">
                   <button
                   (click)="openModalLoadImage(item)"
                   matTooltip="Cargar imagenes"
@@ -209,7 +209,7 @@
                 <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMzY4LDIyNGMyNi41LDAsNDgtMjEuNSw0OC00OGMwLTI2LjUtMjEuNS00OC00OC00OGMtMjYuNSwwLTQ4LDIxLjUtNDgsNDhDMzIwLDIwMi41LDM0MS41LDIyNCwzNjgsMjI0eiIvPjxwYXRoIGQ9Ik00NTIsNjRINjBjLTE1LjYsMC0yOCwxMi43LTI4LDI4LjN2MzI3LjRjMCwxNS42LDEyLjQsMjguMywyOCwyOC4zaDM5MmMxNS42LDAsMjgtMTIuNywyOC0yOC4zVjkyLjMgICBDNDgwLDc2LjcsNDY3LjYsNjQsNDUyLDY0eiBNMzQ4LjksMjYxLjdjLTMtMy41LTcuNi02LjItMTIuOC02LjJjLTUuMSwwLTguNywyLjQtMTIuOCw1LjdsLTE4LjcsMTUuOGMtMy45LDIuOC03LDQuNy0xMS41LDQuNyAgIGMtNC4zLDAtOC4yLTEuNi0xMS00LjFjLTEtMC45LTIuOC0yLjYtNC4zLTQuMUwyMjQsMjE1LjNjLTQtNC42LTEwLTcuNS0xNi43LTcuNWMtNi43LDAtMTIuOSwzLjMtMTYuOCw3LjhMNjQsMzY4LjJWMTA3LjcgICBjMS02LjgsNi4zLTExLjcsMTMuMS0xMS43aDM1Ny43YzYuOSwwLDEyLjUsNS4xLDEyLjksMTJsMC4zLDI2MC40TDM0OC45LDI2MS43eiIvPjwvZz48L3N2Zz4=" width="20rem">
 
                 </button>
-                </div> -->
+                </div>
 
                 <!-- <div class="mr-5">
                   <button
@@ -395,3 +395,4 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
+

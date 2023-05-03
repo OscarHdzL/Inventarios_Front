@@ -25,6 +25,7 @@ import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
+import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
 
 const routes: Routes = [
   {
@@ -102,7 +103,12 @@ const routes: Routes = [
     component: CrearPlanoComponent,
   },
   {
-    path: 'inventario/:producto',
+    path: 'inventario/registrados',
+    component: ListaInventarioRegistradosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'inventario/registrar',
     component: ListaInventarioComponent,
     canActivate: [AuthGuard]
   },

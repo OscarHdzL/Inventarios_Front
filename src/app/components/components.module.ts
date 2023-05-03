@@ -98,6 +98,7 @@ import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones
 import { ModalLoadImageComponent } from './lista-inventario/modal-load-image/modal-load-image.component';
 import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
 import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/modal-asignacion-equipo/modal-asignacion-equipo.component';
+import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
 
 
 
@@ -173,7 +174,8 @@ import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/moda
     ModalUbicacionesComponent,
     ModalLoadImageComponent,
     AsignacionEquipoUsuarioComponent,
-    ModalAsignacionEquipoComponent
+    ModalAsignacionEquipoComponent,
+    ListaInventarioRegistradosComponent
   ],
   imports: [
     CommonModule,
