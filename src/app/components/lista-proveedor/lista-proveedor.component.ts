@@ -104,6 +104,7 @@ export class ListaProveedorComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.dataSourceOriginal = [];
     this.dataSourceOriginal = await this.obtenerPropietarios();
+
     if (window.innerWidth >= 1280) {
       this.tamanoPantalla = true;
     }
