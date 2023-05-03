@@ -1,11 +1,12 @@
-<div class="flex items-center " style="border: none !important" mat-dialog-title >
+<div class="flex items-center " style="border: none !important; overflow:auto;" mat-dialog-title >
  
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
         <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
-  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-    <div class="lg:w-1/3 md:w-1/3 w-full" >
+  <div class="flex grid grid-cols-1" style="justify-content: center;">
+      
+    <div  >
         <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
     (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
@@ -25,11 +26,45 @@
   </button></div>
 
     </div>
-    <div class="lg:w-2/3 md:w-2/3 w-full" >
-        <carousel
+  
+    <div  >
+        
+        <!-- <carousel
     [images]="images">
-</carousel>
+</carousel> -->
+<!-- <div class="slideshow-container">
+    <div *ngFor="let item of images" class="mySlides fade">
+        
+        <img src="{{item.path}}" style="width:20%">
+        <div class="text">Caption Text</div>
+      </div>
+</div> 
+ -->
+      <!--         -->
+          <div *ngIf="images.length > 0">
+           <img src="{{imagenLoad}}" style="margin: auto;max-width: 50rem;max-height: 50rem;" >
+           <div class="flex justify-between items-center mb-10">
+            <button (click)="deleteImage()"  color="basic" mat-mini-fab matTooltip="Eliminar"
+            type="button">
+            <mat-icon svgIcon="mat:delete"></mat-icon>
+          </button>
+          <button (click)="navegar()" *ngIf="images.length > 1"  color="basic" mat-mini-fab matTooltip="Hacia adelante"
+                    type="button">
+                    <mat-icon svgIcon="mat:arrow_forward_ios"></mat-icon>
+                  </button>
+           </div>
+           
+
+                  <div align="end" style="vertical-align: middle">
+                    
+                </div>
+        </div>
+
+
+  
     </div>
   </div>
+  
+  
 
 

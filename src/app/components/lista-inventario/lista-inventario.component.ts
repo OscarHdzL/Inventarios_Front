@@ -51,6 +51,7 @@ export class ListaInventarioComponent implements OnInit {
   public tamanoPantalla: boolean;
   public productosAsignar: boolean;
   formFiltros: FormGroup;
+  loadImages:boolean=false;
 
 
   columns: TableColumn<any>[] = [
@@ -72,7 +73,8 @@ export class ListaInventarioComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef,
     private inventariosService: InventariosService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+ 
     ) {
 
       this.iniciarForm()
@@ -134,6 +136,12 @@ export class ListaInventarioComponent implements OnInit {
       };
 
     });
+    let url=window.location.href;
+    if(url.indexOf('asignados'))
+    {
+      this.loadImages=true;
+    }
+    console.log('this.productosAsignar',)
 
 
   }

@@ -96,7 +96,10 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones/modal-ubicaciones.component';
 import { ModalLoadImageComponent } from './lista-inventario/modal-load-image/modal-load-image.component';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
+import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/modal-asignacion-equipo/modal-asignacion-equipo.component';
+
+
 
 
 
@@ -168,7 +171,9 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     ModalAsignarInventarioComponent,
     ListaUbicacionesComponent,
     ModalUbicacionesComponent,
-    ModalLoadImageComponent
+    ModalLoadImageComponent,
+    AsignacionEquipoUsuarioComponent,
+    ModalAsignacionEquipoComponent
   ],
   imports: [
     CommonModule,
@@ -202,7 +207,8 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     NgxCurrencyModule,
     MatChipsModule,
     NgxFileDropModule,
-    IvyCarouselModule
+
+
     
 
 

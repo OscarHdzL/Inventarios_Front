@@ -24,6 +24,7 @@ import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
+import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
 
 const routes: Routes = [
   {
@@ -108,6 +109,11 @@ const routes: Routes = [
   {
     path: 'ubicaciones',
     component: ListaUbicacionesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'asignacion-equipo-usuario',
+    component: AsignacionEquipoUsuarioComponent,
     canActivate: [AuthGuard]
   }
 
