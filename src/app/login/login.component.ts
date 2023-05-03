@@ -37,26 +37,26 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      user: ['', Validators.required],
+      usuario: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
+  //test
   async login() {
     this.errorMessage = false
-
+    
     try {
-      //let res = await this.authService.Login(this.form.value as LoginModel)
-      let res = {exito: true, respuesta: new SesionModel(), mensaje: ''}
-
+      let res = await this.authService.Login(this.form.value as LoginModel)
+      
       if(res.exito == true) {
-
-        let sesion = res.respuesta as SesionModel
+        //let sesion = res.respuesta as SesionModel
         let fActual = new Date();
         let minutos = 30;
-        sesion.vigenciaSesion = new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )
-        console.log(sesion.vigenciaSesion + " se establecio la vigencia" )
-        localStorage.setItem(KeysStorageEnum.USER, JSON.stringify(sesion));
+
+        //sesion.vigenciaSesion = new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )
+        //console.log(sesion.vigenciaSesion + " se establecio la vigencia" )
+        localStorage.setItem(KeysStorageEnum.USER, JSON.stringify(new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )));
         this.router.navigate(['/components/inicio']);
         this.snackbar.open('Acceso correcto', null, {
           duration: 3000,
@@ -76,8 +76,6 @@ export class LoginComponent implements OnInit {
       });
       return
     }
-
-
   }
 
   toggleVisibility() {

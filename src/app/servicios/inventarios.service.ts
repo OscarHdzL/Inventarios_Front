@@ -215,6 +215,10 @@ export class InventariosService extends ConfiguracionEndpointsService {
      public async obtenerInventarios() : Promise <any> {
       return await this.getAsync(this.url_api + 'Inventario/seleccionar/todos');
     }
+    /* Inventario */
+    public async obtenerInventariosAsignados(bol: boolean) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionar/todos?registrados='+bol);
+    }
 
     public async obtenerInventarioAccesorios(id: number) : Promise <any> {
       return await this.getAsync(this.url_api + 'Inventario/seleccionarAccesorios/' + id);

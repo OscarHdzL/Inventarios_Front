@@ -13,21 +13,20 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
-import { ModalFabricanteComponent } from './modal-fabricante/modal-fabricante.component';
-
+import { ModalUbicacionesComponent } from './modal-ubicaciones/modal-ubicaciones.component';
 
 @Component({
-  selector: 'vex-lista-fabricantes',
-  templateUrl: './lista-fabricantes.component.html',
-  styleUrls: ['./lista-fabricantes.component.scss']
+  selector: 'vex-lista-ubicaciones',
+  templateUrl: './lista-ubicaciones.component.html',
+  styleUrls: ['./lista-ubicaciones.component.scss']
 })
-export class ListaFabricantesComponent implements OnInit {
+export class ListaUbicacionesComponent implements OnInit {
 
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageSize = 10;
+  pageSize = 6;
   pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
   dataSourceOriginal: any[] = [];
@@ -125,7 +124,7 @@ export class ListaFabricantesComponent implements OnInit {
     this.listaItems = this.dataSourceOriginal.slice(firstCut, secondCut);
   }
   openModal(usuario: any){
-    this.dialog.open(ModalFabricanteComponent,{
+    this.dialog.open(ModalUbicacionesComponent,{
       height: 'auto',
       width: '100%',
       autoFocus: true,

@@ -19,7 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
-import {Event, RouterEvent, Router, ActivatedRoute} from '@angular/router';
+import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
 import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
 
@@ -74,7 +74,7 @@ export class ListaInventarioComponent implements OnInit {
     private inventariosService: InventariosService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route:ActivatedRoute
+ 
     ) {
 
       this.iniciarForm()
@@ -84,16 +84,55 @@ export class ListaInventarioComponent implements OnInit {
   async ngOnInit(){
     //console.log("Param URL -> ", this.rutaActiva.snapshot.params.producto);
     this.router.events.pipe(
-      filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
-      ).subscribe((e: RouterEvent) => {
-       
+      filter((e: Event): e is NavigationStart => e instanceof NavigationStart)
+      ).subscribe(async (e: NavigationStart) => {
         console.log("URL -> ",e.url.split('/')[3]);
-
-      if (e.url.split('/')[3] == "asignar") {
+        this.listaItems = []
+      if (e.url.split('/')[3] == "registrados") {
         this.productosAsignar = true;
+        this.dataSourceOriginal = await this.obtenerInventarios();
+
+        if (window.innerWidth >= 1280) {
+          this.tamanoPantalla = true;
+        }
+        else {
+          this.tamanoPantalla = false;
+        }
+
+        this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+        //this.paginatorCards.length = this.listaItems.length;
+
+
+        this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+        this.dataSourceTabla.paginator = this.paginator;
+        this.dataSourceTabla.sort = this.sort;
+
+        this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
+        this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+        this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
       }
       else {
         this.productosAsignar = false;
+        this.dataSourceOriginal = await this.obtenerInventarios();
+
+        if (window.innerWidth >= 1280) {
+          this.tamanoPantalla = true;
+        }
+        else {
+          this.tamanoPantalla = false;
+        }
+
+        this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+        //this.paginatorCards.length = this.listaItems.length;
+
+
+        this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+        this.dataSourceTabla.paginator = this.paginator;
+        this.dataSourceTabla.sort = this.sort;
+
+        this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
+        this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
+        this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
       };
 
     });
@@ -104,26 +143,7 @@ export class ListaInventarioComponent implements OnInit {
     }
     console.log('this.productosAsignar',)
 
-    this.dataSourceOriginal = await this.obtenerInventarios();
 
-      if (window.innerWidth >= 1280) {
-        this.tamanoPantalla = true;
-      }
-      else {
-        this.tamanoPantalla = false;
-      }
-
-      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
-      //this.paginatorCards.length = this.listaItems.length;
-
-
-    this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
-    this.dataSourceTabla.paginator = this.paginator;
-    this.dataSourceTabla.sort = this.sort;
-
-    this.matPaginatorIntl.itemsPerPageLabel = "Registros por página";
-    this.matPaginatorIntl.previousPageLabel  = 'Anterior página';
-    this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
 
 
@@ -200,7 +220,7 @@ export class ListaInventarioComponent implements OnInit {
   }
 
   public async obtenerInventarios(){
-    const respuesta = await this.inventariosService.obtenerInventarios();
+    const respuesta = await this.inventariosService.obtenerInventariosAsignados(this.productosAsignar);
     return respuesta ? respuesta : [];
   }
 

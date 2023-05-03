@@ -118,15 +118,15 @@ export class SidenavComponent implements OnInit {
       children: [
         {
           type: 'link',
-          label: 'Productos sin asignar',
-          route: '/components/inventario/asignar',
+          label: 'Productos registrados',
+          route: '/components/inventario/registrados',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         },
         {
           type: 'link',
-          label: 'Productos asignados',
-          route: '/components/inventario/asignados',
+          label: 'Productos sin registrar',
+          route: '/components/inventario/registrar',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
         }
@@ -137,6 +137,13 @@ export class SidenavComponent implements OnInit {
       label: 'Adquisiciones',
       route: '/components/adquisiciones',
       icon: 'mat:assessment',
+      routerLinkActiveOptions: { exact: true }
+    });
+    children.push({
+      type: 'link',
+      label: 'Ubicaciones',
+      route: '/components/ubicaciones',
+      icon: 'mat:map',
       routerLinkActiveOptions: { exact: true }
     });
 

@@ -1,26 +1,26 @@
-<div></div>
-
 <vex-page-layout>
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Adquisiciones</h1>
-        <vex-breadcrumbs [crumbs]="['Catálogos','Adquisiciones']"></vex-breadcrumbs>
+        <h1 class="title mt-0 mb-1">Lista de Ubicaciones</h1>
+        <vex-breadcrumbs [crumbs]="['Ubicaciones']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
-
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
       <div
         class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
       >
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
-
+          <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
+          matTooltip="Agregar Fabricante" type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button> -->
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Adquisicion"
+            matTooltip="Agregar"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -62,6 +62,11 @@
         </div>
 
         <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
+          <!-- <mat-form-field class="px-2 py-2 w-full" appearance="fill">
+          <mat-label>Buscador</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar...">
+          <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
+        </mat-form-field> -->
           <form>
             <input
               type="text"
@@ -87,26 +92,17 @@
         </div>
       </div>
 
-
-
-
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
-<!--           <div
+          <div
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
-            <h1 class="title text-3xl">No hay registros</h1>
-          </div> -->
-          <div
-          *ngIf="this.listaItems.length == 0"
-          class="flex-auto items-center justify-center"
-        >
           <h1 class="m-10 title" style="text-align: center">
-            No se encontraron adquisiciones registradas
+            No se encontraron registros
           </h1>
-        </div>
+          </div>
           <div
             *ngIf="this.listaItems.length != 0"
             class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
@@ -115,47 +111,41 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <div class="flex flex-col mb-1 mt-1">
-                <div class="flex justify-end mb-3">
-                  <span
-                    class="bg-blue-100 text-salmon-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-salmon-900 dark:text-salmon-300"
-                  >
-                    Adquisiciones
-                  </span>
-                </div>
-                <div class="text-center">
-                  <span class="font-bold">Proveedor</span>: {{ item.proveedor }}
-                </div>
+            <div class="flex flex-col mb-1 mt-1">
+              <div class="flex justify-end mb-3">
+                <span
+                  class="bg-blue-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"
+                >
+                  Ubicaciones
+                </span>
               </div>
+              <div class="text-center">
+                <span class="font-bold">Nombre</span>: {{ item.nombre }}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="flex justify-center items-center mb-1 mt-1">
+              <div class="text-center">
+                <span class="font-bold">Razón social</span>: {{ item.razonsocial }}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="flex justify-center items-center mb-1 mt-1">
+              <div class="text-center">
+                <span class="font-bold">Direccion</span>: {{ item.direccion }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="flex justify-between items-center mb-1 mt-1">
+              <div>
+                <span class="font-bold">Sigla</span>: {{ item.sigla }}
+              </div>
+              <div>
+                <span class="font-bold">RFC</span>: {{ item.rfc }}
+              </div>
+            </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Propietario</span>: {{ item.propietario }}
-                </div>
-              </div>
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Fecha de compra</span>: {{ item.fechadecompra }}
-                </div>
-              </div>
-              <mat-divider></mat-divider>
-
-              <div class="flex justify-between items-center mb-10">
-                <div class="text-center">
-                  <span class="font-bold">Articulos</span>: {{ item.articulos }}
-                </div>
-                <div class="text-center">
-                  <span class="font-bold">Monto</span>: {{ item.monto | currency }}
-                </div>
-              </div>
-              <mat-divider></mat-divider>
-              <div class="flex justify-center items-center">
                 <div class="mr-5">
-                  <!--   <button (click)="openModal(item)" color="basic" mat-mini-fab matTooltip="Editar"
-                    type="button">
-                    <mat-icon svgIcon="mat:edit"></mat-icon>
-                  </button> -->
                   <button
                     (click)="openModal(item)"
                     matTooltip="Editar"
@@ -192,8 +182,6 @@
                     </svg>
                   </button>
                 </div>
-                <div class="mr-5">
-                </div>
                 <!-- <div class="mr-5">
                   <button
                     matTooltip="Descargar documentación"
@@ -212,7 +200,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarAdquisicion(item)"
+                      (change)="EliminarFabricante(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -238,60 +226,16 @@
           mat-table
           matSort
         >
-        <ng-container matColumnDef="proveedor">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Proveedor
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="Proveedor">
-            <div>
-              {{ row.proveedor }}
-            </div>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="propietario">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Propietario
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="Propietario">
-            <div>
-              {{ row.propietario }}
-            </div>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="monto">
+          <ng-container matColumnDef="nombre">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Monto
+              Nombre
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Monto">
+            <mat-cell *matCellDef="let row" data-label="Nombre">
               <div>
-                {{ row.monto | currency}}
+                {{ row.nombre }}
               </div>
             </mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="impuesto">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Impuesto
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Impuesto">
-              <div>
-                {{ row.impuesto | currency}}
-              </div>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="articulos">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Articulos
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Articulos">
-              <div>
-                {{ row.articulos }}
-              </div>
-            </mat-cell>
-          </ng-container>
-
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Acción
@@ -300,23 +244,23 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar adquisicion"
+                  matTooltip="Editar Fabricante"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
                 </a>
-                <a
+                <!-- <a
                   (click)="openModal(row)"
                   matTooltip="Ver funciones"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
-                </a>
+                </a> -->
                 <a
-                  (click)="EliminarAdquisicion(row)"
-                  matTooltip="Eliminar adquisicion"
+                  (click)="EliminarFabricante(row)"
+                  matTooltip="Eliminar Fabricante"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -336,9 +280,9 @@
           *ngIf="this.listaItems.length == 0"
           class="flex-auto items-center justify-center"
         >
-          <h1 class="m-10 title" style="text-align: center">
-            No se encontraron adquisiciones registradas
-          </h1>
+        <h1 class="m-10 title" style="text-align: center">
+          No se encontraron registros
+        </h1>
         </div>
         <mat-paginator
           #paginator
