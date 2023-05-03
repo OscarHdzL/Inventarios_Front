@@ -19,7 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
 import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
 import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
-import {Event, RouterEvent, Router} from '@angular/router';
+import {Event, RouterEvent, Router, ActivatedRoute} from '@angular/router';
 import { filter } from 'rxjs';
 import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
 
@@ -51,6 +51,7 @@ export class ListaInventarioComponent implements OnInit {
   public tamanoPantalla: boolean;
   public productosAsignar: boolean;
   formFiltros: FormGroup;
+  loadImages:boolean=false;
 
 
   columns: TableColumn<any>[] = [
@@ -72,7 +73,8 @@ export class ListaInventarioComponent implements OnInit {
     private changeDetectorRefs: ChangeDetectorRef,
     private inventariosService: InventariosService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route:ActivatedRoute
     ) {
 
       this.iniciarForm()
@@ -84,6 +86,7 @@ export class ListaInventarioComponent implements OnInit {
     this.router.events.pipe(
       filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
       ).subscribe((e: RouterEvent) => {
+       
         console.log("URL -> ",e.url.split('/')[3]);
 
       if (e.url.split('/')[3] == "asignar") {
@@ -94,6 +97,12 @@ export class ListaInventarioComponent implements OnInit {
       };
 
     });
+    let url=window.location.href;
+    if(url.indexOf('asignados'))
+    {
+      this.loadImages=true;
+    }
+    console.log('this.productosAsignar',)
 
     this.dataSourceOriginal = await this.obtenerInventarios();
 

@@ -98,6 +98,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 
 
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -198,7 +199,8 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     NgxCurrencyModule,
     MatChipsModule,
     NgxFileDropModule,
-    IvyCarouselModule
+    IvyCarouselModule,
+
     
 
 
