@@ -96,7 +96,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones/modal-ubicaciones.component';
 import { ModalLoadImageComponent } from './lista-inventario/modal-load-image/modal-load-image.component';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+
 
 
 
@@ -203,7 +203,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     NgxCurrencyModule,
     MatChipsModule,
     NgxFileDropModule,
-    IvyCarouselModule,
+
 
     
 
