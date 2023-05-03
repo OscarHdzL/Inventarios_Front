@@ -88,6 +88,9 @@ export class ModalProductoComponent implements OnInit {
   get caracteristica() {
     return this.formCaracteristica.get("caracteristica");
   }
+  get hardware() {
+    return this.formCaracteristica.get("hardware");
+  }
 
   public async obtenerFabricantes() {
     const respuesta =
@@ -120,6 +123,7 @@ export class ModalProductoComponent implements OnInit {
 
     this.formCaracteristica = this.formBuilder.group({
       caracteristica: ["", Validators.required],
+      hardware: ["", [Validators.required]],
     });
   }
 
@@ -145,12 +149,19 @@ export class ModalProductoComponent implements OnInit {
   }
 
   public async agregarCaracteristica() {
+    debugger
     if (this.caracteristica.value) {
       if (this.productoModel.id > 0) {
         let caracteritica = new CaracteristicaProductoFormModel_();
         caracteritica.catProductoId = this.productoModel.id;
         caracteritica.nombre = this.caracteristica.value;
-
+        caracteritica.hardware = this.hardware.value
+        if (this.hardware.value) {
+          caracteritica.tipo = "HARDWARE"
+        }
+        else {
+          caracteritica.tipo = "SOFTWARE"
+        }
         const respuesta =
           await this.inventariosService.insertarCaracteristicaProducto(
             caracteritica
@@ -166,6 +177,13 @@ export class ModalProductoComponent implements OnInit {
         let caracteritica = new CaracteristicaProductoFormModel_();
         caracteritica.catProductoId = this.productoModel.id;
         caracteritica.nombre = this.caracteristica.value;
+        caracteritica.hardware = this.hardware.value
+        if (this.hardware.value) {
+          caracteritica.tipo = "HARDWARE"
+        }
+        else {
+          caracteritica.tipo = "SOFTWARE"
+        }
         this.listaCaracteristicas.push(caracteritica);
         this.formCaracteristica.reset();
       }
@@ -198,6 +216,7 @@ export class ModalProductoComponent implements OnInit {
     this.categoria.setValue(this.productoModel.catCategoriaProductoId);
     this.vidaUtil.setValue(this.productoModel.vidautil);
     this.nuevo.setValue(this.productoModel.nuevo);
+    this.hardware.setValue(false);
   }
 
   public async guardarProducto() {
