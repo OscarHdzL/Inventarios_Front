@@ -9,51 +9,24 @@
   </vex-page-layout-header>
   <vex-page-layout-content class="-mt-6">
     <div class="card overflow-auto mt-5">
-      <div
-        class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
-      >
+      <div class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col">
         <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
           <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
           matTooltip="Agregar Fabricante" type="button">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button> -->
 
-          <button
-            (click)="openModal(null)"
-            matTooltip="Agregar"
-            class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-          >
-            <svg
-              class="fill-current w-5 h-5"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+          <button (click)="openModal(null)" matTooltip="Agregar"
+            class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md">
+            <svg class="fill-current w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <g id="Complete">
                 <g data-name="add" id="add-2">
                   <g>
-                    <line
-                      fill="none"
-                      stroke="#000000"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      x1="12"
-                      x2="12"
-                      y1="19"
-                      y2="5"
-                    />
+                    <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      x1="12" x2="12" y1="19" y2="5" />
 
-                    <line
-                      fill="none"
-                      stroke="#000000"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      x1="5"
-                      x2="19"
-                      y1="12"
-                      y2="12"
-                    />
+                    <line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      x1="5" x2="19" y1="12" y2="12" />
                   </g>
                 </g>
               </g>
@@ -68,24 +41,13 @@
           <mat-icon matSuffix svgIcon="mat:search"></mat-icon>
         </mat-form-field> -->
           <form>
-            <input
-              type="text"
-              placeholder="Buscar..."
-              name="comentario"
-              id="comentario"
-              (keyup)="applyFilter($event)"
-              class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"
-            />
+            <input type="text" placeholder="Buscar..." name="comentario" id="comentario" (keyup)="applyFilter($event)"
+              class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md" />
           </form>
         </div>
         <div class="xl:w-3/12 lg:w-3/12 md:w-3/12 w-12/12 flex justify-center">
-          <mat-button-toggle-group
-            class="px-2 py-2"
-            #group="matButtonToggleGroup"
-            aria-label="Favorite Color"
-            [value]="selectedVal"
-            (change)="onValChange(group.value)"
-          >
+          <mat-button-toggle-group class="px-2 py-2" #group="matButtonToggleGroup" aria-label="Favorite Color"
+            [value]="selectedVal" (change)="onValChange(group.value)">
             <mat-button-toggle value="cards">Tarjetas</mat-button-toggle>
             <mat-button-toggle value="tables">Tabla</mat-button-toggle>
           </mat-button-toggle-group>
@@ -95,82 +57,53 @@
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
-          <div
-            *ngIf="this.listaItems.length == 0"
-            class="flex justify-center items-center mb-10"
-          >
-          <h1 class="m-10 title" style="text-align: center">
-            No se encontraron registros
-          </h1>
+          <div *ngIf="this.listaItems.length == 0" class="flex justify-center items-center mb-10">
+            <h1 class="m-10 title" style="text-align: center">
+              No se encontraron registros
+            </h1>
           </div>
-          <div
-            *ngIf="this.listaItems.length != 0"
-            class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
-          >
-            <div
-              *ngFor="let item of listaItems"
-              class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
-            >
-            <div class="flex flex-col mb-1 mt-1">
-              <div class="flex justify-end mb-3">
-                <span
-                  class="bg-blue-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"
-                >
-                  Ubicaciones
-                </span>
+          <div *ngIf="this.listaItems.length != 0"
+            class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1">
+            <div *ngFor="let item of listaItems"
+              class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5">
+              <div class="flex flex-col mb-1 mt-1">
+                <div class="flex justify-end mb-3">
+                  <span
+                    class="bg-blue-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
+                    Ubicaciones
+                  </span>
+                </div>
+                <div class="text-center">
+                  <span class="font-bold">Cliente</span>: {{ item.cliente }}
+                </div>
               </div>
-              <div class="text-center">
-                <span class="font-bold">Cliente</span>: {{ item.cliente }}
+              <mat-divider></mat-divider>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center">
+                  <span class="font-bold">Dirección</span>: {{ item.direccion }}
+                </div>
               </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="flex justify-center items-center mb-1 mt-1">
-              <div class="text-center">
-                <span class="font-bold">Dirección</span>: {{ item.direccion }}
+              <mat-divider></mat-divider>
+              <div class="flex justify-between items-center mb-1 mt-1">
+                <div>
+                  <span class="font-bold">Edificio</span>: {{ item.edificio }}
+                </div>
+                <div>
+                  <span class="font-bold">Piso</span>: {{ item.piso }}
+                </div>
               </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="flex justify-between items-center mb-1 mt-1">
-              <div>
-                <span class="font-bold">Edificio</span>: {{ item.edificio }}
-              </div>
-              <div>
-                <span class="font-bold">Piso</span>: {{ item.piso }}
-              </div>
-            </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-1 mt-1">
                 <div class="mr-5">
-                  <button
-                    (click)="openModal(item)"
-                    matTooltip="Editar"
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-                  >
-                    <svg
-                      class="fill-current w-5 h-5"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g
-                        id="Page-1"
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <g
-                          id="Dribbble-Light-Preview"
-                          transform="translate(-59.000000, -400.000000)"
-                          fill="#000000"
-                        >
-                          <g
-                            id="icons"
-                            transform="translate(56.000000, 160.000000)"
-                          >
+                  <button (click)="openModal(item)" matTooltip="Editar"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md">
+                    <svg class="fill-current w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Dribbble-Light-Preview" transform="translate(-59.000000, -400.000000)" fill="#000000">
+                          <g id="icons" transform="translate(56.000000, 160.000000)">
                             <path
                               d="M3,260 L24,260 L24,258.010742 L3,258.010742 L3,260 Z M13.3341,254.032226 L9.3,254.032226 L9.3,249.950269 L19.63095,240 L24,244.115775 L13.3341,254.032226 Z"
-                              id="edit_fill-[#1480]"
-                            ></path>
+                              id="edit_fill-[#1480]"></path>
                           </g>
                         </g>
                       </g>
@@ -178,16 +111,14 @@
                   </button>
                 </div>
                 <div class="mr-5">
-                  <button
-                  (click)="cargarOficinas(item.id)"
-                  matTooltip="Oficinas"
-                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
-                >
-                  <svg fill="#000000" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                  viewBox="0 0 512 512" xml:space="preserve">
-                  <g>
-                    <g>
-                      <path d="M478.609,200.348h-44.522c-9.223,0-16.696,7.473-16.696,16.696c0,9.223,7.473,16.696,16.696,16.696h5.565v83.478
+                  <button (click)="cargarOficinas(item.id)" matTooltip="Agregar Oficinas"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md">
+                    <svg fill="#000000" height="20px" width="20px" version="1.1" id="Layer_1"
+                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 512 512" xml:space="preserve">
+                      <g>
+                        <g>
+                          <path d="M478.609,200.348h-44.522c-9.223,0-16.696,7.473-16.696,16.696c0,9.223,7.473,16.696,16.696,16.696h5.565v83.478
                         c0,9.206-7.49,16.696-16.696,16.696h-19.772c-6.915-19.391-25.275-33.391-47.01-33.391h-50.087V267.13h16.696
                         c33.755,0,61.217-27.462,61.217-61.217V61.217C384,27.462,356.538,0,322.783,0H189.217C155.462,0,128,27.462,128,61.217v144.696
                         c0,33.755,27.462,61.217,61.217,61.217h16.696v33.391h-50.087c-21.737,0-40.095,14-47.01,33.391H89.044
@@ -198,11 +129,42 @@
                         h100.174v16.696c0,9.223,7.473,16.696,16.696,16.696s16.696-7.473,16.696-16.696v-16.696H372.87v16.696
                         c0,9.223,7.473,16.696,16.696,16.696c9.223,0,16.696-7.473,16.696-16.696v-33.391c0-9.223-7.473-16.696-16.696-16.696h-116.87
                         v-44.522h83.478c21.737,0,40.095-14,47.01-33.391h19.772c27.619,0,50.087-22.468,50.087-50.087v-83.478h5.565
-                        c9.223,0,16.696-7.473,16.696-16.696C495.304,207.821,487.831,200.348,478.609,200.348z"/>
-                    </g>
-                  </g>
-                  </svg>
-                </button>
+                        c9.223,0,16.696-7.473,16.696-16.696C495.304,207.821,487.831,200.348,478.609,200.348z" />
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+                <div class="mr-5">
+                  <button (click)="verPlano(item.id)" matTooltip="Ver Plano Interactivo"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md">
+                    <svg fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 442.04 442.04" xml:space="preserve">
+                      <g>
+                        <g>
+                          <path
+                            d="M221.02,341.304c-49.708,0-103.206-19.44-154.71-56.22C27.808,257.59,4.044,230.351,3.051,229.203
+                            c-4.068-4.697-4.068-11.669,0-16.367c0.993-1.146,24.756-28.387,63.259-55.881c51.505-36.777,105.003-56.219,154.71-56.219
+                            c49.708,0,103.207,19.441,154.71,56.219c38.502,27.494,62.266,54.734,63.259,55.881c4.068,4.697,4.068,11.669,0,16.367
+                            c-0.993,1.146-24.756,28.387-63.259,55.881C324.227,321.863,270.729,341.304,221.02,341.304z M29.638,221.021
+                            c9.61,9.799,27.747,27.03,51.694,44.071c32.83,23.361,83.714,51.212,139.688,51.212s106.859-27.851,139.688-51.212
+                            c23.944-17.038,42.082-34.271,51.694-44.071c-9.609-9.799-27.747-27.03-51.694-44.071
+                            c-32.829-23.362-83.714-51.212-139.688-51.212s-106.858,27.85-139.688,51.212C57.388,193.988,39.25,211.219,29.638,221.021z" />
+                        </g>
+                        <g>
+                          <path d="M221.02,298.521c-42.734,0-77.5-34.767-77.5-77.5c0-42.733,34.766-77.5,77.5-77.5c18.794,0,36.924,6.814,51.048,19.188
+                            c5.193,4.549,5.715,12.446,1.166,17.639c-4.549,5.193-12.447,5.714-17.639,1.166c-9.564-8.379-21.844-12.993-34.576-12.993
+                            c-28.949,0-52.5,23.552-52.5,52.5s23.551,52.5,52.5,52.5c28.95,0,52.5-23.552,52.5-52.5c0-6.903,5.597-12.5,12.5-12.5
+                            s12.5,5.597,12.5,12.5C298.521,263.754,263.754,298.521,221.02,298.521z" />
+                        </g>
+                        <g>
+                          <path
+                            d="M221.02,246.021c-13.785,0-25-11.215-25-25s11.215-25,25-25c13.786,0,25,11.215,25,25S234.806,246.021,221.02,246.021z" />
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
                 </div>
                 <!-- <div class="mr-5">
                   <button
@@ -220,10 +182,7 @@
                 </div> -->
                 <div class="mt-3.5 flex flex-col justify-center">
                   <div class="flex justify-center">
-                    <mat-slide-toggle
-                      [checked]="true"
-                      (change)="EliminarFabricante(item)"
-                    ></mat-slide-toggle>
+                    <mat-slide-toggle [checked]="true" (change)="EliminarFabricante(item)"></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
                 </div>
@@ -231,23 +190,13 @@
             </div>
           </div>
 
-          <mat-paginator
-            #paginatorCards
-            [length]="this.dataSourceOriginal.length"
-            [pageSize]="pageSize"
-            [pageSizeOptions]="pageSizeOptions"
-            (page)="onPageChanged($event)"
-          ></mat-paginator>
+          <mat-paginator #paginatorCards [length]="this.dataSourceOriginal.length" [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)"></mat-paginator>
         </div>
       </div>
       <!-- TABLA -->
       <div class="py-4" [hidden]="group.value == 'cards'">
-        <table
-          [dataSource]="this.dataSourceTabla"
-          class="w-full"
-          mat-table
-          matSort
-        >
+        <table [dataSource]="this.dataSourceTabla" class="w-full" mat-table matSort>
           <ng-container matColumnDef="cliente">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Cliente
@@ -294,32 +243,20 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let row" data-label="Acción">
               <div class="flex justify-center">
-                <a
-                  (click)="openModal(row)"
-                  matTooltip="Editar Fabricante"
+                <a (click)="openModal(row)" matTooltip="Editar Fabricante"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button
-                >
+                  mat-icon-button>
                   <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
                 </a>
-                <a
-                  (click)="cargarOficinas(row.id)"
-                  matTooltip="Oficinas"
+                <a (click)="cargarOficinas(row.id)" matTooltip="Oficinas"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button
-                >
+                  mat-icon-button>
                   <mat-icon class="icon-sm" svgIcon="mat:chair"></mat-icon>
                 </a>
-                <a
-                  (click)="EliminarFabricante(row)"
-                  matTooltip="Eliminar Fabricante"
+                <a (click)="EliminarFabricante(row)" matTooltip="Eliminar Fabricante"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                  mat-icon-button
-                >
-                  <mat-icon
-                    class="icon-sm"
-                    svgIcon="mat:delete_forever"
-                  ></mat-icon>
+                  mat-icon-button>
+                  <mat-icon class="icon-sm" svgIcon="mat:delete_forever"></mat-icon>
                 </a>
               </div>
             </mat-cell>
@@ -328,18 +265,12 @@
           <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: visibleColumns"> </mat-row>
         </table>
-        <div
-          *ngIf="this.listaItems.length == 0"
-          class="flex-auto items-center justify-center"
-        >
-        <h1 class="m-10 title" style="text-align: center">
-          No se encontraron registros
-        </h1>
+        <div *ngIf="this.listaItems.length == 0" class="flex-auto items-center justify-center">
+          <h1 class="m-10 title" style="text-align: center">
+            No se encontraron registros
+          </h1>
         </div>
-        <mat-paginator
-          #paginator
-          [pageSizeOptions]="[5, 10, 15]"
-        ></mat-paginator>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
       </div>
     </div>
   </vex-page-layout-content>

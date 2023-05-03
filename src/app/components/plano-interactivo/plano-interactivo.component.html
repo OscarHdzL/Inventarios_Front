@@ -2,7 +2,7 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Plano Intereactivo</h1>
+        <h1 class="title mt-0 mb-1">Plano intereactivo de oficinas del cliente {{this.cliente.cliente}} en el edificio {{this.cliente.edificio}} y piso {{this.cliente.piso}}</h1>
         <vex-breadcrumbs [crumbs]="['Home','Plano']"></vex-breadcrumbs>
       </div>
     </div>
@@ -14,7 +14,7 @@
         <div id="image-container" (contextmenu)="onAreaCreate(1,1)">
           <img [width]="(imageTam.width*92)/100" [height]="(imageTam.height*92)/100" [src]="imageTam.src">
           <div class="coordinates-container">
-            <div [ngClass]="coordinate.clikeado == false ? 'area' : 'clikeado'" [ngStyle]="getCoordinateStyle(coordinate)" [matTooltip]="coordinate.name" *ngFor="let coordinate of coordinates" (click)="onAreaClick(coordinate)" (contextmenu)="onAreaEdit(coordinate)">
+            <div [ngClass]="coordinate.clikeado == false ? 'area' : 'clikeado'" [ngStyle]="getCoordinateStyle(coordinate)" [matTooltip]="coordinate.nombre" *ngFor="let coordinate of coordinates" (click)="onAreaClick(coordinate)" (contextmenu)="onAreaEdit(coordinate)">
             </div>
           </div>
         </div>

@@ -95,7 +95,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'plano',
+    path: 'plano/:id',
     component: PlanoInteractivoComponent,
   },
   {

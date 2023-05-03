@@ -158,3 +158,14 @@ export class OficinasModel{
   ancho?: number;
 }
 
+export class OficinasInteractivasModel{
+  id?: number;
+  tblClienteUbicacionId?: number;
+  nombre?: string;
+  ejeX?: number;
+  ejeY?: number;
+  alto?: number;
+  ancho?: number;
+  clikeado?: boolean;
+}
+

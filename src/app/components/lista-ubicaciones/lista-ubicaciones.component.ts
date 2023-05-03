@@ -146,7 +146,7 @@ export class ListaUbicacionesComponent implements OnInit {
   public async EliminarFabricante(propietario){
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
-      const respuesta = await this.inventariosService.deshabilitarFabricante(propietario.id);
+      const respuesta = await this.inventariosService.deshabilitarUbicacion(propietario.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();
@@ -157,6 +157,9 @@ export class ListaUbicacionesComponent implements OnInit {
   }
   cargarOficinas(id: number){
     this.router.navigateByUrl("components/crear-plano/"+id)
+  }
+  verPlano(id: number){
+    this.router.navigateByUrl("components/plano/"+id)
   }
 
 }

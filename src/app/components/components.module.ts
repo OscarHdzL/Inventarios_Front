@@ -87,7 +87,6 @@ import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal
 import { NgxCurrencyModule } from 'ngx-currency';
 import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
 import { ModalPlanoComponent } from './plano-interactivo/modal-plano/modal-plano.component';
-import { ImageMapComponent } from './plano-interactivo/image-map/image-map.component';
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
@@ -165,7 +164,6 @@ import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-in
     ModalProveedorComponent,
     PlanoInteractivoComponent,
     ModalPlanoComponent,
-    ImageMapComponent,
     CrearPlanoComponent,
     ListaInventarioComponent,
     ModalInventarioComponent,
@@ -211,7 +209,7 @@ import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-in
     NgxFileDropModule,
 
 
-    
+
 
 
   ],

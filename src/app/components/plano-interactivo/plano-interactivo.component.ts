@@ -3,6 +3,11 @@ import { log } from 'console';
 import { ModalPlanoComponent } from './modal-plano/modal-plano.component';
 import { MatDialog } from '@angular/material/dialog';
 import { loadImage } from '../crear-plano/crear-plano.component';
+import { OficinasInteractivasModel } from 'src/app/modelos/Inventarios/propietario.model';
+import { InventariosService } from 'src/app/servicios/inventarios.service';
+import { FileManagerService } from 'src/app/servicios/filemanager.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from "sweetalert2/dist/sweetalert2.js";
 @Component({
   selector: 'vex-plano-interactivo',
   templateUrl: './plano-interactivo.component.html',
@@ -10,47 +15,53 @@ import { loadImage } from '../crear-plano/crear-plano.component';
 })
 export class PlanoInteractivoComponent implements OnInit {
 
+  canEdit: boolean = true;
+  imageTam: HTMLImageElement
+  coordinates: OficinasInteractivasModel[] = [];
+  cliente: any = {};
   constructor(
-    private dialog: MatDialog,) { }
+    private dialog: MatDialog,
+    private inventariosService: InventariosService,
+    private filemanagerService: FileManagerService,
+    private activeRoute: ActivatedRoute,
+    private router: Router,) { }
 
   async ngOnInit(): Promise<void> {
-    this.image =
-    '../../../assets/plano.jpg';
-    this.imageTam = await loadImage('../../../assets/plano.jpg')
-    console.log("Imagen Tam -> ", this.imageTam.src);
-
-    this.coordinates = [{
-      name: 'Comedor',
-      x: 426,
-      y: 110,
-      width: 667,
-      height: 389,
-      clikeado: false
-    },
-    {
-      name: 'Mesa',
-      x: 128,
-      y: 135,
-      width: 186,
-      height: 154,
-      clikeado: false
-    },]
+    if (window.innerWidth >= 1280) {
+      let res = await this.inventariosService.obtenerCatalogoUbicacionesId(this.activeRoute.snapshot.params.id);
+      this.cliente = res.output[0]
+      this.coordinates = res.output[0].relClienteUbicacionOficinas;
+      for (let i = 0; i < this.coordinates.length; i++) {
+        this.coordinates[i].clikeado = false;
+      }
+      this.imageTam = await loadImage(await this.obtenerURLPlano(res.output[0].plano));
+    }
+    else {
+      Swal.fire({
+        title: "No es posible visualizar el plano desde un celular",
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigateByUrl("components/ubicaciones")
+        }
+      })
+    }
   }
-  canEdit: boolean = true;
-  image: string;
-  imageTam: HTMLImageElement
-  coordinates: ImageMapCoordinate[] = [];
-  getCoordinateStyle(coordinate: ImageMapCoordinate): object {
+  getCoordinateStyle(coordinate: OficinasInteractivasModel): object {
     return {
-      top: `${coordinate.y}px`,
-      left: `${coordinate.x}px`,
-      height: `${coordinate.height}px`,
-      width: `${coordinate.width}px`
+      top: `${coordinate.ejeY}px`,
+      left: `${coordinate.ejeX}px`,
+      height: `${coordinate.alto}px`,
+      width: `${coordinate.ancho}px`
     };
   }
-  onAreaClick(coordinate: ImageMapCoordinate) {
-    //this.onClick.emit(coordinate);
-    console.log("coord -> ", coordinate);
+  async obtenerURLPlano(token: string){
+    let url = await this.filemanagerService.obtenerRutaArchivo(token);
+    return url;
+  }
+  onAreaClick(coordinate: OficinasInteractivasModel) {
     if (coordinate.clikeado == true) {
       for (let i = 0; i < this.coordinates.length; i++) {
         this.coordinates[i].clikeado = false;
@@ -60,10 +71,20 @@ export class PlanoInteractivoComponent implements OnInit {
       for (let i = 0; i < this.coordinates.length; i++) {
         this.coordinates[i].clikeado = false;
       }
-      this.coordinates[this.coordinates.findIndex(x => x.name == coordinate.name)].clikeado = !this.coordinates[this.coordinates.findIndex(x => x.name == coordinate.name)].clikeado
+      this.coordinates[this.coordinates.findIndex(x => x.id == coordinate.id)].clikeado = !this.coordinates[this.coordinates.findIndex(x => x.id == coordinate.id)].clikeado
     }
+    this.dialog.open(ModalPlanoComponent,{
+      height: 'auto',
+      width: '100%',
+      autoFocus: true,
+      data: coordinate,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
-  onAreaContext(e: MouseEvent, coordinate: ImageMapCoordinate) {
+  onAreaContext(e: MouseEvent, coordinate: OficinasInteractivasModel) {
     if(this.canEdit)
     {
       if(coordinate) {
@@ -76,24 +97,12 @@ export class PlanoInteractivoComponent implements OnInit {
       return false;
     }
   }
-  onAreaCreate(x: number, y: number): ImageMapCoordinate {
-    const coordinate = new ImageMapCoordinate({x, y, width: 100, height: 100});
+  onAreaCreate(x: number, y: number): OficinasInteractivasModel {
+    const coordinate = new OficinasInteractivasModel();
     return coordinate
   }
-  onAreaEdit(coordinate: ImageMapCoordinate): ImageMapCoordinate {
+  onAreaEdit(coordinate: OficinasInteractivasModel): OficinasInteractivasModel {
     return coordinate;
-  }
-}
-export class ImageMapCoordinate {
-  x: number = 0
-  y: number = 0
-  width: number = 100
-  height: number = 100
-  name?: string
-  clikeado?: boolean;
-
-  constructor(init?: Partial<ImageMapCoordinate>) {
-    Object.assign(this, init);
   }
 }
 
