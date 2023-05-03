@@ -1,0 +1,265 @@
+<div></div>
+
+<vex-page-layout>
+    <vex-page-layout-header class="flex flex-col items-start justify-center">
+        <div class="w-full flex flex-col sm:flex-row justify-between">
+            <div>
+                <h1 class="title mt-0 mb-1">Asignación de equipo</h1>
+                <vex-breadcrumbs [crumbs]="['Asignaciones']"></vex-breadcrumbs>
+            </div>
+        </div>
+    </vex-page-layout-header>
+
+    <vex-page-layout-content class="-mt-6">
+        <!-- Select -->
+        <div class="flex flex-col">
+            <div class="ml-3 mt-3">
+                <div class="flex flex-row">
+                    <div class="flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"> 
+                        <div class="relative overflow-x-auto mt-2 w-80">
+                            <label class="block text-sm font-medium text-gray-900 white:text-dark ml-2">
+                                Usuario
+                            </label>
+                            <!-- <select
+                                [(ngModel)]="selectedInc" 
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                                focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-10"
+                            > -->
+                            <select
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                                focus:border-blue-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 
+                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2"
+                            >
+                                <!-- <option 
+                                *ngFor="let item of terminado" 
+                                [ngValue]="item.id"
+                                [value]="item.id"
+                                >
+                                {{item.descripcion | uppercase }}
+                                </option> -->
+                                <option>
+                                    Seleccione...
+                                </option>
+                            </select>
+                            <!-- </select> -->
+                        </div>
+                    </div>
+                    <div class="flex xl:flex-row lg:flex-row md:flex-row items-center flex-col ml-5"> 
+                        <div class="relative overflow-x-auto mt-2 w-80">
+                            <label class="block text-sm font-medium text-gray-900 white:text-dark ml-2">
+                                Cliente
+                            </label>
+                            <!-- <select
+                                [(ngModel)]="selectedInc" 
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                                focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-10"
+                            > -->
+                            <select
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                                focus:border-blue-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 
+                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2"
+                            >
+                                <!-- <option 
+                                *ngFor="let item of terminado" 
+                                [ngValue]="item.id"
+                                [value]="item.id"
+                                >
+                                {{item.descripcion | uppercase }}
+                                </option> -->
+                                <option>
+                                    Seleccione...
+                                </option>
+                            </select>
+                            <!-- </select> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ml-3 mt-3"> 
+                <div class="relative overflow-x-auto mt-2 w-80">
+                    <label class="block text-sm font-medium text-gray-900 white:text-dark ml-2">
+                        Equipo
+                    </label>
+                    <!-- <select
+                        [(ngModel)]="selectedInc" 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                        focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-10"
+                    > -->
+                    <select
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+                        focus:border-blue-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 
+                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2"
+                    >
+                        <!-- <option 
+                        *ngFor="let item of terminado" 
+                        [ngValue]="item.id"
+                        [value]="item.id"
+                        >
+                        {{item.descripcion | uppercase }}
+                        </option> -->
+                        <option>
+                            Seleccione...
+                        </option>
+                    </select>
+                    <!-- </select> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLA -->
+        <div class="py-4">
+            <table
+                [dataSource]="this.dataSourceTabla"
+                class="w-full"
+                mat-table
+                matSort
+            >
+                <ng-container matColumnDef="Modelo">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Modelo
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Modelo">
+                        <div>
+                            {{ row.Modelo }}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Fabricante">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Fabricante
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Fabricante">
+                        <div>
+                            {{ row.Fabricante }}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Categoria">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Categoria
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Categoria">
+                        <div>
+                            {{ row.Categoria }}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Clave">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Clave
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Clave">
+                        <div>
+                            {{ row.Clave }}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Responsiva">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Responsiva
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Responsiva" class="flex justify-center">
+                        <a
+                            (click)="openModal()"
+                            matTooltip="Descarga responsiva"
+                            class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                            mat-icon-button
+                        >
+                            <mat-icon class="icon-sm" svgIcon="mat:file_download"></mat-icon>
+                        </a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Responsiva_firmada">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Responsiva firmada
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Responsiva_firmada" class="flex justify-center">
+                        <a
+                            (click)="openModal()"
+                            matTooltip="Sube responsiva firmada"
+                            class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                            mat-icon-button
+                        >
+                            <mat-icon class="icon-sm" svgIcon="mat:file_upload"></mat-icon>
+                        </a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Acción
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" data-label="Acción">
+                        <div class="flex justify-center">
+                            <a
+                                (click)="openModal()"
+                                matTooltip="Ver detalle"
+                                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                                mat-icon-button
+                            >
+                                <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                            </a>
+                            <a
+                                (click)="desasignar()"
+                                matTooltip="Eliminar"
+                                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                                mat-icon-button
+                            >
+                                <mat-icon class="icon-sm" svgIcon="mat:delete_forever"></mat-icon>
+                            </a>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="visibleColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: visibleColumns"> </mat-row>
+            </table>
+
+            <div
+                *ngIf="this.listaItems.length == 0"
+                class="flex-auto items-center justify-center"
+            >
+                <h1 class="m-10 title" style="text-align: center">
+                    No se encontraron registros
+                </h1>
+            </div>
+
+            <mat-paginator
+                #paginator
+                [pageSizeOptions]="[5, 10, 15]"
+            ></mat-paginator>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-end">
+            <button 
+                type="button" 
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 
+                focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 
+                py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 
+                dark:focus:ring-red-900"
+            >
+                Cancelar
+            </button>
+            <button 
+                type="button" 
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
+                focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 
+                mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none 
+                dark:focus:ring-blue-800"
+            >
+                Guardar
+            </button>
+        </div>
+    </vex-page-layout-content>
+</vex-page-layout>
+
