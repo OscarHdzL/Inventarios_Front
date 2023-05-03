@@ -14,7 +14,7 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
 import { ModalUbicacionesComponent } from './modal-ubicaciones/modal-ubicaciones.component';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'vex-lista-ubicaciones',
   templateUrl: './lista-ubicaciones.component.html',
@@ -39,7 +39,10 @@ export class ListaUbicacionesComponent implements OnInit {
 
 
   columns: TableColumn<any>[] = [
-    { label: 'Nombre', property: 'nombre', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Cliente', property: 'cliente', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Dirección', property: 'direccion', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Edificio', property: 'edificio', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Piso', property: 'piso', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -49,6 +52,7 @@ export class ListaUbicacionesComponent implements OnInit {
     private swalService: SwalServices,
     private changeDetectorRefs: ChangeDetectorRef,
     private inventariosService: InventariosService,
+    private router: Router
     ) {
 
    }
@@ -70,7 +74,10 @@ export class ListaUbicacionesComponent implements OnInit {
     else {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
-        val.nombre.toLowerCase().includes(filterValue)
+        val.cliente.toLowerCase().includes(filterValue)||
+        val.dirrecion.toLowerCase().includes(filterValue)||
+        val.edificio.toLowerCase().includes(filterValue)||
+        val.piso.toLowerCase().includes(filterValue)
       );
       //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
       this.paginatorCards.length = this.listaItems.length;
@@ -115,7 +122,7 @@ export class ListaUbicacionesComponent implements OnInit {
     this.matPaginatorIntl.nextPageLabel = 'Siguiente página';
   }
   public async obtenerFabricantes(){
-    const respuesta = await this.inventariosService.obtenerCatalogoFabricantes();
+    const respuesta = await this.inventariosService.obtenerCatalogoUbicaciones();
     return respuesta.exito ? respuesta.output : [];
   }
   onPageChanged(e) {
@@ -147,6 +154,9 @@ export class ListaUbicacionesComponent implements OnInit {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+  }
+  cargarOficinas(id: number){
+    this.router.navigateByUrl("components/crear-plano/"+id)
   }
 
 }

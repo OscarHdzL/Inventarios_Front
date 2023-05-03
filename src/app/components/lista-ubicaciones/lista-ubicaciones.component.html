@@ -113,27 +113,22 @@
             >
             <div class="flex justify-center items-center mb-1 mt-1">
               <div class="text-center">
-                <span class="font-bold">Nombre</span>: {{ item.nombre }}
+                <span class="font-bold">Cliente</span>: {{ item.cliente }}
               </div>
             </div>
             <mat-divider></mat-divider>
             <div class="flex justify-center items-center mb-1 mt-1">
               <div class="text-center">
-                <span class="font-bold">Razón social</span>: {{ item.razonsocial }}
+                <span class="font-bold">Dirección</span>: {{ item.direccion }}
               </div>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="flex justify-center items-center mb-1 mt-1">
-              <div class="text-center">
-                <span class="font-bold">Direccion</span>: {{ item.direccion }}</div>
             </div>
             <mat-divider></mat-divider>
             <div class="flex justify-between items-center mb-1 mt-1">
               <div>
-                <span class="font-bold">Sigla</span>: {{ item.sigla }}
+                <span class="font-bold">Edificio</span>: {{ item.edificio }}
               </div>
               <div>
-                <span class="font-bold">RFC</span>: {{ item.rfc }}
+                <span class="font-bold">Piso</span>: {{ item.piso }}
               </div>
             </div>
               <mat-divider></mat-divider>
@@ -174,6 +169,33 @@
                       </g>
                     </svg>
                   </button>
+                </div>
+                <div class="mr-5">
+                  <button
+                  (click)="cargarOficinas(item.id)"
+                  matTooltip="Oficinas"
+                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                >
+                  <svg fill="#000000" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 512 512" xml:space="preserve">
+                  <g>
+                    <g>
+                      <path d="M478.609,200.348h-44.522c-9.223,0-16.696,7.473-16.696,16.696c0,9.223,7.473,16.696,16.696,16.696h5.565v83.478
+                        c0,9.206-7.49,16.696-16.696,16.696h-19.772c-6.915-19.391-25.275-33.391-47.01-33.391h-50.087V267.13h16.696
+                        c33.755,0,61.217-27.462,61.217-61.217V61.217C384,27.462,356.538,0,322.783,0H189.217C155.462,0,128,27.462,128,61.217v144.696
+                        c0,33.755,27.462,61.217,61.217,61.217h16.696v33.391h-50.087c-21.737,0-40.095,14-47.01,33.391H89.044
+                        c-9.206,0-16.696-7.49-16.696-16.696v-83.478h5.565c9.223,0,16.696-7.473,16.696-16.696c0-9.223-7.473-16.696-16.696-16.696
+                        H33.391c-9.223,0-16.696,7.473-16.696,16.696c0,9.223,7.473,16.696,16.696,16.696h5.565v83.478
+                        c0,27.619,22.468,50.087,50.087,50.087h19.772c6.915,19.391,25.275,33.391,47.01,33.391h83.478v44.522h-116.87
+                        c-9.223,0-16.696,7.473-16.696,16.696v33.391c0,9.223,7.473,16.696,16.696,16.696c9.223,0,16.696-7.473,16.696-16.696v-16.696
+                        h100.174v16.696c0,9.223,7.473,16.696,16.696,16.696s16.696-7.473,16.696-16.696v-16.696H372.87v16.696
+                        c0,9.223,7.473,16.696,16.696,16.696c9.223,0,16.696-7.473,16.696-16.696v-33.391c0-9.223-7.473-16.696-16.696-16.696h-116.87
+                        v-44.522h83.478c21.737,0,40.095-14,47.01-33.391h19.772c27.619,0,50.087-22.468,50.087-50.087v-83.478h5.565
+                        c9.223,0,16.696-7.473,16.696-16.696C495.304,207.821,487.831,200.348,478.609,200.348z"/>
+                    </g>
+                  </g>
+                  </svg>
+                </button>
                 </div>
                 <!-- <div class="mr-5">
                   <button
@@ -219,13 +241,43 @@
           mat-table
           matSort
         >
-          <ng-container matColumnDef="nombre">
+          <ng-container matColumnDef="cliente">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Nombre
+              Cliente
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Nombre">
+            <mat-cell *matCellDef="let row" data-label="Cliente">
               <div>
-                {{ row.nombre }}
+                {{ row.cliente }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="direccion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Dirección
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Dirección">
+              <div>
+                {{ row.direccion }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="edificio">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Edificio
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Edificio">
+              <div>
+                {{ row.edificio }}
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="piso">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Piso
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Piso">
+              <div>
+                {{ row.piso }}
               </div>
             </mat-cell>
           </ng-container>
@@ -243,14 +295,14 @@
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:edit"></mat-icon>
                 </a>
-                <!-- <a
-                  (click)="openModal(row)"
-                  matTooltip="Ver funciones"
+                <a
+                  (click)="cargarOficinas(row.id)"
+                  matTooltip="Oficinas"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
-                  <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
-                </a> -->
+                  <mat-icon class="icon-sm" svgIcon="mat:chair"></mat-icon>
+                </a>
                 <a
                   (click)="EliminarFabricante(row)"
                   matTooltip="Eliminar Fabricante"

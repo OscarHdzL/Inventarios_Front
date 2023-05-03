@@ -97,7 +97,7 @@ const routes: Routes = [
     component: PlanoInteractivoComponent,
   },
   {
-    path: 'crear-plano',
+    path: 'crear-plano/:id',
     component: CrearPlanoComponent,
   },
   {

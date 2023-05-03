@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ArticuloFormModel } from '../modelos/Inventarios/articulo.model';
 import { SoftwareFormModel } from '../modelos/Inventarios/software.model';
-import { PropietarioFormModel } from '../modelos/Inventarios/propietario.model';
+import { PropietarioFormModel, UbicacionFormModel } from '../modelos/Inventarios/propietario.model';
 import { CaracteristicaProductoFormModel_, ProductoFormModel } from '../modelos/Inventarios/producto.model';
 import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventarios/adquisicion.model';
 import { AccesorioInventario, InventarioFormModel } from '../modelos/Inventarios/inventario.model';
@@ -202,6 +202,38 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     public async deshabilitarProveedor(propietario: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'api/Proveedor/Disable?id='+propietario);
+    }
+
+    /* ubicaciones */
+    public async obtenerCatalogoUbicaciones() : Promise <any> {
+      return await this.getAsync(this.url_api + 'Ubicacion/seleccionar');
+    }
+    public async obtenerCatalogoUbicacionesId(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Ubicacion/seleccionar?id='+id);
+    }
+
+    public async insertarUbicacion(ubicacion: UbicacionFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Ubicacion/agregar', ubicacion);
+    }
+
+    public async actualizarUbicacion(ubicacion: UbicacionFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Ubicacion/editar', ubicacion);
+    }
+
+    public async deshabilitarUbicacion(ubicacion: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Ubicacion/eliminar?id='+ubicacion);
+    }
+    /* Oficinas */
+    public async insertarOficina(ubicacion: UbicacionFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Ubicacion/agregar/oficina', ubicacion);
+    }
+
+    public async actualizarOficina(ubicacion: UbicacionFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'Ubicacion/editar/oficina', ubicacion);
+    }
+
+    public async deshabilitarOficina(ubicacion: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Ubicacion/eliminar/oficina?id='+ubicacion);
     }
 
 

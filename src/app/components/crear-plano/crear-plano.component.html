@@ -2,13 +2,28 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Crear Plano</h1>
+        <h1 class="title mt-0 mb-1">Plano</h1>
         <vex-breadcrumbs [crumbs]="['Home','Crear']"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content class="-mt-6">
-    <div class="card overflow-auto mt-5 flex justify-center">
+    <div  class="flex justify-center mt-2">
+      <h1 class="title mt-0 mb-1">Selecciona una oficina para eliminarla</h1>
+    </div>
+    <div *ngIf="this.listaOficinas.length > 0" class="flex justify-center mt-1">
+      <mat-form-field class="w-1/2">
+        <mat-label>Oficina</mat-label>
+        <mat-select (selectionChange)="eliminarOficina($event)">
+          <mat-option
+            *ngFor="let oficina of this.listaOficinas"
+            [value]="oficina.id">
+            {{ oficina.nombre }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="card overflow-auto mt-1 flex justify-center">
       <ng-container>
         <canvas #myCanvas [width]="(image.width*92)/100" [height]="(image.height*92)/100" (click)="punto($event)" >
         </canvas>
