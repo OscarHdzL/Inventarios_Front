@@ -101,6 +101,8 @@ import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/moda
 
 
 
+
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -205,6 +207,8 @@ import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/moda
     NgxCurrencyModule,
     MatChipsModule,
     NgxFileDropModule,
+
+
     
 
 
