@@ -121,3 +121,51 @@ export class ClienteFormModel {
   }
 }
 
+export class UbicacionModel{
+  id?: number;
+  catClienteId?: number;
+  cliente?: string;
+  direccion?: string;
+  piso?: string;
+  edificio?: string;
+  plano?: string;
+}
+
+export class UbicacionFormModel{
+  id?: number;
+  catClienteId?: number;
+  direccion?: string;
+  piso?: string;
+  edificio?: string;
+  plano?: string;
+  constructor(){
+    this.id = 0;
+    this.catClienteId = 0;
+    this.direccion = null;
+    this.piso = null;
+    this.edificio = null;
+    this.plano = null;
+  }
+}
+
+export class OficinasModel{
+  id?: number;
+  tblClienteUbicacionId?: number;
+  nombre?: string;
+  ejeX?: number;
+  ejeY?: number;
+  alto?: number;
+  ancho?: number;
+}
+
+export class OficinasInteractivasModel{
+  id?: number;
+  tblClienteUbicacionId?: number;
+  nombre?: string;
+  ejeX?: number;
+  ejeY?: number;
+  alto?: number;
+  ancho?: number;
+  clikeado?: boolean;
+}
+

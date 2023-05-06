@@ -4,7 +4,7 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Productos</h1>
+        <h1 class="title mt-0 mb-1">Productos registrados</h1>
         <vex-breadcrumbs [crumbs]="['Productos']"></vex-breadcrumbs>
       </div>
     </div>
@@ -15,15 +15,11 @@
       <div
         class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col"
       >
-        <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
-          <!-- <button (click)="openModal(null)" class="" color="primary" mat-mini-fab
-          matTooltip="Agregar Producto" type="button">
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button> -->
+        <!-- <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
 
           <button
             (click)="openModal(null)"
-            matTooltip="Agregar Producto"
+            matTooltip="Agregar Inventario"
             class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
           >
             <svg
@@ -62,7 +58,7 @@
               </g>
             </svg>
           </button>
-        </div>
+        </div> -->
 
         <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
           <form>
@@ -93,14 +89,21 @@
       <!-- CARDS -->
       <div class="py-4" [hidden]="group.value == 'tables'">
         <div class="py-2">
-          <div
+        <!--   <div
             *ngIf="this.listaItems.length == 0"
             class="flex justify-center items-center mb-10"
           >
+            <h1 class="title text-3xl">No hay registros</h1>
+          </div> -->
+
+          <div
+          *ngIf="this.listaItems.length == 0"
+          class="flex-auto items-center justify-center"
+        >
           <h1 class="m-10 title" style="text-align: center">
-            No se encontraron registros
+            No se encontraron inventarios registrados
           </h1>
-          </div>
+        </div>
           <div
             *ngIf="this.listaItems.length != 0"
             class="card overflow-auto grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-2 flex-wrap px-1"
@@ -109,40 +112,40 @@
               *ngFor="let item of listaItems"
               class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
             >
-              <div class="flex flex-col mb-1 mt-1">
-                <div class="flex justify-end mb-3">
-                  <span
-                    class="bg-blue-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300"
-                  >
-                    Productos
-                  </span>
-                </div>
-                <div class="text-center">
-                  <span class="font-bold">Modelo</span>: {{ item.modelo }}
-                </div>
+            <div class="flex flex-col mb-1 mt-1">
+              <div class="flex justify-end mb-3">
+                <span
+                  class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                >
+                  Productos registrados
+                </span>
+              </div>
+                <div class="text-center"><b>Modelo:</b> {{ item.modelo }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Fabricante</span>: {{ item.fabricante }}
-                </div>
+                <div class="text-center"><b>Fabricante:</b> {{ item.fabricante }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Categoría</span>: {{ item.categoria }}
-                </div>
+                <div class="text-center"><b>Categoría:</b> {{ item.categoria }}</div>
               </div>
               <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Nuevo</span>: {{ item.nuevo ? 'Si':'No' }}
-                </div>
+                <div class="text-center"><b>Nuevo:</b> {{ item.nuevo ? 'Si':'No' }}</div>
+              </div>
+<!--               <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center"><b>Año:</b> {{ item.anio }}</div>
               </div>
               <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center">
-                  <span class="font-bold">Año</span>: {{ item.anio }}
-                </div>
+                <div class="text-center"><b>Estatus:</b> {{ item.catEstatusinventario }}</div>
+              </div> -->
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center"><b>Número serie:</b> {{ item.numerodeserie }}</div>
               </div>
+              <div class="flex justify-center items-center mb-1 mt-1">
+                <div class="text-center"><b>Clave:</b> {{ item.inventarioclv }}</div>
+              </div>
+
               <mat-divider></mat-divider>
               <mat-divider></mat-divider>
               <div class="flex justify-center items-center">
@@ -183,8 +186,32 @@
                     </svg>
                   </button>
                 </div>
+                <div class="mr-5">
+                  <button
+                    (click)="openModalAsignacion(item)"
+                    matTooltip="Asignar inventario"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                  >
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" fill-rule="evenodd" clip-rule="evenodd" d="M18.1554 18.5659L18.087 18.4067C17.6996 17.3756 17.0535 16.6988 16.0488 16.2901C15.0618 15.8886 13.7385 15.75 12.0001 15.75C10.275 15.75 8.95912 15.8972 7.97442 16.3031C6.97373 16.7156 6.32558 17.3909 5.93304 18.4043L5.85652 18.5771C4.09876 16.9345 3 14.5956 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 14.5897 19.9062 16.9239 18.1554 18.5659ZM8.75 10C8.75 8.20507 10.2051 6.75 12 6.75C13.7949 6.75 15.25 8.20507 15.25 10C15.25 11.7949 13.7949 13.25 12 13.25C10.2051 13.25 8.75 11.7949 8.75 10Z" fill="#323232"/>
+                    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2"/>
+                    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2"/>
+                    <path d="M6.16406 18.5C6.90074 16.5912 8.56373 16 12.0001 16C15.4661 16 17.128 16.5578 17.855 18.5" stroke="#323232" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="mr-5">
+                  <button
+                  (click)="openModalLoadImage(item)"
+                  matTooltip="Cargar imagenes"
+                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+                >
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMzY4LDIyNGMyNi41LDAsNDgtMjEuNSw0OC00OGMwLTI2LjUtMjEuNS00OC00OC00OGMtMjYuNSwwLTQ4LDIxLjUtNDgsNDhDMzIwLDIwMi41LDM0MS41LDIyNCwzNjgsMjI0eiIvPjxwYXRoIGQ9Ik00NTIsNjRINjBjLTE1LjYsMC0yOCwxMi43LTI4LDI4LjN2MzI3LjRjMCwxNS42LDEyLjQsMjguMywyOCwyOC4zaDM5MmMxNS42LDAsMjgtMTIuNywyOC0yOC4zVjkyLjMgICBDNDgwLDc2LjcsNDY3LjYsNjQsNDUyLDY0eiBNMzQ4LjksMjYxLjdjLTMtMy41LTcuNi02LjItMTIuOC02LjJjLTUuMSwwLTguNywyLjQtMTIuOCw1LjdsLTE4LjcsMTUuOGMtMy45LDIuOC03LDQuNy0xMS41LDQuNyAgIGMtNC4zLDAtOC4yLTEuNi0xMS00LjFjLTEtMC45LTIuOC0yLjYtNC4zLTQuMUwyMjQsMjE1LjNjLTQtNC42LTEwLTcuNS0xNi43LTcuNWMtNi43LDAtMTIuOSwzLjMtMTYuOCw3LjhMNjQsMzY4LjJWMTA3LjcgICBjMS02LjgsNi4zLTExLjcsMTMuMS0xMS43aDM1Ny43YzYuOSwwLDEyLjUsNS4xLDEyLjksMTJsMC4zLDI2MC40TDM0OC45LDI2MS43eiIvPjwvZz48L3N2Zz4=" width="20rem">
 
-               <!--  <div class="mr-5">
+                </button>
+                </div>
+
+                <!-- <div class="mr-5">
                   <button
                     matTooltip="Descargar documentación"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
@@ -202,7 +229,7 @@
                   <div class="flex justify-center">
                     <mat-slide-toggle
                       [checked]="true"
-                      (change)="EliminarProducto(item)"
+                      (change)="EliminarInventario(item)"
                     ></mat-slide-toggle>
                   </div>
                   <div>Deshabilitar</div>
@@ -223,6 +250,7 @@
       <!-- TABLA -->
       <div class="py-4" [hidden]="group.value == 'cards'">
         <table
+        width="100%"
           [dataSource]="this.dataSourceTabla"
           class="w-full"
           mat-table
@@ -269,7 +297,7 @@
               </div>
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="anio">
+          <!-- <ng-container matColumnDef="anio">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Año
             </mat-header-cell>
@@ -278,7 +306,38 @@
                 {{ row.anio}}
               </div>
             </mat-cell>
+          </ng-container> -->
+<!--           <ng-container matColumnDef="catEstatusinventario">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Estatus
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Estatus">
+              <div>
+                {{ row.catEstatusinventario}}
+              </div>
+            </mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="numerodeserie">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              # de Serie
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="# de Serie">
+              <div>
+                {{ row.numerodeserie}}
+              </div>
+            </mat-cell>
           </ng-container>
+          <ng-container matColumnDef="inventarioclv">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Clave
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Clave">
+              <div>
+                {{ row.inventarioclv}}
+              </div>
+            </mat-cell>
+          </ng-container>
+
 
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -288,7 +347,7 @@
               <div class="flex justify-center">
                 <a
                   (click)="openModal(row)"
-                  matTooltip="Editar producto"
+                  matTooltip="Editar inventario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -303,8 +362,8 @@
                   <mat-icon class="icon-sm" svgIcon="mat:list"></mat-icon>
                 </a>
                 <a
-                  (click)="EliminarProducto(row)"
-                  matTooltip="Eliminar producto"
+                  (click)="EliminarInventario(row)"
+                  matTooltip="Eliminar inventario"
                   class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
                 >
@@ -324,9 +383,9 @@
           *ngIf="this.listaItems.length == 0"
           class="flex-auto items-center justify-center"
         >
-        <h1 class="m-10 title" style="text-align: center">
-          No se encontraron registros
-        </h1>
+          <h1 class="m-10 title" style="text-align: center">
+            No se encontraron inventarios registrados
+          </h1>
         </div>
         <mat-paginator
           #paginator
@@ -336,3 +395,4 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
+

@@ -1,4 +1,4 @@
-import { MesaValidacionService } from './../../servicios/mesa-validacion.service';
+import { MesaValidacionService } from '../../../servicios/mesa-validacion.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,19 +17,20 @@ import { MatAccordion } from '@angular/material/expansion';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { InventarioModel } from 'src/app/modelos/Inventarios/inventario.model';
-import { ModalInventarioComponent } from './modal-inventario/modal-inventario.component';
-import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/modal-asignar-inventario.component';
+import { ModalInventarioComponent } from '../modal-inventario/modal-inventario.component';
+import { ModalAsignarInventarioComponent } from '../modal-asignar-inventario/modal-asignar-inventario.component';
 import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
-import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
+import { ModalLoadImageComponent } from '../modal-load-image/modal-load-image.component';
 
 
 @Component({
-  selector: 'vex-lista-inventario',
-  templateUrl: './lista-inventario.component.html',
-  styleUrls: ['./lista-inventario.component.scss']
+  selector: 'vex-lista-inventario-registrados',
+  templateUrl: './lista-inventario-registrados.component.html',
+  styleUrls: ['./lista-inventario-registrados.component.scss']
 })
-export class ListaInventarioComponent implements OnInit {
+export class ListaInventarioRegistradosComponent implements OnInit {
+
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -187,7 +188,7 @@ export class ListaInventarioComponent implements OnInit {
   }
 
   public async obtenerInventarios(){
-    const respuesta = await this.inventariosService.obtenerInventariosAsignados(false);
+    const respuesta = await this.inventariosService.obtenerInventariosAsignados(true);
     return respuesta ? respuesta : [];
   }
 
@@ -256,6 +257,5 @@ export class ListaInventarioComponent implements OnInit {
       }
     }
   }
-
 
 }

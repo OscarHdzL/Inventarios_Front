@@ -27,7 +27,7 @@
   cursor: pointer;
   transition: all 0.1s;
   &:hover{
-    border: 3px solid red;
+    border: 5px solid #093F97;
     box-shadow: 0 0px 5px darkgray;
   }
 }
@@ -38,7 +38,7 @@
     background-color: gray;
     opacity: 0.5;
     &:hover{
-      border: 3px solid red;
+      border: 3px solid #093F97;
       box-shadow: 0 0px 5px darkgray;
     }
 }

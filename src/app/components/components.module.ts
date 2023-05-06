@@ -87,7 +87,6 @@ import { ModalProveedorComponent } from './lista-proveedor/modal-proveedor/modal
 import { NgxCurrencyModule } from 'ngx-currency';
 import { PlanoInteractivoComponent } from './plano-interactivo/plano-interactivo.component';
 import { ModalPlanoComponent } from './plano-interactivo/modal-plano/modal-plano.component';
-import { ImageMapComponent } from './plano-interactivo/image-map/image-map.component';
 import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ModalInventarioComponent } from './lista-inventario/modal-inventario/modal-inventario.component';
@@ -104,6 +103,10 @@ import { ModalConeccionDirectorioClienteComponent } from './arrendamiento-invent
 import { ModalAsignacionInventarioClienteComponent } from './arrendamiento-inventario/asignacion-inventario-cliente/modal-asignacion-inventario-cliente/modal-asignacion-inventario-cliente.component';
 import { ModalVisualizacionAsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado.component';
 import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario.component';
+import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -166,7 +169,6 @@ import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion
     ModalProveedorComponent,
     PlanoInteractivoComponent,
     ModalPlanoComponent,
-    ImageMapComponent,
     CrearPlanoComponent,
     ListaInventarioComponent,
     ModalInventarioComponent,
@@ -181,7 +183,8 @@ import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion
     ModalConeccionDirectorioClienteComponent,
     ModalAsignacionInventarioClienteComponent,
     ModalVisualizacionAsignacionInventarioEmpleadoComponent,
-    ModalVisualizacionAsignacionEquipoUsuarioComponent
+    ModalVisualizacionAsignacionEquipoUsuarioComponent,
+    ListaInventarioRegistradosComponent
   ],
   imports: [
     CommonModule,

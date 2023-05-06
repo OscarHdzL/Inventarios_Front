@@ -23,7 +23,7 @@ export class ProductoFormModel {
   anio: number
   nuevo: boolean
   vidautil: number
-  caracteristicas_: string[]
+  caracteristicas_: any[]
 
   constructor(){
     this.id = 0;
@@ -77,9 +77,13 @@ export class CaracteristicaProductoFormModel {
     id?: number;
     catProductoId?: number;
     nombre?: string;
+    hardware?: boolean;
+    tipo?: string;
     constructor(){
       this.id = 0;
       this.catProductoId = 0;
       this.nombre = null;
+      this.hardware = true
+      this.tipo = null
     }
     }
