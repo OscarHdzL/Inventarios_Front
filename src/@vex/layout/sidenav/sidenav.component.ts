@@ -147,6 +147,31 @@ export class SidenavComponent implements OnInit {
       routerLinkActiveOptions: { exact: true }
     });
 
+    children.push({
+      type: 'link',
+      label: 'Inventario clientes',
+      route: '/components/asignacion-inventario-cliente',
+      icon: 'mat:assignment',
+      routerLinkActiveOptions: { exact: true }
+    });
+
+    children.push({
+      type: 'link',
+      label: 'Asignación inventario arrendamiento',
+      route: '/components/asignacion-inventario-empleado',
+      icon: 'mat:assignment',
+      routerLinkActiveOptions: { exact: true }
+    });
+
+
+
+    children.push({
+      type: 'link',
+      label: 'Asignación inventario',
+      route: '/components/asignacion-equipo-usuario',
+      icon: 'mat:assignment',
+      routerLinkActiveOptions: { exact: true }
+    });
 
 
      /* let menu = this.sesionUsuarioActual.funciones.filter((x)=> x.modulo == 'Sidebar' && x.activo == true);

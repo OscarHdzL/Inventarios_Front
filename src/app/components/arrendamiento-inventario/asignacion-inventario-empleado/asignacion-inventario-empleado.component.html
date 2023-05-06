@@ -4,7 +4,7 @@
   <vex-page-layout-header class="flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between">
       <div>
-        <h1 class="title mt-0 mb-1">Asignación de inventario</h1>
+        <h1 class="title mt-0 mb-1">Asignación de inventario arrendamiento</h1>
         <vex-breadcrumbs [crumbs]="['Asignaciones']"></vex-breadcrumbs>
       </div>
     </div>
@@ -21,7 +21,7 @@
       >
         <div class="mt-4 flex flex-col gap-2 m-2">
           <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-           <!--  <mat-form-field class="flex-auto">
+            <mat-form-field class="flex-auto">
               <mat-label>Cliente</mat-label>
               <mat-select
                 formControlName="cliente"
@@ -37,15 +37,15 @@
               <mat-error *ngIf="this.cliente.hasError('required')">
                 El campo es requerido</mat-error
               >
-            </mat-form-field> -->
+            </mat-form-field>
             <mat-form-field class="flex-auto">
-              <mat-label>Usuario</mat-label>
+              <mat-label>Empleado</mat-label>
               <mat-select formControlName="empleado">
                 <mat-option
                   *ngFor="let empleado of listaEmpleados"
-                  [value]="empleado.id"
+                  [value]="empleado.cuenta"
                 >
-                  {{ empleado.nombre }}</mat-option
+                  {{ empleado.empleado }}</mat-option
                 >
               </mat-select>
               <mat-error *ngIf="this.empleado.hasError('required')">
@@ -62,7 +62,7 @@
               >
                 <mat-option
                   *ngFor="let equipo of listaEquipo"
-                  [value]="equipo.idinventario"
+                  [value]="equipo.idinventarioarrendamiento"
                 >
                   <b>Categoría: </b> {{ equipo.categoria + " | " }}
                   <b>Modelo: </b> {{ equipo.modelo + " | " }}
@@ -230,13 +230,13 @@
           mat-table
           matSort
         >
-          <ng-container matColumnDef="nombreusuario">
+          <ng-container matColumnDef="nombreEmpleadoCliente">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Usuario
+              Empleado
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Usuario">
+            <mat-cell *matCellDef="let row" data-label="Empleado">
               <div>
-                {{ row.nombreusuario }}
+                {{ row.nombreEmpleadoCliente }}
               </div>
             </mat-cell>
           </ng-container>

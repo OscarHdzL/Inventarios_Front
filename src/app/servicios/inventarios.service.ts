@@ -9,6 +9,8 @@ import { PropietarioFormModel } from '../modelos/Inventarios/propietario.model';
 import { CaracteristicaProductoFormModel_, ProductoFormModel } from '../modelos/Inventarios/producto.model';
 import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventarios/adquisicion.model';
 import { AccesorioInventario, InventarioFormModel } from '../modelos/Inventarios/inventario.model';
+import { ArchivoEmpleadoInventario, EmpleadoInventarioArrendamientoFormModel, InventarioArrendamientoAgrupadoModel, InventarioArrendamientoFormModel } from '../modelos/Inventarios/inventario-arrendamiento.model';
+import { ArchivoUsuarioInventario, UsuarioInventarioFormModel } from '../modelos/Inventarios/usuario-inventario.model';
 
 
 @Injectable({
@@ -253,5 +255,97 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario);
     }
 
+
+
+    //Configuracion
+    public async obtenerConfiguracionProductoByCategoria(idCategoria: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'ConfiguracionProducto/GetByCategory?id=' + idCategoria);
+    }
+
+
+
+    //ARRENDAMIENTO
+
+    public async obtenerInventarioArrendamientoAgrupado() : Promise <any> {
+      return await this.getAsync(this.url_api + 'InventarioArrendamiento/seleccionar/todosAgrupado');
+    }
+
+    public async obtenerInventarioProductosDisponibles() : Promise <any> {
+      return await this.getAsync(this.url_api + 'InventarioArrendamiento/seleccionarInventarioProductosDisponibles');
+    }
+
+    public async obtenerAsignacionEmpleadoInventarioArrendamiento(idrelempleadoinventarioarrendamiento: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'InventarioArrendamiento/seleccionarAsignacion?idrelempleadoinventarioarrendamiento=' + idrelempleadoinventarioarrendamiento);
+    }
+
+    public async obtenerAsignacionesInventarioArrendamiento(idCliente: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'InventarioArrendamiento/seleccionarAsignacionTodos?idCliente=' + idCliente);
+    }
+
+    public async obtenerInventarioArrendamientoDisponibleCliente(idCliente: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'InventarioArrendamiento/seleccionarInventarioArrendamientoDisponible?idCliente=' + idCliente);
+    }
+
+    public async insertarInventarioArrendamiento(Inventario: InventarioArrendamientoFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'InventarioArrendamiento/agregarInventarioCliente', Inventario);
+    }
+
+    public async insertarAsignacionInventarioArrendamiento(asignacion: EmpleadoInventarioArrendamientoFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'InventarioArrendamiento/agregarAsignacion', asignacion);
+    }
+
+
+    public async editarAsignacionInventarioArrendamiento(asignacion: EmpleadoInventarioArrendamientoFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'InventarioArrendamiento/editarResponsivaAsignacion', asignacion);
+    }
+
+    public async eliminarAsignacionInventarioArrendamiento(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'InventarioArrendamiento/eliminarAsignacion?id='+Inventario);
+    }
+
+
+    public async insertarArchivosAsignacionInventarioArrendamiento(archivos: ArchivoEmpleadoInventario[]) : Promise <any> {
+      return await this.postAsync(this.url_api + 'InventarioArrendamiento/agregarArchivosAsignacion', archivos);
+    }
+
+    public async eliminarArchivoAsignacionInventarioArrendamiento(idArchivo: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'InventarioArrendamiento/eliminarArchivoAsignacion?id='+idArchivo);
+    }
+
+
+
+    // USUARIOS
+    public async obtenerUsuarios() : Promise <any> {
+      return await this.getAsync(this.url_api + 'Usuario/seleccionar');
+    }
+
+    //ASIGNACION USUARIO INVENTARIO
+    public async insertarAsignacionUsuarioInventario(asignacion: UsuarioInventarioFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'UsuarioInventario/agregar', asignacion);
+    }
+
+    public async obtenerAsignacionesInventario() : Promise <any> {
+      return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarAsignacionTodos');
+    }
+
+    public async obtenerAsignacionInventario(idrelusuarioinventario) : Promise <any> {
+      return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarAsignacion?idrelusuarioinventario=' + idrelusuarioinventario);
+    }
+
+    public async obtenerInventarioProductosDisponibles_UsuarioInventario() : Promise <any> {
+      return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarInventarioProductosDisponibles');
+    }
+
+    public async eliminarAsignacionInventario(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminar?id='+Inventario);
+    }
+
+    public async insertarArchivosAsignacionInventario(archivos: ArchivoUsuarioInventario[]) : Promise <any> {
+      return await this.postAsync(this.url_api + 'UsuarioInventario/agregar/archivos', archivos);
+    }
+
+    public async editarAsignacionInventario(asignacion: UsuarioInventarioFormModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'UsuarioInventario/editarResponsivaAsignacion', asignacion);
+    }
 
 }

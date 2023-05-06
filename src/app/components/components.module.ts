@@ -98,10 +98,12 @@ import { ModalUbicacionesComponent } from './lista-ubicaciones/modal-ubicaciones
 import { ModalLoadImageComponent } from './lista-inventario/modal-load-image/modal-load-image.component';
 import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
 import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/modal-asignacion-equipo/modal-asignacion-equipo.component';
-
-
-
-
+import { AsignacionInventarioClienteComponent } from './arrendamiento-inventario/asignacion-inventario-cliente/asignacion-inventario-cliente.component';
+import { AsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/asignacion-inventario-empleado.component';
+import { ModalConeccionDirectorioClienteComponent } from './arrendamiento-inventario/modal-coneccion-directorio-cliente/modal-coneccion-directorio-cliente.component';
+import { ModalAsignacionInventarioClienteComponent } from './arrendamiento-inventario/asignacion-inventario-cliente/modal-asignacion-inventario-cliente/modal-asignacion-inventario-cliente.component';
+import { ModalVisualizacionAsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado.component';
+import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario.component';
 
 @NgModule({
   declarations: [
@@ -173,7 +175,13 @@ import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/moda
     ModalUbicacionesComponent,
     ModalLoadImageComponent,
     AsignacionEquipoUsuarioComponent,
-    ModalAsignacionEquipoComponent
+    ModalAsignacionEquipoComponent,
+    AsignacionInventarioClienteComponent,
+    AsignacionInventarioEmpleadoComponent,
+    ModalConeccionDirectorioClienteComponent,
+    ModalAsignacionInventarioClienteComponent,
+    ModalVisualizacionAsignacionInventarioEmpleadoComponent,
+    ModalVisualizacionAsignacionEquipoUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -209,7 +217,7 @@ import { ModalAsignacionEquipoComponent } from './asignacion-equipo-usuario/moda
     NgxFileDropModule,
 
 
-    
+
 
 
   ],

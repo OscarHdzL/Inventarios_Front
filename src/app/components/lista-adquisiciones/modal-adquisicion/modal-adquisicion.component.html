@@ -75,7 +75,6 @@
             <mat-form-field class="flex-auto">
               <mat-label>Articulos</mat-label>
               <input
-
                 type="number"
                 matInput
                 formControlName="articulos"
@@ -88,7 +87,6 @@
             <mat-form-field class="flex-auto">
               <mat-label>Monto</mat-label>
               <input
-
                 currencyMask
                 type="text"
                 matInput
@@ -102,7 +100,6 @@
             <mat-form-field class="flex-auto">
               <mat-label>Impuesto</mat-label>
               <input
-
                 currencyMask
                 type="text"
                 matInput
@@ -118,11 +115,7 @@
             <div class="lg:w-1/3 md:w-1/3 w-full">
               <mat-form-field class="w-full">
                 <mat-label>Fecha de compra</mat-label>
-                <input
-                  type="date"
-                  matInput
-                  formControlName="fechaCompra"
-                />
+                <input type="date" matInput formControlName="fechaCompra" />
                 <mat-error *ngIf="this.fechaCompra.hasError('required')">
                   El campo es requerido</mat-error
                 >
@@ -130,21 +123,34 @@
             </div>
           </div>
           <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-            <div class="lg:w-1/2 md:w-1/2 w-full" >
+            <div class="lg:w-1/2 md:w-1/2 w-full">
               <label
                 class="block mb-2 text-sm font-medium text-gray-900"
                 for="file_input"
                 >Factura PDF</label
               >
-              <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          Arraste archivo
-          <button style="margin-left: 1rem;" type="button" (click)="openFileSelector()">Browse Files</button>
-        </ng-template>
-    </ngx-file-drop>
-    <a
-                *ngIf="adquisicionModel.facpdf!=''"
+              <ngx-file-drop
+                dropZoneLabel="Drop files here"
+                (onFileDrop)="dropped($event)"
+                (onFileOver)="fileOver($event)"
+                (onFileLeave)="fileLeave($event)"
+              >
+                <ng-template
+                  ngx-file-drop-content-tmp
+                  let-openFileSelector="openFileSelector"
+                >
+                  Arraste archivo
+                  <button
+                    style="margin-left: 1rem"
+                    type="button"
+                    (click)="openFileSelector()"
+                  >
+                    Browse Files
+                  </button>
+                </ng-template>
+              </ngx-file-drop>
+              <a
+                *ngIf="adquisicionModel.facpdf != ''"
                 (click)="abrirDocumento(adquisicionModel.facpdf)"
                 href="javascript: void(0)"
                 class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
@@ -180,13 +186,26 @@
                 for="file_input2"
                 >Factura XML</label
               >
-              <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          Arraste archivo
-          <button style="margin-left: 1rem;" type="button" (click)="openFileSelector()">Browse Files</button>
-        </ng-template>
-    </ngx-file-drop>
+              <ngx-file-drop
+                dropZoneLabel="Drop files here"
+                (onFileDrop)="dropped($event)"
+                (onFileOver)="fileOver($event)"
+                (onFileLeave)="fileLeave($event)"
+              >
+                <ng-template
+                  ngx-file-drop-content-tmp
+                  let-openFileSelector="openFileSelector"
+                >
+                  Arraste archivo
+                  <button
+                    style="margin-left: 1rem"
+                    type="button"
+                    (click)="openFileSelector()"
+                  >
+                    Browse Files
+                  </button>
+                </ng-template>
+              </ngx-file-drop>
               <!-- <input
                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="file_input_help"
@@ -195,8 +214,8 @@
                 type="file"
               /> -->
               <a
-              *ngIf="adquisicionModel.facxml!=''"
-              (click)="abrirDocumento(adquisicionModel.facxml)"
+                *ngIf="adquisicionModel.facxml != ''"
+                (click)="abrirDocumento(adquisicionModel.facxml)"
                 href="javascript: void(0)"
                 class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
                 id="file_input_help"
@@ -220,7 +239,7 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true" >
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title> ADQUISICIÓN </mat-panel-title>
         <mat-panel-description>
@@ -296,9 +315,14 @@
             </tr>
           </tbody>
         </table> -->
-        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg  sm:shadow-lg my-5">
+        <table
+          class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg sm:shadow-lg my-5"
+        >
           <thead class="text-white">
-            <tr class="bg-gray-200 text-gray-600 flex flex-col flex-no wrap md:table-row rounded-l-lg sm:rounded-none mb-1"  *ngFor="let row of listaProductosAdquisicion">
+            <tr
+              class="bg-gray-200 text-gray-600 flex flex-col flex-no wrap md:table-row rounded-l-lg sm:rounded-none mb-1"
+              *ngFor="let row of listaProductosAdquisicion"
+            >
               <th class="p-3 text-left">Categoria</th>
               <th class="p-3 text-left">Producto</th>
               <th class="p-3 text-left">Cantidad</th>
@@ -307,14 +331,35 @@
             </tr>
           </thead>
           <tbody class="flex-1 md:flex-none">
-            <tr class="flex flex-col flex-no wrap md:table-row mb-1" *ngFor="let row of listaProductosAdquisicion">
-              <td class="border-grey-light border hover:bg-gray-100 p-3  truncate">  {{ row.categoria }}</td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3  truncate">  {{ row.modelo }}</td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ row.cantidad }}</td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ row.costosiunitario }}</td>
-              <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
-                 <a
-                (click)="eliminarProducto(row)"
+            <tr
+              class="flex flex-col flex-no wrap md:table-row mb-1"
+              *ngFor="let row of listaProductosAdquisicion"
+            >
+              <td
+                class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+              >
+                {{ row.categoria }}
+              </td>
+              <td
+                class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+              >
+                {{ row.modelo }}
+              </td>
+              <td
+                class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+              >
+                {{ row.cantidad }}
+              </td>
+              <td
+                class="border-grey-light border hover:bg-gray-100 p-3 truncate"
+              >
+                {{ row.costosiunitario }}
+              </td>
+              <td
+                class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer"
+              >
+                <a
+                  (click)="eliminarProducto(row)"
                   matTooltip="Eliminar producto"
                   class="w-5 h-5 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                   mat-icon-button
@@ -349,7 +394,7 @@
           </tbody>
         </table>
       </div>
-     <!--  <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
+      <!--  <div class="flex justify-end" *ngIf="this.listaProductosAdquisicion.length > 0">
 
         <button
           type="submit"
@@ -364,7 +409,7 @@
   </mat-accordion>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="this.adquisicionModel.id == 0">
-  <div class="flex justify-end" >
+  <div class="flex justify-end">
     <button type="button" mat-button mat-dialog-close>Cancelar</button>
     <button
       type="submit"

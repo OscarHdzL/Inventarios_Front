@@ -52,6 +52,9 @@ export class FileManagerService extends ConfiguracionEndpointsService {
   public async obtenerRutaArchivo(token: string): Promise <string>{
     return this.url_filemanager + 'api/Archivos/DescargarArchivo/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55/' + token;
   }
+  public obtenerURLRutaArchivo(token: string){
+    return this.url_filemanager + 'api/Archivos/DescargarArchivo/21279CA3-1BE9-4DE2-9B1D-18FF5346DE55/' + token;
+  }
 
 /*   public async obtenerRutaArchivo(token: string): Promise <string>{
     return this.url_filemanager + 'AdminArchivos/AdminArchivos/Visualizar/31B215CC-90A7-4E7B-A4B2-7001B177DB43/' + token;

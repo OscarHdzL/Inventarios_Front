@@ -25,6 +25,8 @@ import { CrearPlanoComponent } from './crear-plano/crear-plano.component';
 import { ListaInventarioComponent } from './lista-inventario/lista-inventario.component';
 import { ListaUbicacionesComponent } from './lista-ubicaciones/lista-ubicaciones.component';
 import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/asignacion-equipo-usuario.component';
+import { AsignacionInventarioClienteComponent } from './arrendamiento-inventario/asignacion-inventario-cliente/asignacion-inventario-cliente.component';
+import { AsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/asignacion-inventario-empleado.component';
 
 const routes: Routes = [
   {
@@ -115,7 +117,19 @@ const routes: Routes = [
     path: 'asignacion-equipo-usuario',
     component: AsignacionEquipoUsuarioComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'asignacion-inventario-cliente',
+    component: AsignacionInventarioClienteComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'asignacion-inventario-empleado',
+    component: AsignacionInventarioEmpleadoComponent,
+    canActivate: [AuthGuard]
   }
+
+
 
 /*   {
     path: 'home',

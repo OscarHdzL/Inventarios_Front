@@ -11,36 +11,51 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ClienteModel } from 'src/app/modelos/Inventarios/propietario.model';
 import { ConfiguracionProducto, EmpleadoInventarioArrendamientoFormModel, EmpleadoInventarioArrendamientoModel, InventarioArrendamientoDisponibleModel } from 'src/app/modelos/Inventarios/inventario-arrendamiento.model';
 import { FileManagerService } from 'src/app/servicios/filemanager.service';
-import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './modal-visualizacion-asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario.component';
-import { CatUsuarioModel, ProductosInventarioDisponiblesModel, UsuarioInventarioFormModel, UsuarioInventarioModel } from 'src/app/modelos/Inventarios/usuario-inventario.model';
+import { ModalVisualizacionAsignacionInventarioEmpleadoComponent } from './modal-visualizacion-asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado.component';
 
 
 @Component({
-  selector: 'vex-asignacion-equipo-usuario',
-  templateUrl: './asignacion-equipo-usuario.component.html',
-  styleUrls: ['./asignacion-equipo-usuario.component.scss']
+  selector: 'vex-asignacion-inventario-empleado',
+  templateUrl: './asignacion-inventario-empleado.component.html',
+  styleUrls: ['./asignacion-inventario-empleado.component.scss']
 })
-export class AsignacionEquipoUsuarioComponent implements OnInit {
+export class AsignacionInventarioEmpleadoComponent implements OnInit {
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   formInventario: FormGroup;
   pageSize = 6;
   pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
-  dataSourceOriginal: UsuarioInventarioModel[] = [];
+  dataSourceOriginal: EmpleadoInventarioArrendamientoModel[] = [];
   dataSourceTabla:any;
-  listaItems: UsuarioInventarioModel[] = [];
+  listaItems: EmpleadoInventarioArrendamientoModel[] = [];
   listaClientes:  ClienteModel[] = [];
-  listaEquipo:  ProductosInventarioDisponiblesModel[] = [];
-  empleadoInventarioArrendamientoFormModel: UsuarioInventarioFormModel = new UsuarioInventarioFormModel()
+  listaEquipo:  InventarioArrendamientoDisponibleModel[] = [];
+  empleadoInventarioArrendamientoFormModel: EmpleadoInventarioArrendamientoFormModel = new EmpleadoInventarioArrendamientoFormModel()
 
   listaConfiguracion: ConfiguracionProducto[] = [];
-  listaEmpleados: CatUsuarioModel[] = []
+  listaEmpleados = [
+    {
+      id: 1,
+      empleado: 'Mariana Perez Perez',
+      cuenta: 'mperez'
+    },
+    {
+      id: 2,
+      empleado: 'Elisa Juarez juarez',
+      cuenta: 'eJuarez'
+    },
+    {
+      id: 3,
+      empleado: 'Karina Moreno ',
+      cuenta: 'kmoreno'
+    }
+  ];
 
   tamanoPantalla: boolean;
 
   columns: TableColumn<any>[] = [
-    { label: 'Usuario', property: 'nombreusuario', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Empleado', property: 'nombreEmpleadoCliente', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
@@ -65,7 +80,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
   public iniciarForm(){
     this.formInventario = this.formBuilder.group({
-     // cliente: ['', [Validators.required]],
+      cliente: ['', [Validators.required]],
       equipo: ['', [Validators.required]],
       empleado: ['', [Validators.required]],
       configuracionEquipo: this.formBuilder.array([])
@@ -79,7 +94,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
   }
 
 
-  //get cliente() { return this.formInventario.get('cliente') }
+  get cliente() { return this.formInventario.get('cliente') }
   get equipo() { return this.formInventario.get('equipo') }
   get empleado() { return this.formInventario.get('empleado') }
   get configuracionEquipo() { return this.formInventario.get('configuracionEquipo') as FormArray }
@@ -87,6 +102,8 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
   anadirConfiguracion() {
+
+
 
     const config = this.formBuilder.group({
       idConfiguracion: new FormControl(''),
@@ -101,12 +118,11 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.listaEquipo = await this.obtenerInventarioProductoDisponible();
+
     this.listaClientes = await this.obtenerClientes();
-    this.listaEmpleados = await this.obtenerUsuarios();
+
 
     this.dataSourceOriginal = [];
-    this.dataSourceOriginal = await this.obtenerAsignacionesInventario();
     /* this.dataSourceOriginal = [// Datos dummy
       {
         id: 1,
@@ -148,8 +164,9 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
   async changeCliente(x){
 
+    this.listaEquipo = await this.obtenerInventarioProductoDisponible(x);
     console.log(this.listaEquipo);
-    this.dataSourceOriginal = await this.obtenerAsignacionesInventario();
+    this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(x);
     console.log(this.dataSourceOriginal);
     this.listaItems = this.dataSourceOriginal.slice(0, this.pageSize);
     this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
@@ -159,15 +176,11 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
   async changeEquipo(x){
     debugger
-    const seleccionado = this.listaEquipo.find((y)=> y.idinventario == x );
+    const seleccionado = this.listaEquipo.find((y)=> y.idinventarioarrendamiento == x );
     this.listaConfiguracion = await this.obtenerConfiguracionProducto(seleccionado.idcategoria)
-
-    this.configuracionEquipo.clear();
 
     this.listaConfiguracion.forEach((x)=>{
       const config = this.formBuilder.group({
-        id: new FormControl(0),
-        relUsuarioInventarioId: new FormControl(0),
         catConfiguracionProductoId: new FormControl(x.id),
         nombreConfiguracion: new FormControl(x.descripcion),
         valor: new FormControl('', [Validators.required])
@@ -190,30 +203,23 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     return respuesta ? respuesta.output : [];
   }
 
-
-  public async obtenerUsuarios() {
-    const respuesta =
-      await this.inventariosService.obtenerUsuarios()
-    return respuesta ? respuesta.output : [];
-  }
-
-
-
   public async obtenerClientes() {
     const respuesta =
       await this.inventariosService.obtenerCatalogoClientes();
     return respuesta ? respuesta.output : [];
   }
 
-  public async obtenerInventarioProductoDisponible() {
-    const respuesta = await this.inventariosService.obtenerInventarioProductosDisponibles_UsuarioInventario();
+  public async obtenerInventarioProductoDisponible(idCliente) {
+    const respuesta =
+      await this.inventariosService.obtenerInventarioArrendamientoDisponibleCliente(idCliente);
     return respuesta ? respuesta : [];
   }
 
 
-  public async obtenerAsignacionesInventario() {
+
+  public async obtenerAsignacionesInventarioProductoDisponible(idCliente) {
     const respuesta =
-      await this.inventariosService.obtenerAsignacionesInventario();
+      await this.inventariosService.obtenerAsignacionesInventarioArrendamiento(idCliente);
     return respuesta ? respuesta : [];
   }
 
@@ -221,18 +227,19 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
   public async guardarAsignacion(){
     debugger
     //this.asignacionInventarioFormModel.id = 0;
-    this.empleadoInventarioArrendamientoFormModel.tblInventarioId = this.equipo.value;
-    this.empleadoInventarioArrendamientoFormModel.catUsuarioId = this.empleado.value;
-    this.empleadoInventarioArrendamientoFormModel.responsiva = '';
+    this.empleadoInventarioArrendamientoFormModel.tblInventarioArrendamientoId = this.equipo.value;
+    this.empleadoInventarioArrendamientoFormModel.cuentaEmpleadoCliente = this.empleado.value;
+    this.empleadoInventarioArrendamientoFormModel.nombreEmpleadoCliente = this.listaEmpleados.find((x)=>x.cuenta == this.empleado.value).empleado;
+    this.empleadoInventarioArrendamientoFormModel.responsiva = null;
     this.empleadoInventarioArrendamientoFormModel.configuracion = this.configuracionEquipo.value;
-    const respuesta = await this.inventariosService.insertarAsignacionUsuarioInventario(this.empleadoInventarioArrendamientoFormModel);
+    const respuesta = await this.inventariosService.insertarAsignacionInventarioArrendamiento(this.empleadoInventarioArrendamientoFormModel);
     if(respuesta.exito){
       this.swalService.alertaPersonalizada(true, 'Exito');
       this.empleado.reset();
       this.equipo.reset();
       this.listaConfiguracion = [];
-      this.listaEquipo = await this.obtenerInventarioProductoDisponible();
-      this.dataSourceOriginal = await this.obtenerAsignacionesInventario();
+      this.listaEquipo = await this.obtenerInventarioProductoDisponible(this.cliente.value);
+      this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(this.cliente.value);
       console.log(this.dataSourceOriginal);
       this.listaItems = this.dataSourceOriginal.slice(0, this.pageSize);
       this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
@@ -243,9 +250,9 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     }
   }
 
-  openModalVisualizacion(asignacion: UsuarioInventarioModel){
+  openModalVisualizacion(asignacion: EmpleadoInventarioArrendamientoModel){
 
-    this.dialog.open(ModalVisualizacionAsignacionEquipoUsuarioComponent,{
+    this.dialog.open(ModalVisualizacionAsignacionInventarioEmpleadoComponent,{
       //height: '80%',
       height: 'auto',
       width: '80%',
@@ -256,22 +263,22 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     }).afterClosed().subscribe(async result => {
 
       //this.ngOnInit();
-      this.listaEquipo = await this.obtenerInventarioProductoDisponible();
+      this.listaEquipo = await this.obtenerInventarioProductoDisponible(this.cliente.value);
     });
   }
 
 
-  public async desasignar(asignacion: UsuarioInventarioModel){
+  public async desasignar(asignacion: EmpleadoInventarioArrendamientoModel){
     debugger
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
-      const respuesta = await this.inventariosService.eliminarAsignacionInventario(asignacion.idrelusuarioinventario);
+      const respuesta = await this.inventariosService.eliminarAsignacionInventarioArrendamiento(asignacion.idrelempleadoinventarioarrendamiento);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
 
 
-        this.listaEquipo = await this.obtenerInventarioProductoDisponible();
-        this.dataSourceOriginal = await this.obtenerAsignacionesInventario();
+        this.listaEquipo = await this.obtenerInventarioProductoDisponible(this.cliente.value);
+        this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(this.cliente.value);
         console.log(this.dataSourceOriginal);
         this.listaItems = this.dataSourceOriginal.slice(0, this.pageSize);
         this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
@@ -285,7 +292,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
   }
 
 
-  async cargarResponsiva(event, usuarioInventarioModel: UsuarioInventarioModel) {
+  async cargarResponsiva(event, empleadoInventarioArrendamientoModel: EmpleadoInventarioArrendamientoModel) {
     debugger
     if(event.target.files.length > 0)
      {
@@ -295,13 +302,14 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
       const respuesta = await this.filemanagerService.cargarArchivo(formData);
 
       if(respuesta.exito){
-        let obj = new UsuarioInventarioFormModel();
-        obj.id = usuarioInventarioModel.idrelusuarioinventario;
-        obj.catUsuarioId = usuarioInventarioModel.idusuario
-        obj.tblInventarioId = usuarioInventarioModel.idinventario;
+        let obj = new EmpleadoInventarioArrendamientoFormModel();
+        obj.id = empleadoInventarioArrendamientoModel.idrelempleadoinventarioarrendamiento;
+        obj.cuentaEmpleadoCliente = empleadoInventarioArrendamientoModel.cuentaEmpleadoCliente;
+        obj.nombreEmpleadoCliente = empleadoInventarioArrendamientoModel.nombreEmpleadoCliente;
+        obj.tblInventarioArrendamientoId = empleadoInventarioArrendamientoModel.idinventarioarrendamiento;
         obj.responsiva = respuesta.anotacion;
 
-         const respuestaArchivoArrendamiento = await this.inventariosService.editarAsignacionInventario(obj);
+         const respuestaArchivoArrendamiento = await this.inventariosService.editarAsignacionInventarioArrendamiento(obj);
 
             if (respuestaArchivoArrendamiento.exito) {
               this.swalService.alertaPersonalizada(
@@ -309,7 +317,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
                 "Carga de archivo correcta"
               );
 
-              this.dataSourceOriginal = await this.obtenerAsignacionesInventario();
+              this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(this.cliente.value);
               console.log(this.dataSourceOriginal);
               this.listaItems = this.dataSourceOriginal.slice(0, this.pageSize);
               this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
