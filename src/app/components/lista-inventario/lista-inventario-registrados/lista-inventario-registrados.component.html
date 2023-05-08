@@ -139,8 +139,9 @@
               <div class="flex justify-center items-center mb-1 mt-1">
                 <div class="text-center"><b>Estatus:</b> {{ item.catEstatusinventario }}</div>
               </div> -->
-              <div class="flex justify-center items-center mb-1 mt-1">
-                <div class="text-center"><b>Número serie:</b> {{ item.numerodeserie }}</div>
+              <div class="flex justify-between items-center mb-1 mt-1">
+                <div class="text-center"><b>Nuevo:</b> {{ item.nuevo ? 'Si':'No' }}</div>
+                <div class="text-center"><b>Estatus:</b> {{ item.catEstatusinventario}}</div>
               </div>
               <div class="flex justify-center items-center mb-1 mt-1">
                 <div class="text-center"><b>Clave:</b> {{ item.inventarioclv }}</div>
@@ -307,7 +308,7 @@
               </div>
             </mat-cell>
           </ng-container> -->
-<!--           <ng-container matColumnDef="catEstatusinventario">
+           <ng-container matColumnDef="catEstatusinventario">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Estatus
             </mat-header-cell>
@@ -316,7 +317,7 @@
                 {{ row.catEstatusinventario}}
               </div>
             </mat-cell>
-          </ng-container> -->
+          </ng-container>
           <ng-container matColumnDef="numerodeserie">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               # de Serie

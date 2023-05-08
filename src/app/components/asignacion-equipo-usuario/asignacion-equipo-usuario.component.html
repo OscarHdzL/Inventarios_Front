@@ -222,6 +222,14 @@
       </div>
     </div>
     <div class="card overflow-auto mt-5">
+      <div class="bg-app-bar w-full flex justify-center">
+        <div class="xl:w-8/12 lg:w-8/12 md:w-8/12 w-full px-2 py-2">
+          <form>
+            <input type="text" placeholder="Buscar..." name="comentario" id="comentario" (keyup)="applyFilter($event)"
+            class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md" />
+          </form>
+        </div>
+      </div>
       <!-- TABLA -->
       <div class="py-4">
         <table
@@ -284,14 +292,13 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="Responsiva">
+          <ng-container matColumnDef="Responsivas">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Responsiva
+              Responsivas
             </mat-header-cell>
             <mat-cell
               *matCellDef="let row"
-              data-label="Responsiva"
-              class="flex justify-center"
+              data-label="Responsivas"
             >
               <a
                 matTooltip="Descarga responsiva"
@@ -303,10 +310,35 @@
                   svgIcon="mat:file_download"
                 ></mat-icon>
               </a>
+              <input
+                id="responsiva_file"
+                #responsiva_file
+                type="file"
+                class="hidden"
+                (change)="cargarResponsiva($event, row)"
+              />
+              <a
+                *ngIf="!row.responsiva"
+                (click)="responsiva_file.click()"
+                matTooltip="Sube responsiva firmada"
+                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                mat-icon-button
+              >
+                <mat-icon class="icon-sm" svgIcon="mat:file_upload"></mat-icon>
+              </a>
+              <a
+                *ngIf="row.responsiva"
+                (click)="abrirDocumento(row.responsiva)"
+                matTooltip="Visualizar responsiva"
+                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                mat-icon-button
+              >
+                <mat-icon class="icon-sm" svgIcon="mat:open_in_new"></mat-icon>
+              </a>
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="responsiva">
+          <!-- <ng-container matColumnDef="responsiva">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Responsiva firmada
             </mat-header-cell>
@@ -341,7 +373,7 @@
                 <mat-icon class="icon-sm" svgIcon="mat:open_in_new"></mat-icon>
               </a>
             </mat-cell>
-          </ng-container>
+          </ng-container> -->
 
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef mat-sort-header>

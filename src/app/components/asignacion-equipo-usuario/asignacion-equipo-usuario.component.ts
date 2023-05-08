@@ -45,8 +45,8 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Clave', property: 'inventarioclv', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Responsiva', property: 'Responsiva', type: 'button', visible: true },
-    { label: 'Responsiva firmada', property: 'responsiva', type: 'button', visible: true },
+    { label: 'Responsivas', property: 'Responsivas', type: 'button', visible: true },
+    //{ label: 'Responsiva firmada', property: 'responsiva', type: 'button', visible: true },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -77,7 +77,31 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
       this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(x);
     }); */
   }
-
+  applyFilter(event: any) {
+    let filterValue = event.target.value.toLowerCase();
+    if (filterValue == "") {
+      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+      //ACTUALIZA LA TABLA
+      this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+      this.dataSourceTabla.paginator = this.paginator;
+      this.dataSourceTabla.sort = this.sort;
+    }
+    else {
+      //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
+      this.listaItems = this.dataSourceOriginal.filter((val) =>
+        val.nombreusuario.toLowerCase().includes(filterValue)||
+        val.modelo.toLowerCase().includes(filterValue)||
+        val.fabricante.toLowerCase().includes(filterValue)||
+        val.inventarioclv.toLowerCase().includes(filterValue)||
+        val.categoria.toLowerCase().includes(filterValue)
+      );
+      //ACTUALIZA EL CONTADOR DEL PAGINADOR DE CARDS
+      //ACTUALIZA LA TABLA
+      this.dataSourceTabla = new MatTableDataSource<any>(this.listaItems);
+      this.dataSourceTabla.paginator = this.paginator;
+      this.dataSourceTabla.sort = this.sort;
+    }
+  }
 
   //get cliente() { return this.formInventario.get('cliente') }
   get equipo() { return this.formInventario.get('equipo') }
