@@ -77,13 +77,15 @@ export class CaracteristicaProductoFormModel {
     id?: number;
     catProductoId?: number;
     nombre?: string;
-    hardware?: boolean;
+    hardware: boolean;
+    software: boolean;
     tipo?: string;
     constructor(){
       this.id = 0;
       this.catProductoId = 0;
       this.nombre = null;
-      this.hardware = true
+      this.hardware = false
+      this.software= true
       this.tipo = null
     }
     }

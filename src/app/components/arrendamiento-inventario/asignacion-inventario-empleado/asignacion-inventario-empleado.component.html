@@ -40,14 +40,22 @@
             </mat-form-field>
             <mat-form-field class="flex-auto">
               <mat-label>Empleado</mat-label>
-              <mat-select formControlName="empleado">
+              <!-- <mat-select formControlName="empleado">
                 <mat-option
                   *ngFor="let empleado of listaEmpleados"
                   [value]="empleado.cuenta"
                 >
                   {{ empleado.empleado }}</mat-option
                 >
-              </mat-select>
+              </mat-select> -->
+
+              <input type="text" matInput formControlName="empleado" maxlength="500" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let empl of filteredEmpleados" [value]="empl.nombre" (onSelectionChange)="empleadoSeleccionado(empl)">
+                  {{empl.nombre}}
+                </mat-option>
+
+              </mat-autocomplete>
               <mat-error *ngIf="this.empleado.hasError('required')">
                 El campo es requerido</mat-error
               >

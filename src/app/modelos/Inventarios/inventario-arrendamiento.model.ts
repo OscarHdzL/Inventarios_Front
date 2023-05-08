@@ -159,3 +159,10 @@ export class ConfiguracionEmpleadoInventario {
   catConfiguracionProductoId?: number
   valor?: string
 }
+
+
+export class EmpleadoLDAP {
+  nombre: string
+  correo: string
+  cuenta: string
+}

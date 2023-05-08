@@ -158,9 +158,13 @@ export class ModalProductoComponent implements OnInit {
         caracteritica.hardware = this.hardware.value
         if (this.hardware.value) {
           caracteritica.tipo = "HARDWARE"
+          caracteritica.hardware = true;
+          caracteritica.software = false;
         }
         else {
           caracteritica.tipo = "SOFTWARE"
+          caracteritica.hardware = false;
+          caracteritica.software = true;
         }
         const respuesta =
           await this.inventariosService.insertarCaracteristicaProducto(
@@ -179,10 +183,15 @@ export class ModalProductoComponent implements OnInit {
         caracteritica.nombre = this.caracteristica.value;
         caracteritica.hardware = this.hardware.value
         if (this.hardware.value) {
-          caracteritica.tipo = "HARDWARE"
+          caracteritica.tipo = "HARDWARE";
+          caracteritica.hardware = true;
+          caracteritica.software = false;
         }
         else {
-          caracteritica.tipo = "SOFTWARE"
+          caracteritica.tipo = "SOFTWARE";
+          caracteritica.hardware = false;
+          caracteritica.software = true;
+
         }
         this.listaCaracteristicas.push(caracteritica);
         this.formCaracteristica.reset();
@@ -227,11 +236,15 @@ export class ModalProductoComponent implements OnInit {
     this.productoModel.vidautil = this.vidaUtil.value;
     this.productoModel.nuevo = this.nuevo.value;
 
-    if (this.productoModel.id == 0) {
+/*     if (this.productoModel.id == 0) {
       this.listaCaracteristicas.forEach((x) => {
         this.productoModel.caracteristicas_.push(x.nombre);
       });
-    }
+    } */
+
+    this.productoModel.caracteristicas_ = this.listaCaracteristicas;
+
+
 
     const respuesta =
       this.productoModel.id > 0

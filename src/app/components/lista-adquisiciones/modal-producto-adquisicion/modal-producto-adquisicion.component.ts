@@ -72,6 +72,8 @@ export class ModalProductoAdquisicionComponent implements OnInit {
     );
   }
 
+
+
   public async obtenerProductos(){
     const respuesta = await this.inventariosService.obtenerCatalogoProductos();
     return respuesta ? respuesta : [];
@@ -151,6 +153,9 @@ private _filter(value: string): ProductoModel[] {
   const filterValue = this._normalizeValue(value);
   return this.listaProductos.filter(producto => this._normalizeValue(producto.modelo).includes(filterValue));
 }
+
+
+
 
 private _normalizeValue(value: string): string {
   return value.toLowerCase().replace(/\s/g, '');

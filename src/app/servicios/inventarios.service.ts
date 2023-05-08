@@ -380,4 +380,13 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.putAsync(this.url_api + 'UsuarioInventario/editarResponsivaAsignacion', asignacion);
     }
 
+
+    // LDAP
+    public async obtenerUsuarioLDAP(idCliente: number, name: string) : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/LDAP/ListadoUsuarioPorCliente?id='+ idCliente + '&name=' + name);
+    }
+
+
+
+
 }
