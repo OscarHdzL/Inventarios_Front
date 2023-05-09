@@ -44,7 +44,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     { label: 'Modelo', property: 'modelo', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Fabricante', property: 'fabricante', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
-    { label: 'Clave', property: 'inventarioclv', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Serie', property: 'numerodeserie', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Responsiva', property: 'Responsiva', type: 'button', visible: true },
     { label: 'Responsiva firmada', property: 'responsiva', type: 'button', visible: true },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
@@ -340,5 +340,39 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     window.open(url,'_blank');
    }
+
+
+   applyFilter(event: any) {
+    let filterValue = event.target.value.toLowerCase();
+    if (filterValue == "") {
+      this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
+
+      //ACTUALIZA LA TABLA
+      this.dataSourceTabla = new MatTableDataSource<any>(this.dataSourceOriginal);
+      this.dataSourceTabla.paginator = this.paginator;
+      this.dataSourceTabla.sort = this.sort;
+
+    }
+    else {
+      //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
+      this.listaItems = this.dataSourceOriginal.filter((val) =>
+        val.nombreusuario.toString().toLowerCase().includes(filterValue) ||
+        val.modelo.toString().toLowerCase().includes(filterValue)||
+        val.fabricante.toString().toLowerCase().includes(filterValue)||
+        val.categoria.toString().toLowerCase().includes(filterValue)||
+        val.numerodeserie.toString().toLowerCase().includes(filterValue)
+        );
+
+
+      //ACTUALIZA LA TABLA
+      this.dataSourceTabla = new MatTableDataSource<any>(this.listaItems);
+      this.dataSourceTabla.paginator = this.paginator;
+      this.dataSourceTabla.sort = this.sort;
+
+    }
+
+  }
+
+
 
 }

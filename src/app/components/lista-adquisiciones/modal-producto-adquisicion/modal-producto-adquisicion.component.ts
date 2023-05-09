@@ -145,6 +145,7 @@ public async productoSeleccionado(producto: ProductoModel){
   console.log(producto);
   this.productoModel.catProductoId = producto.idproducto;
   this.productoModel.modelo = producto.modelo;
+  this.productoModel.categoria = producto.categoria;
   this.categoriaSelect = producto.categoria;
 }
 

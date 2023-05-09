@@ -221,7 +221,72 @@
         </button>
       </div>
     </div>
-    <div class="card overflow-auto mt-5">
+
+
+    <div
+        class="bg-app-bar flex xl:flex-row lg:flex-row md:flex-row items-center flex-col rounded-md mt-2"
+      >
+        <!-- <div class="xl:w-1/12 lg:w-1/12 md:w-1/12 flex justify-center">
+
+
+          <button
+            (click)="openModal(null)"
+            matTooltip="Agregar Adquisicion"
+            class="bg-gray-400 hover:bg-gray-500 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center shadow-md"
+          >
+            <svg
+              class="fill-current w-5 h-5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="Complete">
+                <g data-name="add" id="add-2">
+                  <g>
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="12"
+                      x2="12"
+                      y1="19"
+                      y2="5"
+                    />
+
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div> -->
+
+        <div class="w-8/12 px-2 py-2 ">
+          <form>
+            <input
+              type="text"
+              placeholder="Buscar..."
+              name="comentario"
+              id="comentario"
+              (keyup)="applyFilter($event)"
+              class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"
+            />
+          </form>
+        </div>
+      </div>
+
+    <div class="card overflow-auto mt-2">
       <!-- TABLA -->
       <div class="py-4">
         <table
@@ -273,13 +338,13 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="inventarioclv">
+          <ng-container matColumnDef="numerodeserie">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Clave
+              Serie
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Clave">
+            <mat-cell *matCellDef="let row" data-label="Serie">
               <div>
-                {{ row.inventarioclv }}
+                {{ row.numerodeserie }}
               </div>
             </mat-cell>
           </ng-container>

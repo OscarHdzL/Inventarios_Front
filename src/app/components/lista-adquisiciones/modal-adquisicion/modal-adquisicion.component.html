@@ -134,6 +134,8 @@
                 (onFileDrop)="dropped($event)"
                 (onFileOver)="fileOver($event)"
                 (onFileLeave)="fileLeave($event)"
+                accept="application/pdf"
+                [multiple]="false"
               >
                 <ng-template
                   ngx-file-drop-content-tmp
@@ -145,7 +147,7 @@
                     type="button"
                     (click)="openFileSelector()"
                   >
-                    Browse Files
+                    <b>Buscar archivo</b>
                   </button>
                 </ng-template>
               </ngx-file-drop>
@@ -191,18 +193,20 @@
                 (onFileDrop)="dropped($event)"
                 (onFileOver)="fileOver($event)"
                 (onFileLeave)="fileLeave($event)"
+                accept="text/xml"
+                [multiple]="false"
               >
                 <ng-template
                   ngx-file-drop-content-tmp
                   let-openFileSelector="openFileSelector"
                 >
-                  Arraste archivo
+                  Arrastre archivo
                   <button
                     style="margin-left: 1rem"
                     type="button"
                     (click)="openFileSelector()"
                   >
-                    Browse Files
+                  <b>Buscar archivo</b>
                   </button>
                 </ng-template>
               </ngx-file-drop>
@@ -262,7 +266,16 @@
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
-      <div class="relative shadow-md sm:rounded-lg overflow-x-auto">
+
+      <div
+      class="flex justify-center m-3"
+      *ngIf="listaProductosAdquisicion.length == 0"
+    >
+
+          <p>NO SE HAN REGISTRADO PRODUCTOS</p>
+
+    </div>
+      <div class="relative shadow-md sm:rounded-lg overflow-x-auto" *ngIf="listaProductosAdquisicion.length > 0">
         <!-- <table class="w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -407,9 +420,8 @@
       </div> -->
     </mat-expansion-panel>
   </mat-accordion>
-</mat-dialog-content>
-<mat-dialog-actions align="end" *ngIf="this.adquisicionModel.id == 0">
-  <div class="flex justify-end">
+
+  <div class="flex justify-end mt-5" *ngIf="this.adquisicionModel.id == 0">
     <button type="button" mat-button mat-dialog-close>Cancelar</button>
     <button
       type="submit"
@@ -421,4 +433,8 @@
       {{ this.adquisicionModel.id > 0 ? "Editar" : "Agregar" }}
     </button>
   </div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions align="end" *ngIf="this.adquisicionModel.id == 0">
+
 </mat-dialog-actions>
+ -->

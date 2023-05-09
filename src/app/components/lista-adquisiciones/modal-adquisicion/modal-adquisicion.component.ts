@@ -85,6 +85,7 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 ///drag drop
 public dropped(files: NgxFileDropEntry[]) {
+  debugger
   this.files = files;
   for (const droppedFile of files) {
 
@@ -306,8 +307,8 @@ async xmlSeleccionado2(file: File) {
     //this.adquisicionModel.facpdf = "tokenPrueba"; //this.facturaPDF.value;
     //this.adquisicionModel.facxml = "tokenPrueba"; //this.facturaXML.value;
     this.adquisicionModel.fechadecompra = this.fechaCompra.value;
-    //this.adquisicionModel.detalle = this.listaProductosAdquisicion;
-    this.adquisicionModel.detalle =null
+    this.adquisicionModel.detalle = this.listaProductosAdquisicion;
+    //this.adquisicionModel.detalle =null
 
     const respuesta =
       this.adquisicionModel.id > 0
@@ -374,7 +375,7 @@ async xmlSeleccionado2(file: File) {
       })
       .afterClosed()
       .subscribe((result) => {
-        ;
+        debugger
         if (result) {
           if (result.iD > 0) {
             //edita
