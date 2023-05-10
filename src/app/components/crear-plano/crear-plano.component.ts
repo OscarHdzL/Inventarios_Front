@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OficinasModel } from 'src/app/modelos/Inventarios/propietario.model';
 import { FileManagerService } from 'src/app/servicios/filemanager.service';
@@ -25,6 +25,12 @@ export class CrearPlanoComponent implements OnInit, AfterViewInit {
     x1: 0,
     y1: 0
   }
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(evt: KeyboardEvent)
+  {
+    this.primerPunto = false;
+    this.mostrarEliminar = true;
+  }
+  mostrarEliminar: boolean = true;
   constructor(private swalService: SwalServices,
               private activeRoute: ActivatedRoute,
               private router: Router,
@@ -55,6 +61,16 @@ export class CrearPlanoComponent implements OnInit, AfterViewInit {
   async obtenerURLPlano(token: string){
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     return url;
+  }
+  mostrarOficinas(){
+    this.mostrarEliminar = false;
+    this.primerPunto = false;
+    this.coordenadas = {
+      x0: 0,
+      y0: 0,
+      x1: 0,
+      y1: 0
+    }
   }
   ngAfterViewInit() {
 
@@ -109,46 +125,50 @@ export class CrearPlanoComponent implements OnInit, AfterViewInit {
   //    100);
   //  }
    punto(event: any){
-      console.log("Punto X-> ", event.offsetX);
-      console.log("Punto Y-> ", event.offsetY);
-      if (this.primerPunto == false) {
-        this.primerPunto = true;
-        this.coordenadas.x0 = event.offsetX
-        this.coordenadas.y0 = event.offsetY
-        this.oficina.ejeX = event.offsetX
-        this.oficina.ejeY = event.offsetY
-        this.swalService.alertaPunto()
-      }
-      else {
-        this.coordenadas.x1 = event.offsetX
-        this.coordenadas.y1 = event.offsetY
-        //this.swalService.alertaNombre(this.coordenadas);
-        Swal.fire({
-            title: "Segundo Punto Seleccionado",
-            text: "Ingresa el nombre de esta sección",
-            input: 'text',
-            icon: "info",
-            showCancelButton: true
-        }).then(async(result) => {
-            if (result.value) {
-              this.oficina.id = 0;
-              this.oficina.nombre = result.value
-              this.oficina.ancho = this.coordenadas.x1 - this.coordenadas.x0;
-              this.oficina.alto = this.coordenadas.y1 - this.coordenadas.y0;
-              console.log("Result: ", this.oficina);
-              let res = await this.inventariosService.insertarOficina(this.oficina)
-              if (res.exito) {
-                this.ctx.rect(this.oficina.ejeX, this.oficina.ejeY, this.oficina.ancho, this.oficina.alto)
-                this.ctx.stroke();
-                this.ctx.fillText(result.value,(this.coordenadas.x0 + this.coordenadas.x1)/2,(this.coordenadas.y0 + this.coordenadas.y1)/2)
-                this.swalService.alertaPersonalizada(true,res.mensaje)
+      if (this.mostrarEliminar == false) {
+        console.log("Punto X-> ", event.offsetX);
+        console.log("Punto Y-> ", event.offsetY);
+        if (this.primerPunto == false) {
+          this.primerPunto = true;
+          this.coordenadas.x0 = event.offsetX
+          this.coordenadas.y0 = event.offsetY
+          this.oficina.ejeX = event.offsetX
+          this.oficina.ejeY = event.offsetY
+          this.swalService.alertaPunto()
+        }
+        else {
+          this.coordenadas.x1 = event.offsetX
+          this.coordenadas.y1 = event.offsetY
+          //this.swalService.alertaNombre(this.coordenadas);
+          Swal.fire({
+              title: "Segundo Punto Seleccionado",
+              text: "Ingresa el nombre de esta sección",
+              input: 'text',
+              icon: "info",
+              showCancelButton: true
+          }).then(async(result) => {
+              if (result.value) {
+                this.oficina.id = 0;
+                this.oficina.nombre = result.value
+                this.oficina.ancho = this.coordenadas.x1 - this.coordenadas.x0;
+                this.oficina.alto = this.coordenadas.y1 - this.coordenadas.y0;
+                console.log("Result: ", this.oficina);
+                let res = await this.inventariosService.insertarOficina(this.oficina)
+                if (res.exito) {
+                  this.ctx.rect(this.oficina.ejeX, this.oficina.ejeY, this.oficina.ancho, this.oficina.alto)
+                  this.ctx.stroke();
+                  this.ctx.fillText(result.value,(this.coordenadas.x0 + this.coordenadas.x1)/2,(this.coordenadas.y0 + this.coordenadas.y1)/2)
+                  this.swalService.alertaPersonalizada(true,res.mensaje)
+                  this.mostrarEliminar = true;
+                  this.listaOficinas.push(this.oficina)
+                }
+                else {
+                  this.swalService.alertaPersonalizada(false,res.mensaje)
+                }
               }
-              else {
-                this.swalService.alertaPersonalizada(false,res.mensaje)
-              }
-            }
-        });
-        this.primerPunto = false
+          });
+          this.primerPunto = false
+        }
       }
    }
    async eliminarOficina(event: any){

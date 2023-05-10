@@ -8,20 +8,36 @@
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content class="-mt-6">
-    <div  class="flex justify-center mt-2">
-      <h1 class="title mt-0 mb-1">Selecciona una oficina para eliminarla</h1>
+    <div class="flex justify-center mt-2">
+      <button type="button" class="mt-2" mat-flat-button color="primary" (click)="mostrarOficinas()">Agregar Oficina</button>
     </div>
-    <div *ngIf="this.listaOficinas.length > 0" class="flex justify-center mt-1">
-      <mat-form-field class="w-1/2">
-        <mat-label>Oficina</mat-label>
-        <mat-select (selectionChange)="eliminarOficina($event)">
-          <mat-option
-            *ngFor="let oficina of this.listaOficinas"
-            [value]="oficina.id">
-            {{ oficina.nombre }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
+    <div *ngIf="this.mostrarEliminar && this.listaOficinas.length > 0">
+      <div  class="flex justify-center mt-1">
+        <h1 class="title mt-0 mb-1">Selecciona una oficina para eliminarla</h1>
+      </div>
+      <div class="flex justify-center mt-1">
+        <mat-form-field class="w-1/2">
+          <mat-label>Oficina</mat-label>
+          <mat-select (selectionChange)="eliminarOficina($event)">
+            <mat-option
+              *ngFor="let oficina of this.listaOficinas"
+              [value]="oficina.id">
+              {{ oficina.nombre }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="this.mostrarEliminar == false">
+      <div  class="flex justify-center mt-1">
+        <h1 class="title mt-0 mb-1">1.- Selecciona la primera esquina de una oficina</h1>
+      </div>
+      <div  class="flex justify-center mt-1">
+        <h1 class="title mt-0 mb-1">2.- Selecciona la segunda esquina de una oficina en diagonal</h1>
+      </div>
+      <div  class="flex justify-center mt-1">
+        <h1 class="title mt-0 mb-1">Nota: Presiona ESC para cancelar la selección</h1>
+      </div>
     </div>
     <div class="card overflow-auto mt-1 flex justify-center">
       <ng-container>
