@@ -15,6 +15,7 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
 import { ModalUbicacionesComponent } from './modal-ubicaciones/modal-ubicaciones.component';
 import { Router } from '@angular/router';
+import { UbicacionModel } from 'src/app/modelos/Inventarios/propietario.model';
 @Component({
   selector: 'vex-lista-ubicaciones',
   templateUrl: './lista-ubicaciones.component.html',
@@ -29,7 +30,7 @@ export class ListaUbicacionesComponent implements OnInit {
   pageSize = 6;
   pageSizeOptions: number[] = [this.pageSize, this.pageSize*2, this.pageSize*3, this.pageSize*4];
   pageEvent: PageEvent;
-  dataSourceOriginal: any[] = [];
+  dataSourceOriginal: UbicacionModel[] = [];
   dataSourceTabla:any;
   listaItems: any[] = [];
 
@@ -75,7 +76,7 @@ export class ListaUbicacionesComponent implements OnInit {
       //SE FILTRA POR CADA UNO DE LOS CAMPOS DE LOS REGISTROS
       this.listaItems = this.dataSourceOriginal.filter((val) =>
         val.cliente.toLowerCase().includes(filterValue)||
-        val.dirrecion.toLowerCase().includes(filterValue)||
+        val.direccion.toLowerCase().includes(filterValue)||
         val.edificio.toLowerCase().includes(filterValue)||
         val.piso.toLowerCase().includes(filterValue)
       );
@@ -92,20 +93,11 @@ export class ListaUbicacionesComponent implements OnInit {
     console.log("Valor Selected");
     console.log(this.selectedVal);
   }
-  async deshabilitarPropietario(item){
-    console.log("Deshabilidar -> ", item);
-    let res = {exito: true} //await this.servicios.deshabilitarPropietario(item);
-    if (res.exito) {
-      this.swalService.alertaPersonalizada(true, "Fabricante Deshabilitado");
-      this.ngOnInit();
-    }
-    else {
-      this.swalService.alertaPersonalizada(false, "Error al deshabilitar");
-    }
-  }
   async ngOnInit(): Promise<void> {
     this.dataSourceOriginal = [];
     this.dataSourceOriginal = await this.obtenerFabricantes();
+    console.log("Lista ubicaciones -> ", this.dataSourceOriginal);
+
     if (window.innerWidth >= 1280) {
       this.tamanoPantalla = true;
     }
@@ -142,6 +134,23 @@ export class ListaUbicacionesComponent implements OnInit {
 
       this.ngOnInit();
     });
+  }
+  public async EliminarFabricanteCards(propietario, event){
+    console.log("Event Elimnar -> ", event);
+    event.checked = true;
+    let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
+    if(confirmacion){
+      const respuesta = await this.inventariosService.deshabilitarUbicacion(propietario.id);
+      if(respuesta.exito){
+        this.swalService.alertaPersonalizada(true, 'Exito');
+        this.ngOnInit();
+      } else {
+        this.swalService.alertaPersonalizada(false, 'Error');
+      }
+    }
+    else{
+      this.ngOnInit();
+    }
   }
   public async EliminarFabricante(propietario){
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");

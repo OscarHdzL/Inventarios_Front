@@ -1,8 +1,171 @@
 <div class="flex items-center " style="border: none !important" mat-dialog-title >
-  <h2 class="headline m-0 flex-auto">Oficina de <b>{{this.propietario.nombre}}</b></h2>
+  <h2 class="headline m-0 flex-auto">Oficina de <b>{{this.oficina.nombre}}</b></h2>
   <button></button>
   <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
   <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
       <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1">
+  <mat-accordion #accordion="matAccordion" class="example-headers-align" [multi]="true">
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Agregar Inventario </mat-panel-title>
+        <!-- <mat-panel-description>
+          Información general
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:keyboard_arrow_down"
+          ></mat-icon>
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <div class="mt-4 flex flex-col gap-2 m-2">
+        <form role="form" autocomplete="off" [formGroup]="formPropietario" novalidate>
+          <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+            <mat-form-field class="flex-auto" >
+              <mat-label>Inventario</mat-label>
+              <input type="text"
+                     placeholder="Buscar..."
+                     aria-label="Number"
+                     matInput
+                     formControlName="colaborador"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="seleccionarFiltro($event.option.value)">
+                <mat-option *ngFor="let option of this.filteredColaboradores | async" [value]="option.filtro">
+                  {{option.filtro}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div *ngIf="this.mostrarCaracteristicas == true">
+            <div class="flex flex-col mb-1 mt-1">
+              <div class="flex justify-end mb-3">
+                <span
+                  class="bg-blue-100 text-salmon-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-salmon-900 dark:text-salmon-300">
+                  Caracteristicas
+                </span>
+              </div>
+              <div class="flex mb-0 mt-0">
+                <div class="basis-1/4 text-center">
+                  <span class="font-bold">Modelo</span>:
+                </div>
+                <div class="basis-1/4 text-center">
+                  <span class="font-bold">Fabricante</span>:
+                </div>
+                <div class="basis-2/4 text-center">
+                  <span class="font-bold">Categoria</span>:
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="flex mb-0 mt-0">
+                <div class="basis-1/4 text-center">
+                  {{ caracteristicas.modelo }}
+                </div>
+                <div class="basis-1/4 text-center">
+                  {{ caracteristicas.fabricante }}
+                </div>
+                <div class="basis-2/4 text-center">
+                  {{ caracteristicas.categoria }}
+                </div>
+              </div>
+
+              <div class="flex mb-0 mt-2">
+                <div class="basis-1/2 text-center">
+                  <span class="font-bold">Número serie</span>:
+                </div>
+                <div class="basis-1/2 text-center">
+                  <span class="font-bold">Clave</span>:
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="flex mb-0 mt-0">
+                <div class="basis-1/2 text-center">
+                  {{ caracteristicas.numerodeserie }}
+                </div>
+                <div class="basis-1/2 text-center">
+                  {{ caracteristicas.inventarioclv }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              (click)="guardarPropietario()" [disabled]="formPropietario.invalid">Agregar</button>
+          </div>
+        </form>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Lista de Inventarios </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="relative shadow-md sm:rounded-lg overflow-x-auto">
+        <div class="flex justify-center" *ngIf="this.listaInventarios.length == 0">
+          <h1 class="m-10 title" style="text-align: center">Esta oficina no contiene inventarios asignados</h1>
+        </div>
+        <table *ngIf="this.listaInventarios.length > 0" class="w-full flex-no-wrap sm:bg-white rounded-lg sm:shadow-lg my-2">
+          <thead class="text-white">
+            <tr class="bg-gray-200 text-gray-600 flex flex-col flex-no wrap md:table-row rounded-l-lg sm:rounded-none mb-1">
+              <th class="p-3 text-left">Usuario</th>
+              <th class="p-3 text-left">Clave</th>
+              <th class="p-3 text-left">Serie</th>
+              <th class="p-3 text-left">Equipo</th>
+              <th class="p-3 text-left" width="110px">Acción</th>
+            </tr>
+          </thead>
+          <tbody class="flex-1 md:flex-none">
+            <tr
+              class="flex flex-col flex-no wrap md:table-row mb-1 hover:bg-gray-100"
+              *ngFor="let row of listaInventarios"
+            >
+              <td
+                class="border-grey-light border p-3 truncate"
+              >
+                <div  *ngIf="row.usuario == ''">NO ASIGNADO</div>
+                <div  *ngIf="row.usuario != ''">{{row.usuario}}</div>
+              </td>
+              <td
+                class="border-grey-light border p-3 truncate"
+              >
+                <div  *ngIf="row.clave == ''">NO ASIGNADO</div>
+                <div  *ngIf="row.clave != ''">{{row.clave}}</div>
+              </td>
+              <td
+                class="border-grey-light border p-3 truncate"
+              >
+                <div  *ngIf="row.serie == ''">NO ASIGNADO</div>
+                <div  *ngIf="row.serie != ''">{{row.serie}}</div>
+              </td>
+              <td
+                class="border-grey-light border p-3 truncate"
+              >
+                <div  *ngIf="row.equipo == ''">NO ASIGNADO</div>
+                <div  *ngIf="row.equipo != ''">{{row.equipo}}</div>
+              </td>
+              <td
+                class="border-grey-light border p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer"
+              >
+                <a
+                  (click)="eliminarProducto(row)"
+                  matTooltip="Eliminar Inventario"
+                  class="w-5 h-5 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</mat-dialog-content>
