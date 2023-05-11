@@ -173,15 +173,51 @@ export class CrearPlanoComponent implements OnInit, AfterViewInit {
    }
    async eliminarOficina(event: any){
       console.log("Change -> ", event);
-      this.listaOficinas.splice(this.listaOficinas.findIndex(x => x.id == event.value),1);
-      let res = await this.inventariosService.deshabilitarOficina(event.value);
-      if (res.exito) {
-        this.ctx.beginPath();
-        this.ngAfterViewInit();
-        this.swalService.alertaPersonalizada(true, res.mensaje);
+      let res = await this.inventariosService.validarInventarioOficina(event.value);
+      if (res) {
+        Swal.fire({
+          title: "Esta oficina tiene inventario ya asignado",
+          text: "Seguro que lo quieres eliminar?",
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+              this.listaOficinas.splice(this.listaOficinas.findIndex(x => x.id == event.value),1);
+              let res = await this.inventariosService.deshabilitarOficina(event.value);
+              if (res.exito) {
+                this.ctx.beginPath();
+                this.ngAfterViewInit();
+                this.swalService.alertaPersonalizada(true, res.mensaje);
+              }
+              else {
+                this.swalService.alertaPersonalizada(false, res.mensaje);
+              }
+            }
+        });
       }
       else {
-        this.swalService.alertaPersonalizada(false, res.mensaje);
+        Swal.fire({
+          title: "Seguro que lo quieres eliminar?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+              this.listaOficinas.splice(this.listaOficinas.findIndex(x => x.id == event.value),1);
+              let res = await this.inventariosService.deshabilitarOficina(event.value);
+              if (res.exito) {
+                this.ctx.beginPath();
+                this.ngAfterViewInit();
+                this.swalService.alertaPersonalizada(true, res.mensaje);
+              }
+              else {
+                this.swalService.alertaPersonalizada(false, res.mensaje);
+              }
+            }
+        });
       }
    }
 
