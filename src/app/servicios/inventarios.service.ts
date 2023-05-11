@@ -238,6 +238,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async insertarInventarioUbicacion(oficina: UbicacionFormModel) : Promise <any> {
       return await this.postAsync(this.url_api + 'InventarioUbicacion/agregar', oficina);
     }
+    public async deshabilitarInventarioUbicacion(ubicacion: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'InventarioUbicacion/eliminar?id='+ubicacion);
+    }
     /* Oficinas */
     public async insertarOficina(ubicacion: UbicacionFormModel) : Promise <any> {
       return await this.postAsync(this.url_api + 'Ubicacion/agregar/oficina', ubicacion);

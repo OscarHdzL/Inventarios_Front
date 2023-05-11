@@ -102,29 +102,23 @@ export class ModalPlanoComponent implements OnInit {
     this.dialogRef.close(result);
   }
   public async eliminarProducto(producto: any) {
-    if (producto.id > 0) {
-      let confirmacion = await this.swalService.confirmacion(
-        "Atención",
-        "¿Esta seguro de eliminar el registro?",
-        "Eliminar",
-        ""
-      );
+    let confirmacion = await this.swalService.confirmacion(
+      "Atención",
+      "¿Esta seguro de eliminar el registro?",
+      "Eliminar",
+      ""
+    );
 
-      if (confirmacion) {
-        const respuesta = await this.inventariosService.deshabilitarAdquisicionDetalle(
-          producto.id
-        );
-        if (respuesta.exito) {
-          this.swalService.alertaPersonalizada(true, "Exito");
-          this.ngOnInit();
-        } else {
-          this.swalService.alertaPersonalizada(false, "Error");
-        }
+    if (confirmacion) {
+      const respuesta = await this.inventariosService.deshabilitarInventarioUbicacion(
+        producto.id
+      );
+      if (respuesta.exito) {
+        this.swalService.alertaPersonalizada(true, "Exito");
+        this.ngOnInit();
+      } else {
+        this.swalService.alertaPersonalizada(false, "Error");
       }
-    } else {
-      const index = this.listaInventarios.indexOf(producto);
-      this.listaInventarios.splice(index, 1);
-      //this.calcularMontoImpuestoArticulos();
     }
   }
 
