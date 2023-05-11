@@ -18,7 +18,6 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { NgxFileDropModule } from 'ngx-file-drop';
 
 
-
 @NgModule({
   declarations: [AppComponent,  LoaderComponent],
   imports: [
