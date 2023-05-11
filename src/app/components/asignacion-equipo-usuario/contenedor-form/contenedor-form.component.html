@@ -1,0 +1,111 @@
+<form role="form" autocomplete="off" [formGroup]="formContenedores" novalidate>
+  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+    <mat-form-field class="flex-auto">
+      <mat-label>Contenedor</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="contenedor"
+        maxlength="2000"
+      />
+      <mat-error *ngIf="this.contenedor.hasError('required')">
+        El campo es requerido</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4 mb-4">
+    <div class="w-full">
+      <ngx-file-drop
+        class="bg-gray-200 h-52"
+        dropZoneLabel="Arrastre aqui los archivos"
+        (onFileDrop)="dropped($event)"
+      >
+        <ng-template
+          ngx-file-drop-content-tmp
+          let-openFileSelector="openFileSelector"
+        >
+          Arraste archivo(s)
+          <button
+            style="margin-left: 1rem"
+            type="button"
+            (click)="openFileSelector()"
+          >
+            <b>Buscar archivos</b>
+          </button>
+        </ng-template>
+      </ngx-file-drop>
+    </div>
+  </div>
+
+  <div
+  *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length == 0"
+  class="flex-auto items-center justify-center"
+>
+  <h1 class="m-10 title" style="text-align: center">
+    No se encontraron archivos
+  </h1>
+</div>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <ng-container formArrayName="tblUsuarioInventarioContenedorImagenes">
+      <ng-container
+        *ngFor="let conf of tblUsuarioInventarioContenedorImagenes.controls; let i = index"
+      >
+        <div class="card h-72">
+          <div class="flex justify-end mb-1" (click)="eliminarArchivo(i, conf.get('id').value)">
+            <a href="javascript:;">
+              <span
+                class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-red-700 text-red-200"
+              >
+                Eliminar
+              </span>
+            </a>
+          </div>
+          <div class="flex flex-col justify-center content-center" [formGroupName]="i">
+            <img
+              matTooltip="Ver Imagen"
+              class="max-w-full rounded-lg m-5"
+              (click)="abrirDocumento(conf.get('url').value)"
+              [src]="conf.get('url').value"
+              alt=""
+            />
+
+           <!--  <mat-form-field class="flex-auto h-20">
+              <mat-label>Descripcion</mat-label>
+              <input type="text" matInput formControlName="descripcion" class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"/>
+              <mat-error *ngIf="conf.get('descripcion').hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field> -->
+
+            <div class="bg-app-bar w-full flex ">
+              <div class="w-full px-2 py-2">
+                <input type="text" placeholder="Descripcion..." name="comentario" id="comentario" formControlName="descripcion"
+                class="px-2 py-2 bg-white-100 w-11/12 focus:outline-none rounded-md" />
+                <mat-error *ngIf="conf.get('descripcion').hasError('required')">
+                  El campo es requerido</mat-error
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="flex justify-end">
+
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      [disabled]="this.formContenedores.invalid"
+      (click)="guardarContenedor()"
+    >
+      {{this.item.id > 0 ? 'Editar Contenedor':'Guardar Contenedor'}}
+    </button>
+  </div>
+  <div>{{this.formContenedores.getRawValue() | json}}</div>
+  <br>
+  <div>{{this.item | json}}</div>
+</form>

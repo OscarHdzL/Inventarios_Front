@@ -10,7 +10,7 @@ import { CaracteristicaProductoFormModel_, ProductoFormModel } from '../modelos/
 import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventarios/adquisicion.model';
 import { AccesorioInventario, InventarioFormModel } from '../modelos/Inventarios/inventario.model';
 import { ArchivoEmpleadoInventario, EmpleadoInventarioArrendamientoFormModel, InventarioArrendamientoAgrupadoModel, InventarioArrendamientoFormModel } from '../modelos/Inventarios/inventario-arrendamiento.model';
-import { ArchivoUsuarioInventario, UsuarioInventarioFormModel } from '../modelos/Inventarios/usuario-inventario.model';
+import { ArchivoUsuarioInventario, UsuarioInventarioContenedorModel, UsuarioInventarioFormModel } from '../modelos/Inventarios/usuario-inventario.model';
 
 
 @Injectable({
@@ -381,10 +381,34 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
 
 
+
+    public async obtenerContenedoresAsignacionInventario(idrelusuarioinventario) : Promise <any> {
+      return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarContenedores?idrelusuarioinventario=' + idrelusuarioinventario);
+    }
+
+    public async insertaContenedorAsignacionInventario(contenedor: UsuarioInventarioContenedorModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'UsuarioInventario/agregarContenedor', contenedor);
+    }
+
+    public async editarContenedorAsignacionInventario(contenedor: UsuarioInventarioContenedorModel) : Promise <any> {
+      return await this.putAsync(this.url_api + 'UsuarioInventario/editarContenedor', contenedor);
+    }
+
+    public async eliminarImagenContenedorAsignacionInventario(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminarContenedor?id='+Inventario);
+    }
+
+
+
     // LDAP
     public async obtenerUsuarioLDAP(idCliente: number, name: string) : Promise <any> {
       return await this.getAsync(this.url_api + 'api/LDAP/ListadoUsuarioPorCliente?id='+ idCliente + '&name=' + name);
     }
+
+    public async obtenerUsuarioLDAP_PM(name: string) : Promise <any> {
+      return await this.getAsync(this.url_api + 'api/LDAP/ListadoUsuariosPM?name=' + name);
+    }
+
 
 
 

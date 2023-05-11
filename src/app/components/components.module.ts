@@ -104,6 +104,8 @@ import { ModalAsignacionInventarioClienteComponent } from './arrendamiento-inven
 import { ModalVisualizacionAsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado/modal-visualizacion-asignacion-inventario-empleado.component';
 import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario.component';
 import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
+import { ModalContenedorImagenesAsignacionEquipoComponent } from './asignacion-equipo-usuario/modal-contenedor-imagenes-asignacion-equipo/modal-contenedor-imagenes-asignacion-equipo.component';
+import { ContenedorFormComponent } from './asignacion-equipo-usuario/contenedor-form/contenedor-form.component';
 
 
 
@@ -184,7 +186,9 @@ import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-in
     ModalAsignacionInventarioClienteComponent,
     ModalVisualizacionAsignacionInventarioEmpleadoComponent,
     ModalVisualizacionAsignacionEquipoUsuarioComponent,
-    ListaInventarioRegistradosComponent
+    ListaInventarioRegistradosComponent,
+    ModalContenedorImagenesAsignacionEquipoComponent,
+    ContenedorFormComponent
   ],
   imports: [
     CommonModule,

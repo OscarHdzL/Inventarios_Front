@@ -10,6 +10,10 @@ export class CatUsuarioModel {
 export class UsuarioInventarioFormModel {
   id: number
   tblInventarioId: number
+  nombre: string
+  cuenta: string
+  correo: string
+
   catUsuarioId: number
   responsiva: string
   configuracion: ConfiguracionUsuarioInventario[] = []
@@ -87,3 +91,39 @@ export class ArchivoUsuarioInventario {
   relUsuarioInventario: any
   url: string
 }
+
+
+export class UsuarioInventarioContenedorModel {
+  id: number = 0
+  contenedor: string
+  relUsuarioInventarioId: number = 0
+  inclusion?: string
+  relUsuarioInventario?: any
+  tblUsuarioInventarioContenedorImagenes: ImagenUsuarioInventarioContenedor[] = []
+}
+
+export class ImagenUsuarioInventarioContenedor {
+  id: number = 0
+  imagen: string
+  descripcion: string
+  tblUsuarioInventarioContenedorId: number = 0
+  inclusion?: string
+  tblUsuarioInventarioContenedor?: any
+}
+/*
+
+export class UsuarioInventarioContenedorFormModel {
+  id: number = 0
+  contenedor: string
+  relUsuarioInventarioId: number = 0
+  tblUsuarioInventarioContenedorImagenes: ImagenUsuarioInventarioContenedor[] = []
+}
+
+export class ImagenUsuarioInventarioContenedorForm {
+  id: number = 0
+  imagen: string
+  descripcion: string
+  tblUsuarioInventarioContenedorId: number = 0
+  inclusion?: string
+  tblUsuarioInventarioContenedor?: any
+} */

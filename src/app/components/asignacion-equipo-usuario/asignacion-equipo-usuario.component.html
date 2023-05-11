@@ -21,24 +21,7 @@
       >
         <div class="mt-4 flex flex-col gap-2 m-2">
           <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-           <!--  <mat-form-field class="flex-auto">
-              <mat-label>Cliente</mat-label>
-              <mat-select
-                formControlName="cliente"
-                (valueChange)="changeCliente($event)"
-              >
-                <mat-option
-                  *ngFor="let cliente of listaClientes"
-                  [value]="cliente.id"
-                >
-                  {{ cliente.razonsocial }}</mat-option
-                >
-              </mat-select>
-              <mat-error *ngIf="this.cliente.hasError('required')">
-                El campo es requerido</mat-error
-              >
-            </mat-form-field> -->
-            <mat-form-field class="flex-auto">
+<!--             <mat-form-field class="flex-auto">
               <mat-label>Usuario</mat-label>
               <mat-select formControlName="empleado">
                 <mat-option
@@ -48,6 +31,19 @@
                   {{ empleado.nombre }}</mat-option
                 >
               </mat-select>
+              <mat-error *ngIf="this.empleado.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field> -->
+            <mat-form-field class="flex-auto">
+              <mat-label>Usuario</mat-label>
+              <input type="text" matInput formControlName="empleado" maxlength="500" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let empl of filteredEmpleados" [value]="empl.nombre" (onSelectionChange)="empleadoSeleccionado(empl)">
+                  {{empl.nombre}}
+                </mat-option>
+
+              </mat-autocomplete>
               <mat-error *ngIf="this.empleado.hasError('required')">
                 El campo es requerido</mat-error
               >
@@ -281,13 +277,13 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="numerodeserie">
+          <ng-container matColumnDef="inventarioclv">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Serie
+              Clave
             </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="Serie">
+            <mat-cell *matCellDef="let row" data-label="Clave">
               <div>
-                {{ row.numerodeserie }}
+                {{ row.inventarioclv }}
               </div>
             </mat-cell>
           </ng-container>
@@ -390,6 +386,7 @@
                 >
                   <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
                 </a>
+
                 <a
                   (click)="desasignar(row)"
                   matTooltip="Desasignar"
@@ -401,6 +398,14 @@
                     svgIcon="mat:delete_forever"
                   ></mat-icon>
                 </a>
+                <a
+                (click)="openModalContenedor(row)"
+                matTooltip="Ver detalle"
+                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                mat-icon-button
+              >
+                <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+              </a>
               </div>
             </mat-cell>
           </ng-container>

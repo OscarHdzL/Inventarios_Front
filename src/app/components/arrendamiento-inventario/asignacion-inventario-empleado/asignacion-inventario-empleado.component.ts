@@ -303,6 +303,9 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
       .map((column) => column.property);
   }
 
+
+
+
   public async obtenerEmpleados(idCliente: number, nombreEmpleado: string) {
     const respuesta = await this.inventariosService.obtenerUsuarioLDAP(
       idCliente,

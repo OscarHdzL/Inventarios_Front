@@ -1,0 +1,107 @@
+<div class="flex items-center" style="border: none !important" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">Contenedor Asignación</h2>
+  <button></button>
+  <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1">
+  <div class="card overflow-auto grid grid-cols-1 gap-2 flex-wrap px-10">
+    <div
+      class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
+    >
+      <div class="mt-4 flex flex-col gap-2 m-2">
+        <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+          <!--             <mat-form-field class="flex-auto">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="empleado">
+            <mat-option
+              *ngFor="let empleado of listaEmpleados"
+              [value]="empleado.id"
+            >
+              {{ empleado.nombre }}</mat-option
+            >
+          </mat-select>
+          <mat-error *ngIf="this.empleado.hasError('required')">
+            El campo es requerido</mat-error
+          >
+        </mat-form-field> -->
+        </div>
+      </div>
+
+      <!-- <div class="mx-5 overflow-x-auto" *ngIf="this.listaContenedores.length > 0"> -->
+<!--       <div class="mx-5 overflow-x-auto">
+        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+          <vex-contenedor-form item="null"></vex-contenedor-form>
+        </div>
+      </div> -->
+
+<!--       <div class="flex justify-end w-full">
+        <button
+          class="m-4"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Agregar producto"
+          type="button"
+        >
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div> -->
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel expanded="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b>Contenedor</b>
+            </mat-panel-title>
+            <mat-panel-description>
+              Agregue un nuevo contenedor e imagenes
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <!-- content -->
+
+          <vex-contenedor-form [item]="itemVacio" (newItemEvent)="EventEmit($event)"></vex-contenedor-form>
+
+          <!-- end content -->
+        </mat-expansion-panel>
+
+        <mat-expansion-panel *ngFor="let contenedor of this.listaContenedores">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b>{{contenedor.contenedor}}</b>
+            </mat-panel-title>
+            <mat-panel-description>
+              {{contenedor.contenedor}}
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <!-- content -->
+
+          <vex-contenedor-form [item]="contenedor" (newItemEvent)="EventEmit($event)"></vex-contenedor-form>
+
+          <!-- end content -->
+        </mat-expansion-panel>
+      </mat-accordion>
+
+
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <!-- <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="guardarPropietario()"
+      [disabled]="formPropietario.invalid"
+    >
+      Agregar
+    </button> -->
+</mat-dialog-actions>

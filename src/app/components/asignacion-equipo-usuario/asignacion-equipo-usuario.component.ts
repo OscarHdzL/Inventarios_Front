@@ -7,13 +7,14 @@ import { SwalServices } from 'src/app/servicios/sweetalert2.services';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { InventariosService } from 'src/app/servicios/inventarios.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { ClienteModel } from 'src/app/modelos/Inventarios/propietario.model';
-import { ConfiguracionProducto, EmpleadoInventarioArrendamientoFormModel, EmpleadoInventarioArrendamientoModel, InventarioArrendamientoDisponibleModel } from 'src/app/modelos/Inventarios/inventario-arrendamiento.model';
+import { ConfiguracionProducto, EmpleadoInventarioArrendamientoFormModel, EmpleadoInventarioArrendamientoModel, EmpleadoLDAP, InventarioArrendamientoDisponibleModel } from 'src/app/modelos/Inventarios/inventario-arrendamiento.model';
 import { FileManagerService } from 'src/app/servicios/filemanager.service';
 import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './modal-visualizacion-asignacion-equipo-usuario/modal-visualizacion-asignacion-equipo-usuario.component';
 import { CatUsuarioModel, ProductosInventarioDisponiblesModel, UsuarioInventarioFormModel, UsuarioInventarioModel } from 'src/app/modelos/Inventarios/usuario-inventario.model';
-
+import { ModalContenedorImagenesAsignacionEquipoComponent } from './modal-contenedor-imagenes-asignacion-equipo/modal-contenedor-imagenes-asignacion-equipo.component';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vex-asignacion-equipo-usuario',
@@ -36,6 +37,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
   listaConfiguracion: ConfiguracionProducto[] = [];
   listaEmpleados: CatUsuarioModel[] = []
+  filteredEmpleados: EmpleadoLDAP[] = []; //Observable<EmpleadoLDAP[]>;
 
   tamanoPantalla: boolean;
 
@@ -71,12 +73,20 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
       configuracionEquipo: this.formBuilder.array([])
     });
 
-/*     this.formInventario.get('cliente').valueChanges.subscribe(async (x)=>{
-      debugger
-      this.listaEquipo = await this.obtenerInventarioProductoDisponible(x);
-      this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(x);
-    }); */
   }
+
+
+  public async empleadoSeleccionado(empleado: EmpleadoLDAP) {
+    debugger;
+    console.log("EMPLEADO seleccionado: ", empleado);
+    this.empleadoInventarioArrendamientoFormModel.cuenta =
+      empleado.cuenta;
+    this.empleadoInventarioArrendamientoFormModel.nombre =
+      empleado.nombre;
+      this.empleadoInventarioArrendamientoFormModel.correo =
+      empleado.correo;
+  }
+
   applyFilter(event: any) {
     let filterValue = event.target.value.toLowerCase();
     if (filterValue == "") {
@@ -167,6 +177,22 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
     //this.changeCliente(9)
+
+    this.empleado.valueChanges.subscribe(async (x) => {
+      if (x) {
+          this.listaEmpleados = await this.obtenerEmpleados(
+            x
+          );
+          this.filteredEmpleados = this.listaEmpleados;
+      }
+    });
+  }
+
+  public async obtenerEmpleados(nombreEmpleado: string) {
+    const respuesta = await this.inventariosService.obtenerUsuarioLDAP_PM(
+      nombreEmpleado
+    );
+    return respuesta ? respuesta.output : [];
   }
 
 
@@ -246,7 +272,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     debugger
     //this.asignacionInventarioFormModel.id = 0;
     this.empleadoInventarioArrendamientoFormModel.tblInventarioId = this.equipo.value;
-    this.empleadoInventarioArrendamientoFormModel.catUsuarioId = this.empleado.value;
+    this.empleadoInventarioArrendamientoFormModel.catUsuarioId = 0;
     this.empleadoInventarioArrendamientoFormModel.responsiva = '';
     this.empleadoInventarioArrendamientoFormModel.configuracion = this.configuracionEquipo.value;
     const respuesta = await this.inventariosService.insertarAsignacionUsuarioInventario(this.empleadoInventarioArrendamientoFormModel);
@@ -283,6 +309,24 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
       this.listaEquipo = await this.obtenerInventarioProductoDisponible();
     });
   }
+
+  openModalContenedor(asignacion: UsuarioInventarioModel){
+
+    this.dialog.open(ModalContenedorImagenesAsignacionEquipoComponent,{
+      //height: '80%',
+      height: 'auto',
+      width: '80%',
+      autoFocus: true,
+      data: asignacion,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(async result => {
+
+      //this.ngOnInit();
+      this.listaEquipo = await this.obtenerInventarioProductoDisponible();
+    });
+  }
+
 
 
   public async desasignar(asignacion: UsuarioInventarioModel){
@@ -366,7 +410,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
    }
 
 
-   applyFilter(event: any) {
+/*    applyFilter(event: any) {
     let filterValue = event.target.value.toLowerCase();
     if (filterValue == "") {
       this.listaItems = this.dataSourceOriginal.slice(0,this.pageSize);
@@ -395,7 +439,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
     }
 
-  }
+  } */
 
 
 
