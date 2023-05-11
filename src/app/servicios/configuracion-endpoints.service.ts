@@ -13,7 +13,6 @@ url_api = 'https://localhost:7079/';
 
 url_filemanager = 'http://198.251.71.105:8082/';
 //url_filemanager = 'https://localhost:44362/';
-
 //
 
   constructor(public httpClient: HttpClient) { }
