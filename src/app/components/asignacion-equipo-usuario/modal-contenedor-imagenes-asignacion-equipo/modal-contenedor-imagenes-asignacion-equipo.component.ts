@@ -16,6 +16,7 @@ export class ModalContenedorImagenesAsignacionEquipoComponent implements OnInit 
   formContenedores: FormGroup;
   listaContenedores = []
   panelOpenState = false;
+  index = 0;
   itemVacio = new UsuarioInventarioContenedorModel();
 
   listaArchivos: ArchivoUsuarioInventario[] = []
@@ -38,7 +39,7 @@ export class ModalContenedorImagenesAsignacionEquipoComponent implements OnInit 
     private inventariosService: InventariosService,
     private formBuilder: FormBuilder,
   ) {
-debugger
+
 this.itemVacio = new UsuarioInventarioContenedorModel();
 this.itemVacio.relUsuarioInventarioId = this.asignacionInventario.idrelusuarioinventario;
     const a = this.asignacionInventario;
@@ -57,7 +58,7 @@ this.itemVacio.relUsuarioInventarioId = this.asignacionInventario.idrelusuarioin
 
 
     this.listaContenedores = await this.obtenerContenedores();
-debugger
+
   }
 
 
@@ -213,10 +214,15 @@ this.listaArchivos = this.asignacionModel.archivos;
 
   public EventEmit(respuesta){
     debugger
+    this.index == respuesta;
     this.ngOnInit();
+
 
   }
 
+  public abierto(idContenedor){
+   this.index = idContenedor;
+  }
 
   async abrirDocumento(token: string){
     let url = await this.filemanagerService.obtenerRutaArchivo(token);

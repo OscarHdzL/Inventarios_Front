@@ -296,6 +296,7 @@
               *matCellDef="let row"
               data-label="Responsivas"
             >
+            <div class="flex justify-center">
               <a
                 matTooltip="Descarga responsiva"
                 class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
@@ -331,45 +332,10 @@
               >
                 <mat-icon class="icon-sm" svgIcon="mat:open_in_new"></mat-icon>
               </a>
+
+            </div>
             </mat-cell>
           </ng-container>
-
-          <!-- <ng-container matColumnDef="responsiva">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Responsiva firmada
-            </mat-header-cell>
-            <mat-cell
-              *matCellDef="let row"
-              data-label="Responsiva_firmada"
-              class="flex justify-center"
-            >
-              <input
-                id="responsiva_file"
-                #responsiva_file
-                type="file"
-                class="hidden"
-                (change)="cargarResponsiva($event, row)"
-              />
-              <a
-                *ngIf="!row.responsiva"
-                (click)="responsiva_file.click()"
-                matTooltip="Sube responsiva firmada"
-                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                mat-icon-button
-              >
-                <mat-icon class="icon-sm" svgIcon="mat:file_upload"></mat-icon>
-              </a>
-              <a
-                *ngIf="row.responsiva"
-                (click)="abrirDocumento(row.responsiva)"
-                matTooltip="Visualizar responsiva"
-                class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
-                mat-icon-button
-              >
-                <mat-icon class="icon-sm" svgIcon="mat:open_in_new"></mat-icon>
-              </a>
-            </mat-cell>
-          </ng-container> -->
 
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -400,11 +366,11 @@
                 </a>
                 <a
                 (click)="openModalContenedor(row)"
-                matTooltip="Ver detalle"
+                matTooltip="Contenedores"
                 class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
                 mat-icon-button
               >
-                <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                <mat-icon class="icon-sm" svgIcon="mat:add_photo_alternate"></mat-icon>
               </a>
               </div>
             </mat-cell>

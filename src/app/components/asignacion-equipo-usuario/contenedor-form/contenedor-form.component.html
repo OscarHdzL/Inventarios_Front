@@ -37,6 +37,19 @@
     </div>
   </div>
 
+  <div class="flex justify-end mt-5 mb-5">
+    <button
+  class="mx-1 "
+  color="primary"
+  mat-mini-fab
+  matTooltip="Recargar imagenes"
+  *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length > 0"
+  (click)="recargar()"
+
+>
+  <mat-icon svgIcon="mat:refresh"></mat-icon>
+</button>
+  </div>
   <div
   *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length == 0"
   class="flex-auto items-center justify-center"
@@ -45,14 +58,14 @@
     No se encontraron archivos
   </h1>
 </div>
-
+<div class="flex flex-col">
   <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
     <ng-container formArrayName="tblUsuarioInventarioContenedorImagenes">
       <ng-container
         *ngFor="let conf of tblUsuarioInventarioContenedorImagenes.controls; let i = index"
       >
-        <div class="card h-72">
-          <div class="flex justify-end mb-1" (click)="eliminarArchivo(i, conf.get('id').value)">
+        <div class="card h-72 mb-5">
+          <div class="flex justify-end mb-1" (click)="eliminarArchivo(i, conf)">
             <a href="javascript:;">
               <span
                 class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-red-700 text-red-200"
@@ -64,7 +77,7 @@
           <div class="flex flex-col justify-center content-center" [formGroupName]="i">
             <img
               matTooltip="Ver Imagen"
-              class="max-w-full rounded-lg m-5"
+              class="h-40 max-w-full rounded-lg m-5"
               (click)="abrirDocumento(conf.get('url').value)"
               [src]="conf.get('url').value"
               alt=""
@@ -92,8 +105,9 @@
       </ng-container>
     </ng-container>
   </div>
+</div>
 
-  <div class="flex justify-end">
+  <div class="flex justify-end mt-5" >
 
     <button
       type="submit"
@@ -105,7 +119,7 @@
       {{this.item.id > 0 ? 'Editar Contenedor':'Guardar Contenedor'}}
     </button>
   </div>
-  <div>{{this.formContenedores.getRawValue() | json}}</div>
+<!--   <div>{{this.formContenedores.getRawValue() | json}}</div>
   <br>
-  <div>{{this.item | json}}</div>
+  <div>{{this.item | json}}</div> -->
 </form>

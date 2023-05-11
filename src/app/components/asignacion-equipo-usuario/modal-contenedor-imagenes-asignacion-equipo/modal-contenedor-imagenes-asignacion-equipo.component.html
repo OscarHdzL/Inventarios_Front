@@ -1,14 +1,14 @@
 <div class="flex items-center" style="border: none !important" mat-dialog-title>
-  <h2 class="headline m-0 flex-auto">Contenedor Asignación</h2>
+  <h2 class="headline m-0 flex-auto">Contenedores de la asignación</h2>
   <button></button>
   <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
   <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
-<mat-divider class="mx-6 text-border"></mat-divider>
-<mat-dialog-content class="px-1">
-  <div class="card overflow-auto grid grid-cols-1 gap-2 flex-wrap px-10">
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-0">
+  <div class="card overflow-auto grid grid-cols-1 gap-2 flex-wrap">
     <div
       class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
     >
@@ -51,7 +51,7 @@
       </div> -->
 
       <mat-accordion class="example-headers-align">
-        <mat-expansion-panel expanded="true">
+        <mat-expansion-panel [expanded]="index == 0">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <b>Contenedor</b>
@@ -69,7 +69,7 @@
           <!-- end content -->
         </mat-expansion-panel>
 
-        <mat-expansion-panel *ngFor="let contenedor of this.listaContenedores">
+        <mat-expansion-panel *ngFor="let contenedor of this.listaContenedores" [expanded]="index == contenedor.id" (opened)="abierto(contenedor.id)">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <b>{{contenedor.contenedor}}</b>
@@ -82,7 +82,7 @@
 
           <!-- content -->
 
-          <vex-contenedor-form [item]="contenedor" (newItemEvent)="EventEmit($event)"></vex-contenedor-form>
+          <vex-contenedor-form [item]="contenedor" (newItemEvent)="EventEmit($event)" *ngIf="index == contenedor.id"></vex-contenedor-form>
 
           <!-- end content -->
         </mat-expansion-panel>

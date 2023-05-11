@@ -315,7 +315,8 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     this.dialog.open(ModalContenedorImagenesAsignacionEquipoComponent,{
       //height: '80%',
       height: 'auto',
-      width: '80%',
+      //width: '80%',
+      width: (window.innerWidth >= 1280) ? '80%': '100%',
       autoFocus: true,
       data: asignacion,
       disableClose: true,
