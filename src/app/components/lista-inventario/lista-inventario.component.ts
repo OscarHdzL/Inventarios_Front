@@ -60,7 +60,7 @@ export class ListaInventarioComponent implements OnInit {
     { label: 'Categoria', property: 'categoria', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Nuevo', property: 'nuevo', type: 'text', visible: true, cssClasses: ['font-medium'] },
 //    { label: 'Año', property: 'anio', type: 'text', visible: true, cssClasses: ['font-medium'] },
-//    { label: 'Estatus', property: 'catEstatusinventario', type: 'text', visible: true, cssClasses: ['font-medium'] },
+    { label: 'Estatus', property: 'catEstatusinventario', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Numero serie', property: 'numerodeserie', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Clave', property: 'inventarioclv', type: 'text', visible: true, cssClasses: ['font-medium'] },
     { label: 'Acciones', property: 'actions', type: 'button', visible: true }
