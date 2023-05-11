@@ -250,6 +250,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async deshabilitarOficina(ubicacion: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'Ubicacion/eliminar/oficina?id='+ubicacion);
     }
+    public async validarInventarioOficina(id: number) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Ubicacion/validaasignadosoficina?id='+id);
+    }
 
 
     /* CATEGORIA PRODUCTO */
