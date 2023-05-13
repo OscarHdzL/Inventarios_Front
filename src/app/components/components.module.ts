@@ -108,6 +108,7 @@ import { ModalContenedorImagenesAsignacionEquipoComponent } from './asignacion-e
 import { ContenedorFormComponent } from './asignacion-equipo-usuario/contenedor-form/contenedor-form.component';
 import { CamaraComponent } from './camara/camara.component';
 import { WebcamModule } from 'ngx-webcam';
+import { HistoricoInventarioComponent } from './historico-inventario/historico-inventario.component';
 
 
 
@@ -191,7 +192,8 @@ import { WebcamModule } from 'ngx-webcam';
     ListaInventarioRegistradosComponent,
     ModalContenedorImagenesAsignacionEquipoComponent,
     ContenedorFormComponent,
-    CamaraComponent
+    CamaraComponent,
+    HistoricoInventarioComponent
   ],
   imports: [
     CommonModule,

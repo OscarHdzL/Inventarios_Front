@@ -428,7 +428,10 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.getAsync(this.url_api + 'api/LDAP/ListadoUsuariosPM?name=' + name);
     }
 
-
+    // AUDITORIA
+    public async obtenerAuditoria(numeroSerie: string) : Promise <any> {
+      return await this.getAsync(this.url_api + 'Auditoria/inventario?NumSerie=' + numeroSerie);
+    }
 
 
 
