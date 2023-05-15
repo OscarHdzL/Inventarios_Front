@@ -363,6 +363,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.deleteAsync(this.url_api + 'InventarioArrendamiento/eliminarArchivoAsignacion?id='+idArchivo);
     }
 
+    public async obtenerUrlCartaResponsivaArrendamiento(idrelempleadoinventarioarrendamiento) : Promise <any> {
+      return this.url_api + 'api/CartaResponsivaWord/GenerarCartaArrendamiento?id=' + idrelempleadoinventarioarrendamiento;
+    }
 
 
     // USUARIOS
@@ -377,6 +380,10 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     public async obtenerAsignacionesInventario() : Promise <any> {
       return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarAsignacionTodos');
+    }
+
+    public async obtenerUrlCartaResponsiva(idRelUsuario) : Promise <any> {
+      return this.url_api + 'api/CartaResponsivaWord/GenerarCartaUsuario?id=' + idRelUsuario;
     }
 
     public async obtenerAsignacionInventario(idrelusuarioinventario) : Promise <any> {

@@ -233,13 +233,13 @@
               ></path>
             </svg>
           </span>
-          <div *ngIf="movimiento.tipoObjeto == 'TblInventarioAccesoriosincluido'">
+          <div *ngIf="movimiento.tipoObjeto == 'TblInventarioAccesoriosincluido'" class=" mb-5">
             <h3 class="mb-1 text-lg font-semibold text-gray-900">
               {{movimiento.tipoObjeto}}
             </h3>
             <time
               class="block mb-2 text-sm font-normal leading-none text-gray-400"
-              >{{movimiento.inclusionHistorico | date:'yyyy-MM-dd hh:mm'}}</time
+              >Modificación: {{movimiento.inclusionHistorico | date:'yyyy-MM-dd hh:mm'}}</time
             >
             <p class="text-base font-normal text-gray-500">
               Accesorio: {{movimiento.objetoParsed.Nombre}}
@@ -248,13 +248,13 @@
 
             </p>
           </div>
-          <div *ngIf="movimiento.tipoObjeto == 'TblInventario'">
+          <div *ngIf="movimiento.tipoObjeto == 'TblInventario'" class=" mb-5">
               <h3 class="mb-1 text-lg font-semibold text-gray-900">
                 {{movimiento.tipoObjeto}}
               </h3>
               <time
                 class="block mb-2 text-sm font-normal leading-none text-gray-400"
-                >{{movimiento.inclusionHistorico | date:'yyyy-MM-dd hh:mm'}}</time
+                >Modificación: {{movimiento.inclusionHistorico | date:'yyyy-MM-dd hh:mm'}}</time
               >
               <p class="text-base font-normal text-gray-500">
                 Estatus: {{ obtenerDescripcionEstatus(movimiento.objetoParsed.CatEstatusinventarioId)}}

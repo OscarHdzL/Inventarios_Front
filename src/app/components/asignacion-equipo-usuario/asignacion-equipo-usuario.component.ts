@@ -410,6 +410,10 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     window.open(url,'_blank');
    }
 
+   async generarCartaResponsivaDocumento(idrelusuarioinventario: number){
+    let url = await this.inventariosService.obtenerUrlCartaResponsiva(idrelusuarioinventario);
+    window.open(url,'_blank');
+   }
 
 /*    applyFilter(event: any) {
     let filterValue = event.target.value.toLowerCase();
