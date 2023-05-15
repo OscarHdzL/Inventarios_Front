@@ -23,12 +23,14 @@ import {
   ProveedorModel,
 } from "src/app/modelos/Inventarios/propietario.model";
 import { NgxFileDropEntry } from "ngx-file-drop";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 @Component({
   selector: "vex-modal-adquisicion",
   templateUrl: "./modal-adquisicion.component.html",
   styleUrls: ["./modal-adquisicion.component.scss"],
 })
+
 export class ModalAdquisicionComponent implements OnInit {
   abierto = true;
   formAdquisicion: FormGroup;
@@ -40,7 +42,8 @@ export class ModalAdquisicionComponent implements OnInit {
   panelOpenState = false;
   listaProductosAdquisicion = new Array<RelAdquisicionDetalle>();
   public files: NgxFileDropEntry[] = [];
-
+  cargaMasiva: string = 'normal';
+  tokenPlantilla: string = '';
   @ViewChild("accordion", { static: true }) Accordion: MatAccordion;
 
   constructor(
@@ -64,10 +67,12 @@ export class ModalAdquisicionComponent implements OnInit {
 
     this.iniciarForm();
   }
-
+  public onValChange(val: string) {
+    this.cargaMasiva = val;
+    console.log("Valor Selected");
+    console.log(this.cargaMasiva);
+  }
   async ngOnInit() {
-
-
 /*     if( this.adquisicion){
       let AdquisicionModel = await this.obtenerAdquisicion();
     } else{
@@ -85,7 +90,6 @@ export class ModalAdquisicionComponent implements OnInit {
   }
 ///drag drop
 public dropped(files: NgxFileDropEntry[]) {
-  debugger
   this.files = files;
   for (const droppedFile of files) {
 
@@ -100,6 +104,61 @@ public dropped(files: NgxFileDropEntry[]) {
           this.pdfSeleccionado2(file)
         }else{ this.xmlSeleccionado2(file)}
 
+
+        /**
+        // You could upload it like this:
+        const formData = new FormData()
+        formData.append('logo', file, relativePath)
+
+        // Headers
+        const headers = new HttpHeaders({
+          'security-token': 'mytoken'
+        })
+
+        this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
+        .subscribe(data => {
+          // Sanitized logo returned from backend
+        })
+        **/
+
+      });
+    } else {
+      // It was a directory (empty directories are added, otherwise only files)
+      const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+      console.log(droppedFile.relativePath, fileEntry);
+    }
+  }
+}
+
+public droppedPlantilla(files: NgxFileDropEntry[]) {
+  this.files = files;
+  for (const droppedFile of files) {
+
+    // Is it a file?
+    if (droppedFile.fileEntry.isFile) {
+      const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+      fileEntry.file(async (file: File) => {
+        console.log('dropped',file.type)
+        // Here you can access the real file
+        console.log(droppedFile.relativePath, file);
+        const formData: any = new FormData();
+        formData.append("file", file);
+
+        const respuesta = await this.filemanagerService.cargarArchivo(formData);
+
+        if (respuesta.exito) {
+          this.tokenPlantilla = respuesta.anotacion;
+          /*  this.produc = event.target.files[0].name;
+          this.archivoEditableToken = respuesta.anotacion;
+          //this.archivoEditableToken = respuesta.respuesta;
+          this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
+          this.swalService.alertaPersonalizada(true, "Carga de archivo correcta");
+        } else {
+          this.swalService.alertaPersonalizada(
+            false,
+            "No se pudo cargar el archivo"
+          );
+        }
 
         /**
         // You could upload it like this:
@@ -495,5 +554,18 @@ async xmlSeleccionado2(file: File) {
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     window.open(url,'_blank');
    }
+  descargarPlantilla(){
+    Swal.fire({
+      title: "Cuantos productos cargaras en esta plantilla?",
+      text: "Ingresa el numero de productos",
+      input: 'text',
+      icon: "info",
+      showCancelButton: true
+  }).then(async(result) => {
+      if (result.value) {
+        window.open(this.inventariosService.obtenerPlantillaMasiva(result.value),"_blank");
+      }
+  });
+  }
 
 }
