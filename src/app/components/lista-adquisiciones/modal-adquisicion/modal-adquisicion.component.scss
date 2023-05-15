@@ -20,6 +20,10 @@ th:not(:last-child) {
   border-bottom: 2px solid rgba(0, 0, 0, .1);
 }
 
+.mat-button-toggle-checked {
+  background-color: #093F97;
+  color: white !important;
+}
 
 /*  td {
   word-break: break-all;

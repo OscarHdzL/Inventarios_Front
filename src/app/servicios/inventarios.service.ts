@@ -75,6 +75,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async obtenerAdquisicion(id: number) : Promise <any> {
       return await this.getAsync(this.url_api + 'Adquisicion/seleccionar?id='+ id);
     }
+    public obtenerPlantillaMasiva(id: number) : any {
+      return this.url_api + 'CargaMasiva/ObtenerPlantilla?num='+ id;
+    }
     public async obtenerCatalogoAdquisiciones() : Promise <any> {
       return await this.getAsync(this.url_api + 'Adquisicion/seleccionar');
     }
