@@ -7,12 +7,14 @@ import { FileManagerService } from "src/app/servicios/filemanager.service";
 import { InventariosService } from "src/app/servicios/inventarios.service";
 import { SwalServices } from "src/app/servicios/sweetalert2.services";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { WebcamImage } from "ngx-webcam";
 @Component({
   selector: 'vex-modal-contenedor-imagenes-asignacion-equipo',
   templateUrl: './modal-contenedor-imagenes-asignacion-equipo.component.html',
   styleUrls: ['./modal-contenedor-imagenes-asignacion-equipo.component.scss']
 })
 export class ModalContenedorImagenesAsignacionEquipoComponent implements OnInit {
+  public webcamImage: WebcamImage = null;
   formContenedores: FormGroup;
   listaContenedores = []
   panelOpenState = false;
@@ -228,4 +230,8 @@ this.listaArchivos = this.asignacionModel.archivos;
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     window.open(url,'_blank');
    }
+
+   public handleImage(webcamImage: WebcamImage) {
+    this.webcamImage = webcamImage;
+  }
 }

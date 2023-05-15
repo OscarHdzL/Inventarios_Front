@@ -147,6 +147,40 @@ export class SidenavComponent implements OnInit {
       routerLinkActiveOptions: { exact: true }
     });
 
+
+
+    children.push({
+      type: 'dropdown',
+      label: 'Inventario arrendamiento',
+      icon: 'mat:list',
+      children: [
+        {
+          type: 'link',
+          label: 'Inventario clientes',
+          route: '/components/asignacion-inventario-cliente',
+          icon: 'mat:assignment',
+          routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Asignación inventario arrendamiento',
+          route: '/components/asignacion-inventario-empleado',
+          icon: 'mat:assignment',
+          routerLinkActiveOptions: { exact: true }
+        }
+      ]
+    });
+
+    children.push({
+      type: 'link',
+      label: 'Histórico inventario',
+      route: '/components/historico-inventario',
+      icon: 'mat:list',
+      routerLinkActiveOptions: { exact: true }
+    });
+
+
+/*
     children.push({
       type: 'link',
       label: 'Inventario clientes',
@@ -154,14 +188,14 @@ export class SidenavComponent implements OnInit {
       icon: 'mat:assignment',
       routerLinkActiveOptions: { exact: true }
     });
-
-    children.push({
+ */
+/*     children.push({
       type: 'link',
       label: 'Asignación inventario arrendamiento',
       route: '/components/asignacion-inventario-empleado',
       icon: 'mat:assignment',
       routerLinkActiveOptions: { exact: true }
-    });
+    }); */
 
 
 

@@ -106,6 +106,9 @@ import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './asignacion
 import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
 import { ModalContenedorImagenesAsignacionEquipoComponent } from './asignacion-equipo-usuario/modal-contenedor-imagenes-asignacion-equipo/modal-contenedor-imagenes-asignacion-equipo.component';
 import { ContenedorFormComponent } from './asignacion-equipo-usuario/contenedor-form/contenedor-form.component';
+import { CamaraComponent } from './camara/camara.component';
+import { WebcamModule } from 'ngx-webcam';
+import { HistoricoInventarioComponent } from './historico-inventario/historico-inventario.component';
 
 
 
@@ -188,7 +191,9 @@ import { ContenedorFormComponent } from './asignacion-equipo-usuario/contenedor-
     ModalVisualizacionAsignacionEquipoUsuarioComponent,
     ListaInventarioRegistradosComponent,
     ModalContenedorImagenesAsignacionEquipoComponent,
-    ContenedorFormComponent
+    ContenedorFormComponent,
+    CamaraComponent,
+    HistoricoInventarioComponent
   ],
   imports: [
     CommonModule,
@@ -222,7 +227,7 @@ import { ContenedorFormComponent } from './asignacion-equipo-usuario/contenedor-
     NgxCurrencyModule,
     MatChipsModule,
     NgxFileDropModule,
-
+    WebcamModule
 
 
 

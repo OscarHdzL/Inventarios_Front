@@ -28,6 +28,7 @@ import { AsignacionEquipoUsuarioComponent } from './asignacion-equipo-usuario/as
 import { ListaInventarioRegistradosComponent } from './lista-inventario/lista-inventario-registrados/lista-inventario-registrados.component';
 import { AsignacionInventarioClienteComponent } from './arrendamiento-inventario/asignacion-inventario-cliente/asignacion-inventario-cliente.component';
 import { AsignacionInventarioEmpleadoComponent } from './arrendamiento-inventario/asignacion-inventario-empleado/asignacion-inventario-empleado.component';
+import { HistoricoInventarioComponent } from './historico-inventario/historico-inventario.component';
 
 const routes: Routes = [
   {
@@ -132,6 +133,11 @@ const routes: Routes = [
   {
     path: 'asignacion-inventario-empleado',
     component: AsignacionInventarioEmpleadoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'historico-inventario',
+    component: HistoricoInventarioComponent,
     canActivate: [AuthGuard]
   }
 

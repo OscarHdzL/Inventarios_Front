@@ -12,43 +12,17 @@
     <div
       class="w-full p-5 bg-white border border-gray-200 rounded-lg shadow-md mr-5"
     >
-      <div class="mt-4 flex flex-col gap-2 m-2">
+<!--       <div class="mt-4 flex flex-col gap-2 m-2">
         <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
-          <!--             <mat-form-field class="flex-auto">
-          <mat-label>Usuario</mat-label>
-          <mat-select formControlName="empleado">
-            <mat-option
-              *ngFor="let empleado of listaEmpleados"
-              [value]="empleado.id"
-            >
-              {{ empleado.nombre }}</mat-option
-            >
-          </mat-select>
-          <mat-error *ngIf="this.empleado.hasError('required')">
-            El campo es requerido</mat-error
-          >
-        </mat-form-field> -->
-        </div>
-      </div>
+          <vex-camara (pictureTaken)="handleImage($event)"></vex-camara>
 
-      <!-- <div class="mx-5 overflow-x-auto" *ngIf="this.listaContenedores.length > 0"> -->
-<!--       <div class="mx-5 overflow-x-auto">
-        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-          <vex-contenedor-form item="null"></vex-contenedor-form>
+          <div class="snapshot" *ngIf="webcamImage">
+            <img [src]="webcamImage.imageAsDataUrl" />
+          </div>
         </div>
       </div> -->
 
-<!--       <div class="flex justify-end w-full">
-        <button
-          class="m-4"
-          color="primary"
-          mat-mini-fab
-          matTooltip="Agregar producto"
-          type="button"
-        >
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
-      </div> -->
+
 
       <mat-accordion class="example-headers-align">
         <mat-expansion-panel [expanded]="index == 0">
