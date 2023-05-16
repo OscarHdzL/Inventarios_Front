@@ -22,6 +22,8 @@ import { ModalAsignarInventarioComponent } from './modal-asignar-inventario/moda
 import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
 import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.component';
+import { SesionModel } from 'src/app/modelos/sesion.model';
+import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
 
 
 @Component({
@@ -30,6 +32,7 @@ import { ModalLoadImageComponent } from './modal-load-image/modal-load-image.com
   styleUrls: ['./lista-inventario.component.scss']
 })
 export class ListaInventarioComponent implements OnInit {
+  sesionUsuarioActual: SesionModel;
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild('paginatorCards', { static: true }) paginatorCards!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -76,7 +79,9 @@ export class ListaInventarioComponent implements OnInit {
     private router: Router,
 
     ) {
-
+      debugger
+      let sesion = localStorage.getItem(KeysStorageEnum.USER);
+      this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
       this.iniciarForm()
 
    }
@@ -241,13 +246,13 @@ export class ListaInventarioComponent implements OnInit {
   }
 
 
-  public async EliminarInventario(inventario){
+  public async EliminarInventario(inventario: InventarioModel){
 
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
-      inventario.activo = false;
-      const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
+
+      const respuesta = await this.inventariosService.deshabilitarInventario(inventario.idinventario, this.sesionUsuarioActual.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();

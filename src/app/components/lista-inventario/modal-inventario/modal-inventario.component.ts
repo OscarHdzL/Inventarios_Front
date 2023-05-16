@@ -12,6 +12,8 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { InventariosService } from 'src/app/servicios/inventarios.service';
 import { FabricanteModel } from 'src/app/modelos/Inventarios/propietario.model';
 import { id } from 'date-fns/locale';
+import { SesionModel } from 'src/app/modelos/sesion.model';
+import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
 
 
 @Component({
@@ -20,7 +22,7 @@ import { id } from 'date-fns/locale';
   styleUrls: ['./modal-inventario.component.scss']
 })
 export class ModalInventarioComponent implements OnInit {
-
+  sesionUsuarioActual: SesionModel;
   app: MatFormFieldAppearance
   abierto = true;
   formInventario: FormGroup;
@@ -41,6 +43,9 @@ export class ModalInventarioComponent implements OnInit {
               private inventariosService: InventariosService,
               ) {
 
+                debugger
+                let sesion = localStorage.getItem(KeysStorageEnum.USER);
+                this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
 
                 if(inventario != null){
                   this.llenarFormModel(inventario);
@@ -155,6 +160,7 @@ export class ModalInventarioComponent implements OnInit {
       let accesorio = new AccesorioInventario();
       accesorio.nombre = this.accesorio.value;
       accesorio.tblInventarioId = this.inventarioModel.id;
+      accesorio.usuarioAppid = this.sesionUsuarioActual.id;
       lista.push(accesorio);
 
       const respuesta = await this.inventariosService.insertarAccesorioInventario(lista);
@@ -178,6 +184,7 @@ export class ModalInventarioComponent implements OnInit {
     this.inventarioModel.inventarioclv = this.inventarioclv.value;
     this.inventarioModel.notas = this.notas.value;
     this.inventarioModel.accesorios = [];
+    this.inventarioModel.usuarioAppid = this.sesionUsuarioActual.id;
   /*   this.listaAccesorios.forEach((x)=>{
       this.inventarioModel.accesorios.push(x);
     }); */
@@ -206,7 +213,7 @@ export class ModalInventarioComponent implements OnInit {
         ""
       );
       if (confirmacion) {
-        const respuesta = await this.inventariosService.deshabilitarAccesorioInventario(Accesorio.id);
+        const respuesta = await this.inventariosService.deshabilitarAccesorioInventario(Accesorio.id, this.sesionUsuarioActual.id);
       if (respuesta.exito) {
         //this.swalService.alertaPersonalizada(true, 'Exito');
         //this.ngOnInit();

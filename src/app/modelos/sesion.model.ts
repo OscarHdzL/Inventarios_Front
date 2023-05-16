@@ -36,6 +36,9 @@ export class Cliente {
 export class SesionModel {
   id: number = 0;
   nombre: string = '';
+  nombres: string = '';
+  apellidos: string = '';
+  usuario: string = '';
   correo: string = '';
   clientes: Cliente[] = [];
   administrador: boolean = true;

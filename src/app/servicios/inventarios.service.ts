@@ -301,12 +301,12 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.putAsync(this.url_api + 'Inventario/editar', Inventario);
     }
 
-    public async deshabilitarInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'Inventario/eliminar?id='+Inventario);
+    public async deshabilitarInventario(Inventario: number, usuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar?id='+Inventario+'&idUsuario='+usuario);
     }
 
-    public async deshabilitarAccesorioInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario);
+    public async deshabilitarAccesorioInventario(Inventario: number, usuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario+'&idUsuario='+usuario);
     }
 
 
