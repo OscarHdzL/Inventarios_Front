@@ -70,6 +70,15 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async deshabilitarCaracteristicaProducto(prod: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'Producto/eliminar/caracteristica?id='+prod);
     }
+    public async obtenerImagenesProductos(id:number): Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionarImagenes/' + id);
+    }
+    public async insertarImagenesProductos(usuario: any) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Inventario/agregar/imagen', usuario);
+    }
+    public async deshabilitarImagenesProductos(id:number, idUsuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/imagen?id='+ id +'&idUsuario='+idUsuario);
+    }
 
     /* ADQUISICIONES */
     public async obtenerAdquisicion(id: number) : Promise <any> {

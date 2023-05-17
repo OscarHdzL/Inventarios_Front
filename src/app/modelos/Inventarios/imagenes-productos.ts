@@ -1,5 +1,6 @@
 export class ProductosImagenes{
-    idImagen?:number;
-    path:string;
-    token?:string;
+    id?:number;
+    tblInventarioId:number;
+    imagen?:string;
+    usuarioAppid?:number;
 }
