@@ -308,12 +308,12 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.putAsync(this.url_api + 'Inventario/editar', Inventario);
     }
 
-    public async deshabilitarInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'Inventario/eliminar?id='+Inventario);
+    public async deshabilitarInventario(Inventario: number, usuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar?id='+Inventario+'&idUsuario='+usuario);
     }
 
-    public async deshabilitarAccesorioInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario);
+    public async deshabilitarAccesorioInventario(Inventario: number, usuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/accesorio?id='+Inventario+'&idUsuario='+usuario);
     }
 
 
@@ -373,6 +373,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.deleteAsync(this.url_api + 'InventarioArrendamiento/eliminarArchivoAsignacion?id='+idArchivo);
     }
 
+    public async obtenerUrlCartaResponsivaArrendamiento(idrelempleadoinventarioarrendamiento) : Promise <any> {
+      return this.url_api + 'api/CartaResponsivaWord/GenerarCartaArrendamiento?id=' + idrelempleadoinventarioarrendamiento;
+    }
 
 
     // USUARIOS
@@ -387,6 +390,10 @@ export class InventariosService extends ConfiguracionEndpointsService {
 
     public async obtenerAsignacionesInventario() : Promise <any> {
       return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarAsignacionTodos');
+    }
+
+    public async obtenerUrlCartaResponsiva(idRelUsuario) : Promise <any> {
+      return this.url_api + 'api/CartaResponsivaWord/GenerarCartaUsuario?id=' + idRelUsuario;
     }
 
     public async obtenerAsignacionInventario(idrelusuarioinventario) : Promise <any> {

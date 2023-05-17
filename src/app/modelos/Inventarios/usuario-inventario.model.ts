@@ -17,12 +17,14 @@ export class UsuarioInventarioFormModel {
   catUsuarioId: number
   responsiva: string
   configuracion: ConfiguracionUsuarioInventario[] = []
+  usuarioAppid: number
 
   constructor(){
 
     this.id = 0;
     this.tblInventarioId = 0;
     this.catUsuarioId = 0;
+    this.usuarioAppid = 0;
     this.responsiva = null;
   }
 }

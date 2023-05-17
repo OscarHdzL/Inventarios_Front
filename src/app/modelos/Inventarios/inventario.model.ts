@@ -41,6 +41,7 @@ export class InventarioFormModel {
   numerodeserie: string
   inventarioclv: string
   notas: string
+  usuarioAppid: number
   accesorios: AccesorioInventario[]
 
   constructor(){
@@ -51,6 +52,7 @@ export class InventarioFormModel {
     this.inventarioclv = null;
     this.notas = null;
     this.accesorios = [];
+    this.usuarioAppid = 0;
 
   }
 }
@@ -61,11 +63,13 @@ export class AccesorioInventario {
   tblInventarioId: number
   nombre: string
   detalle: string
+  usuarioAppid: number
   constructor(){
     this.id = 0;
     this.tblInventarioId = 0;
     this.nombre = null;
     this.detalle = null;
+    this.usuarioAppid = 0;
   }
 }
 

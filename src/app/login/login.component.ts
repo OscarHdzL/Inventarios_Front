@@ -1,7 +1,7 @@
 import { SesionModel } from './../modelos/sesion.model';
 import { LoginModel } from './../modelos/login.model';
 import { MesaValidacionService } from './../servicios/mesa-validacion.service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -45,10 +45,10 @@ export class LoginComponent implements OnInit {
   //test
   async login() {
     this.errorMessage = false
-    
+
     try {
       let res = await this.authService.Login(this.form.value as LoginModel)
-      
+
       if(res.exito == true) {
         //let sesion = res.respuesta as SesionModel
         let fActual = new Date();
@@ -56,7 +56,8 @@ export class LoginComponent implements OnInit {
 
         //sesion.vigenciaSesion = new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )
         //console.log(sesion.vigenciaSesion + " se establecio la vigencia" )
-        localStorage.setItem(KeysStorageEnum.USER, JSON.stringify(new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )));
+        localStorage.setItem(KeysStorageEnum.USER, JSON.stringify(res.output));
+        //localStorage.setItem(KeysStorageEnum.USER, JSON.stringify(new Date().setTime(fActual.getTime() + (minutos * 60 * 1000) )));
         this.router.navigate(['/components/inicio']);
         this.snackbar.open('Acceso correcto', null, {
           duration: 3000,

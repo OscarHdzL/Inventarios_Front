@@ -501,4 +501,9 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     window.open(url, "_blank");
   }
+
+  async generarCartaResponsivaDocumento(idrelempleadoinventarioarrendamiento: number){
+    let url = await this.inventariosService.obtenerUrlCartaResponsivaArrendamiento(idrelempleadoinventarioarrendamiento);
+    window.open(url,'_blank');
+   }
 }

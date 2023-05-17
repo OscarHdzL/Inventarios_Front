@@ -15,6 +15,8 @@ import { ModalVisualizacionAsignacionEquipoUsuarioComponent } from './modal-visu
 import { CatUsuarioModel, ProductosInventarioDisponiblesModel, UsuarioInventarioFormModel, UsuarioInventarioModel } from 'src/app/modelos/Inventarios/usuario-inventario.model';
 import { ModalContenedorImagenesAsignacionEquipoComponent } from './modal-contenedor-imagenes-asignacion-equipo/modal-contenedor-imagenes-asignacion-equipo.component';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SesionModel } from 'src/app/modelos/sesion.model';
+import { KeysStorageEnum } from 'src/app/enum/keysStorage.enum';
 
 @Component({
   selector: 'vex-asignacion-equipo-usuario',
@@ -22,6 +24,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   styleUrls: ['./asignacion-equipo-usuario.component.scss']
 })
 export class AsignacionEquipoUsuarioComponent implements OnInit {
+  sesionUsuarioActual: SesionModel;
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   formInventario: FormGroup;
@@ -61,6 +64,10 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private filemanagerService: FileManagerService,
   ) {
+    debugger
+    let sesion = localStorage.getItem(KeysStorageEnum.USER);
+    this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
+
     this.iniciarForm();
    }
 
@@ -275,6 +282,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     this.empleadoInventarioArrendamientoFormModel.catUsuarioId = 0;
     this.empleadoInventarioArrendamientoFormModel.responsiva = '';
     this.empleadoInventarioArrendamientoFormModel.configuracion = this.configuracionEquipo.value;
+    this.empleadoInventarioArrendamientoFormModel.usuarioAppid = this.sesionUsuarioActual.id;
     const respuesta = await this.inventariosService.insertarAsignacionUsuarioInventario(this.empleadoInventarioArrendamientoFormModel);
     if(respuesta.exito){
       this.swalService.alertaPersonalizada(true, 'Exito');
@@ -410,6 +418,10 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     window.open(url,'_blank');
    }
 
+   async generarCartaResponsivaDocumento(idrelusuarioinventario: number){
+    let url = await this.inventariosService.obtenerUrlCartaResponsiva(idrelusuarioinventario);
+    window.open(url,'_blank');
+   }
 
 /*    applyFilter(event: any) {
     let filterValue = event.target.value.toLowerCase();
