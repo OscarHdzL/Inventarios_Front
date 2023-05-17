@@ -574,14 +574,6 @@
                 </button>
               </ng-template>
             </ngx-file-drop>
-            <a
-              *ngIf="adquisicionModel.facpdf != ''"
-              (click)="abrirDocumento(tokenPlantilla)"
-              href="javascript: void(0)"
-              class="underline underline-offset-1 mt-2 flex justify-center text-sm text-blue-500"
-              id="file_input_help"
-              >Descargar plantilla.</a
-            >
           </div>
         </div>
       </div>
@@ -593,9 +585,7 @@
         type="submit"
         mat-flat-button
         color="primary"
-        (click)="guardarAdquisicion()"
-        [disabled]="formAdquisicion.invalid"
-      >
+        (click)="guardarAdquisicion()"      >
         {{ this.adquisicionModel.id > 0 ? "Editar" : "Agregar" }}
       </button>
     </div>
