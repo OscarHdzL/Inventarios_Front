@@ -24,6 +24,8 @@ import {
 } from "src/app/modelos/Inventarios/propietario.model";
 import { NgxFileDropEntry } from "ngx-file-drop";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { SesionModel } from "src/app/modelos/sesion.model";
+import { KeysStorageEnum } from "src/app/enum/keysStorage.enum";
 
 @Component({
   selector: "vex-modal-adquisicion",
@@ -32,6 +34,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 })
 
 export class ModalAdquisicionComponent implements OnInit {
+  sesionUsuarioActual: SesionModel;
   abierto = true;
   formAdquisicion: FormGroup;
   adquisicionModel: AdquisicionFormModel = new AdquisicionFormModel();
@@ -56,7 +59,8 @@ export class ModalAdquisicionComponent implements OnInit {
     private dialog: MatDialog,
     private filemanagerService: FileManagerService
   ) {
-
+    let sesion = localStorage.getItem(KeysStorageEnum.USER);
+    this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
     if (adquisicion != null) {
       //this.llenarFormModel(this.adquisicion);
     } else {
@@ -349,6 +353,7 @@ async xmlSeleccionado2(file: File) {
           console.log(this.plantilla[0].relativePath, file);
           const formData: any = new FormData();
           formData.append("file", file);
+          formData.append("idUsuario", this.sesionUsuarioActual.id);
 
           const respuesta = await this.inventariosService.insertarAdquisicionCargaMasiva(formData);
 
