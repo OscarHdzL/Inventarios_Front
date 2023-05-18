@@ -70,6 +70,15 @@ export class InventariosService extends ConfiguracionEndpointsService {
     public async deshabilitarCaracteristicaProducto(prod: number) : Promise <any> {
       return await this.deleteAsync(this.url_api + 'Producto/eliminar/caracteristica?id='+prod);
     }
+    public async obtenerImagenesProductos(id:number): Promise <any> {
+      return await this.getAsync(this.url_api + 'Inventario/seleccionarImagenes/' + id);
+    }
+    public async insertarImagenesProductos(usuario: any) : Promise <any> {
+      return await this.postAsync(this.url_api + 'Inventario/agregar/imagen', usuario);
+    }
+    public async deshabilitarImagenesProductos(id:number, idUsuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'Inventario/eliminar/imagen?id='+ id +'&idUsuario='+idUsuario);
+    }
 
     /* ADQUISICIONES */
     public async obtenerAdquisicion(id: number) : Promise <any> {
@@ -77,6 +86,13 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
     public obtenerPlantillaMasiva(id: number) : any {
       return this.url_api + 'CargaMasiva/ObtenerPlantilla?num='+ id;
+    }
+
+    public async insertarAdquisicionCargaMasiva(usuario: any) : Promise <any> {
+      return await this.postAsync(this.url_api + 'CargaMasiva/CargarPlantilla', usuario);
+    }
+    public async insertarAdjuntos(usuario: any) : Promise <any> {
+      return await this.putAsync(this.url_api + 'CargaMasiva/Adjuntos', usuario);
     }
     public async obtenerCatalogoAdquisiciones() : Promise <any> {
       return await this.getAsync(this.url_api + 'Adquisicion/seleccionar');

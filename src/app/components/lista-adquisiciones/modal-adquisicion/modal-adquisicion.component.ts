@@ -42,6 +42,7 @@ export class ModalAdquisicionComponent implements OnInit {
   panelOpenState = false;
   listaProductosAdquisicion = new Array<RelAdquisicionDetalle>();
   public files: NgxFileDropEntry[] = [];
+  plantilla: NgxFileDropEntry[] = [];
   cargaMasiva: string = 'normal';
   tokenPlantilla: string = '';
   @ViewChild("accordion", { static: true }) Accordion: MatAccordion;
@@ -131,58 +132,7 @@ public dropped(files: NgxFileDropEntry[]) {
 }
 
 public droppedPlantilla(files: NgxFileDropEntry[]) {
-  this.files = files;
-  for (const droppedFile of files) {
-
-    // Is it a file?
-    if (droppedFile.fileEntry.isFile) {
-      const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-      fileEntry.file(async (file: File) => {
-        console.log('dropped',file.type)
-        // Here you can access the real file
-        console.log(droppedFile.relativePath, file);
-        const formData: any = new FormData();
-        formData.append("file", file);
-
-        const respuesta = await this.filemanagerService.cargarArchivo(formData);
-
-        if (respuesta.exito) {
-          this.tokenPlantilla = respuesta.anotacion;
-          /*  this.produc = event.target.files[0].name;
-          this.archivoEditableToken = respuesta.anotacion;
-          //this.archivoEditableToken = respuesta.respuesta;
-          this.archivoEditableExtension = this.archivoEditableNombre.split('.')[1]; */
-          this.swalService.alertaPersonalizada(true, "Carga de archivo correcta");
-        } else {
-          this.swalService.alertaPersonalizada(
-            false,
-            "No se pudo cargar el archivo"
-          );
-        }
-
-        /**
-        // You could upload it like this:
-        const formData = new FormData()
-        formData.append('logo', file, relativePath)
-
-        // Headers
-        const headers = new HttpHeaders({
-          'security-token': 'mytoken'
-        })
-
-        this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-        .subscribe(data => {
-          // Sanitized logo returned from backend
-        })
-        **/
-
-      });
-    } else {
-      // It was a directory (empty directories are added, otherwise only files)
-      const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-      console.log(droppedFile.relativePath, fileEntry);
-    }
-  }
+  this.plantilla = files;
 }
 
 public fileOver(event){
@@ -357,35 +307,81 @@ async xmlSeleccionado2(file: File) {
   }
 
   public async guardarAdquisicion() {
-    ;
-    this.adquisicionModel.catProveedorId = this.proveedor.value;
-    this.adquisicionModel.catPropietarioId = this.propietario.value;
-    this.adquisicionModel.articulos = this.articulos.value;
-    this.adquisicionModel.monto = this.monto.value;
-    this.adquisicionModel.impuesto = this.impuesto.value;
-    //this.adquisicionModel.facpdf = "tokenPrueba"; //this.facturaPDF.value;
-    //this.adquisicionModel.facxml = "tokenPrueba"; //this.facturaXML.value;
-    this.adquisicionModel.fechadecompra = this.fechaCompra.value;
-    this.adquisicionModel.detalle = this.listaProductosAdquisicion;
-    //this.adquisicionModel.detalle =null
+    if (this.cargaMasiva == 'normal') {
+      this.adquisicionModel.catProveedorId = this.proveedor.value;
+      this.adquisicionModel.catPropietarioId = this.propietario.value;
+      this.adquisicionModel.articulos = this.articulos.value;
+      this.adquisicionModel.monto = this.monto.value;
+      this.adquisicionModel.impuesto = this.impuesto.value;
+      //this.adquisicionModel.facpdf = "tokenPrueba"; //this.facturaPDF.value;
+      //this.adquisicionModel.facxml = "tokenPrueba"; //this.facturaXML.value;
+      this.adquisicionModel.fechadecompra = this.fechaCompra.value;
+      this.adquisicionModel.detalle = this.listaProductosAdquisicion;
+      //this.adquisicionModel.detalle =null
 
-    const respuesta =
-      this.adquisicionModel.id > 0
-        ? await this.inventariosService.actualizarAdquisicion(
-            this.adquisicionModel
-          )
-        : await this.inventariosService.insertarAdquisicion(
-            this.adquisicionModel
-          );
+      const respuesta =
+        this.adquisicionModel.id > 0
+          ? await this.inventariosService.actualizarAdquisicion(
+              this.adquisicionModel
+            )
+          : await this.inventariosService.insertarAdquisicion(
+              this.adquisicionModel
+            );
 
-    if (respuesta.exito) {
-      this.swalService.alertaPersonalizada(true, "Exito");
-      //this.close(true);
-      this.adquisicion = new AdquisicionModel();
-      this.adquisicion.id = respuesta.id;
-      this.ngOnInit();
-    } else {
-      this.swalService.alertaPersonalizada(false, "Error");
+      if (respuesta.exito) {
+        this.swalService.alertaPersonalizada(true, "Exito");
+        //this.close(true);
+        this.adquisicion = new AdquisicionModel();
+        this.adquisicion.id = respuesta.id;
+        this.ngOnInit();
+      } else {
+        this.swalService.alertaPersonalizada(false, "Error");
+      }
+    }
+    else {
+        // Is it a file?
+      if (this.plantilla[0].fileEntry.isFile) {
+        const fileEntry = this.plantilla[0].fileEntry as FileSystemFileEntry;
+        fileEntry.file(async (file: File) => {
+          debugger
+          console.log('dropped',file.type)
+          // Here you can access the real file
+          console.log(this.plantilla[0].relativePath, file);
+          const formData: any = new FormData();
+          formData.append("file", file);
+
+          const respuesta = await this.inventariosService.insertarAdquisicionCargaMasiva(formData);
+
+          if (respuesta.exito) {
+            let objeto = {
+              idAdquision: respuesta.id,
+              pdf: this.adquisicionModel.facpdf,
+              xml: this.adquisicionModel.facxml
+            }
+            let res = await this.inventariosService.insertarAdjuntos(objeto)
+            if (res.exito) {
+              this.swalService.alertaPersonalizada(true, "Exito");
+              //this.close(true);
+              this.adquisicion = new AdquisicionModel();
+              this.adquisicion.id = respuesta.id;
+              this.close(true)
+            }
+            else {
+              this.swalService.alertaPersonalizada(false, "Error");
+            }
+          }
+          else {
+            this.swalService.alertaPersonalizada(
+              false,
+              "No se pudo cargar la plantilla"
+            );
+          }
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = this.plantilla[0].fileEntry as FileSystemDirectoryEntry;
+        console.log(this.plantilla[0].relativePath, fileEntry);
+      }
     }
   }
 
