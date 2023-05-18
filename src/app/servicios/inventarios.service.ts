@@ -397,8 +397,8 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.getAsync(this.url_api + 'UsuarioInventario/seleccionarInventarioProductosDisponibles');
     }
 
-    public async eliminarAsignacionInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminar?id='+Inventario);
+    public async eliminarAsignacionInventario(Inventario: number, idUsuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminar?id='+Inventario+"&idUsuario="+idUsuario);
     }
 
     public async insertarArchivosAsignacionInventario(archivos: ArchivoUsuarioInventario[]) : Promise <any> {
@@ -423,8 +423,8 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.putAsync(this.url_api + 'UsuarioInventario/editarContenedor', contenedor);
     }
 
-    public async eliminarImagenContenedorAsignacionInventario(Inventario: number) : Promise <any> {
-      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminarContenedor?id='+Inventario);
+    public async eliminarImagenContenedorAsignacionInventario(Inventario: number, idUsuario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'UsuarioInventario/eliminarContenedor?id='+Inventario+'&idUsuario='+idUsuario);
     }
 
 
@@ -443,6 +443,9 @@ export class InventariosService extends ConfiguracionEndpointsService {
       return await this.getAsync(this.url_api + 'Auditoria/inventario?NumSerie=' + numeroSerie);
     }
 
-
+   // HISTORIOC
+   public async obtenerHistoricoInventario(numeroSerie: string) : Promise <any> {
+    return await this.getAsync(this.url_api + 'HistoricoInventario/Get?numeroSerie=' + numeroSerie);
+  }
 
 }

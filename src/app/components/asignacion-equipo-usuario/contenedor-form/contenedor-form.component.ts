@@ -8,11 +8,13 @@ import {
 } from "@angular/forms";
 import { NgxFileDropEntry } from "ngx-file-drop";
 import { WebcamInitError } from "ngx-webcam";
+import { KeysStorageEnum } from "src/app/enum/keysStorage.enum";
 import {
   ArchivoUsuarioInventario,
   ImagenUsuarioInventarioContenedor,
   UsuarioInventarioContenedorModel,
 } from "src/app/modelos/Inventarios/usuario-inventario.model";
+import { SesionModel } from "src/app/modelos/sesion.model";
 import { FileManagerService } from "src/app/servicios/filemanager.service";
 import { InventariosService } from "src/app/servicios/inventarios.service";
 import { SwalServices } from "src/app/servicios/sweetalert2.services";
@@ -23,6 +25,7 @@ import { SwalServices } from "src/app/servicios/sweetalert2.services";
   styleUrls: ["./contenedor-form.component.scss"],
 })
 export class ContenedorFormComponent implements OnInit {
+  sesionUsuarioActual: SesionModel;
   @Input() item: UsuarioInventarioContenedorModel;
   @Output() newItemEvent = new EventEmitter<boolean>();
   public files: NgxFileDropEntry[] = [];
@@ -34,6 +37,8 @@ export class ContenedorFormComponent implements OnInit {
     private swalService: SwalServices,
     private inventariosService: InventariosService
   ) {
+    let sesion = localStorage.getItem(KeysStorageEnum.USER);
+    this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
     this.iniciarForm();
   }
 
@@ -67,6 +72,7 @@ export class ContenedorFormComponent implements OnInit {
       id: new FormControl(0),
       relUsuarioInventarioId: new FormControl(0),
       contenedor: new FormControl("", [Validators.required]),
+      usuarioAppid: new FormControl(0),
       tblUsuarioInventarioContenedorImagenes: this.formBuilder.array([]),
     });
   }
@@ -75,6 +81,7 @@ export class ContenedorFormComponent implements OnInit {
     this.id.setValue(this.item.id);
     this.relUsuarioInventarioId.setValue(this.item.relUsuarioInventarioId);
     this.contenedor.setValue(this.item.contenedor);
+    this.usuarioAppid.setValue(this.sesionUsuarioActual.id);
     this.item.tblUsuarioInventarioContenedorImagenes.forEach((x) => {
       const config = this.formBuilder.group({
         id: new FormControl(x.id),
@@ -97,6 +104,9 @@ export class ContenedorFormComponent implements OnInit {
   }
   get contenedor() {
     return this.formContenedores.get("contenedor");
+  }
+  get usuarioAppid() {
+    return this.formContenedores.get("usuarioAppid");
   }
   get tblUsuarioInventarioContenedorImagenes() {
     return this.formContenedores.get(
@@ -157,7 +167,7 @@ export class ContenedorFormComponent implements OnInit {
       if (confirmacion) {
         const respuesta =
           await this.inventariosService.eliminarImagenContenedorAsignacionInventario(
-            archivo.value.id
+            archivo.value.id, this.sesionUsuarioActual.id
           );
         if (respuesta.exito) {
           this.swalService.alertaPersonalizada(true, "Exito");

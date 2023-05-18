@@ -218,6 +218,8 @@ export class ListaInventarioComponent implements OnInit {
 
   }
 
+
+
   openModalAsignacion(usuario: InventarioModel){
     this.dialog.open(ModalAsignarInventarioComponent,{
       height: 'auto',

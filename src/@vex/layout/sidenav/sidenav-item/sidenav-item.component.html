@@ -15,6 +15,7 @@
   <mat-icon *ngIf="item.label === 'Proveedor'" class="mr-1">sell</mat-icon>
   <mat-icon *ngIf="item.label === 'Productos'" class="mr-1">screen_search_desktop</mat-icon>
   <mat-icon *ngIf="item.label === 'Productos registrados'" class="mr-1">mobile_friendly</mat-icon>
+  <mat-icon *ngIf="item.label === 'Asignación inventario'" class="mr-1">assignment_ind</mat-icon>
   <mat-icon *ngIf="item.label === 'Productos sin registrar'" class="mr-1">phonelink_erase</mat-icon>
 
   <span class="vex-sidenav-item__label">{{ item.label }}</span>
@@ -38,7 +39,7 @@
 </div>
 
 <ng-container *ngIf="isDropdown(item)">
-  <div 
+  <div
     (click)="toggleOpen()"
     [class.vex-sidenav-item--active]="isOpen || isActive"
     [class.vex-sidenav-item--open]="isOpen"
@@ -46,9 +47,9 @@
     matRipple
     matRippleColor="var(--sidenav-item-ripple-color)"
   >
-    <mat-icon 
-      *ngIf="level === 0" 
-      [svgIcon]="item.icon" 
+    <mat-icon
+      *ngIf="level === 0"
+      [svgIcon]="item.icon"
       class="vex-sidenav-item__icon"
     >
       {{item.icon}}
@@ -56,7 +57,7 @@
     <span class="vex-sidenav-item__label">
       {{ item.label }}
     </span>
-    <span 
+    <span
       *ngIf="item.badge"
       [ngClass]="[item.badge.bgClass, item.badge.textClass]"
       class="vex-sidenav-item__badge"

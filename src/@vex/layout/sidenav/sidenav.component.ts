@@ -129,6 +129,13 @@ export class SidenavComponent implements OnInit {
           route: '/components/inventario/registrar',
           icon: 'mat:file_copy',
           routerLinkActiveOptions: { exact: true }
+        },
+        {
+          type: 'link',
+          label: 'Asignación inventario',
+          route: '/components/asignacion-equipo-usuario',
+          icon: 'mat:assignment',
+          routerLinkActiveOptions: { exact: true }
         }
       ]
     });
@@ -171,14 +178,14 @@ export class SidenavComponent implements OnInit {
       ]
     });
 
-    children.push({
+   /*  children.push({
       type: 'link',
       label: 'Histórico inventario',
       route: '/components/historico-inventario',
       icon: 'mat:list',
       routerLinkActiveOptions: { exact: true }
     });
-
+ */
 
 /*
     children.push({
@@ -198,14 +205,14 @@ export class SidenavComponent implements OnInit {
     }); */
 
 
-
+/*
     children.push({
       type: 'link',
       label: 'Asignación inventario',
       route: '/components/asignacion-equipo-usuario',
       icon: 'mat:assignment',
       routerLinkActiveOptions: { exact: true }
-    });
+    }); */
 
 
      /* let menu = this.sesionUsuarioActual.funciones.filter((x)=> x.modulo == 'Sidebar' && x.activo == true);

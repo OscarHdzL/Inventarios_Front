@@ -143,4 +143,5 @@ openModalProducto(producto: RelAdquisicionDetalle){
   });
 }
 
+
 }

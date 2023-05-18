@@ -98,6 +98,7 @@ export class ArchivoUsuarioInventario {
 export class UsuarioInventarioContenedorModel {
   id: number = 0
   contenedor: string
+  usuarioAppid: number = 0
   relUsuarioInventarioId: number = 0
   inclusion?: string
   relUsuarioInventario?: any

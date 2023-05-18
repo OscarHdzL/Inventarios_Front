@@ -342,7 +342,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     debugger
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
-      const respuesta = await this.inventariosService.eliminarAsignacionInventario(asignacion.idrelusuarioinventario);
+      const respuesta = await this.inventariosService.eliminarAsignacionInventario(asignacion.idrelusuarioinventario, this.sesionUsuarioActual.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
 
@@ -377,6 +377,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
         obj.catUsuarioId = usuarioInventarioModel.idusuario
         obj.tblInventarioId = usuarioInventarioModel.idinventario;
         obj.responsiva = respuesta.anotacion;
+        obj.usuarioAppid = this.sesionUsuarioActual.id;
 
          const respuestaArchivoArrendamiento = await this.inventariosService.editarAsignacionInventario(obj);
 

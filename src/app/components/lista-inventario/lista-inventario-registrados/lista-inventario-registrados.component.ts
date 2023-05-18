@@ -22,6 +22,7 @@ import { ModalAsignarInventarioComponent } from '../modal-asignar-inventario/mod
 import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
 import { ModalLoadImageComponent } from '../modal-load-image/modal-load-image.component';
+import { ModalHistoricoInventarioComponent } from '../modal-historico-inventario/modal-historico-inventario.component';
 
 
 @Component({
@@ -256,6 +257,22 @@ export class ListaInventarioRegistradosComponent implements OnInit {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+  }
+
+    openModalHistorico(inventario: InventarioModel){
+
+    this.dialog.open(ModalHistoricoInventarioComponent,{
+      height: 'auto',
+      width: '100%',
+      autoFocus: true,
+      data: inventario,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+
+      this.ngOnInit();
+    });
+
   }
 
 }
