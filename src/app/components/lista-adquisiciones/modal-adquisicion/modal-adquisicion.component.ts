@@ -137,6 +137,8 @@ public dropped(files: NgxFileDropEntry[]) {
 
 public droppedPlantilla(files: NgxFileDropEntry[]) {
   this.plantilla = files;
+  this.swalService.alertaPersonalizada(true,"Plantilla de cargada correctamente");
+  this.tokenPlantilla = "Plantilla Cargada";
 }
 
 public fileOver(event){
