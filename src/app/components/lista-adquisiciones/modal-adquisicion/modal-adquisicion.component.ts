@@ -349,7 +349,7 @@ async xmlSeleccionado2(file: File) {
       if (this.plantilla[0].fileEntry.isFile) {
         const fileEntry = this.plantilla[0].fileEntry as FileSystemFileEntry;
         fileEntry.file(async (file: File) => {
-          debugger
+
           console.log('dropped',file.type)
           // Here you can access the real file
           console.log(this.plantilla[0].relativePath, file);
@@ -437,7 +437,7 @@ async xmlSeleccionado2(file: File) {
       })
       .afterClosed()
       .subscribe((result) => {
-        debugger
+
         if (result) {
           if (result.iD > 0) {
             //edita

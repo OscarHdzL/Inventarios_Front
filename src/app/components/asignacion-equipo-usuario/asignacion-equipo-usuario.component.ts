@@ -64,7 +64,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private filemanagerService: FileManagerService,
   ) {
-    debugger
+
     let sesion = localStorage.getItem(KeysStorageEnum.USER);
     this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
 
@@ -84,7 +84,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
   public async empleadoSeleccionado(empleado: EmpleadoLDAP) {
-    debugger;
+
     console.log("EMPLEADO seleccionado: ", empleado);
     this.empleadoInventarioArrendamientoFormModel.cuenta =
       empleado.cuenta;
@@ -215,7 +215,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
   }
 
   async changeEquipo(x){
-    debugger
+
     const seleccionado = this.listaEquipo.find((y)=> y.idinventario == x );
     this.listaConfiguracion = await this.obtenerConfiguracionProducto(seleccionado.idcategoria)
 
@@ -276,7 +276,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
   public async guardarAsignacion(){
-    debugger
+
     //this.asignacionInventarioFormModel.id = 0;
     this.empleadoInventarioArrendamientoFormModel.tblInventarioId = this.equipo.value;
     this.empleadoInventarioArrendamientoFormModel.catUsuarioId = 0;
@@ -339,7 +339,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
   public async desasignar(asignacion: UsuarioInventarioModel){
-    debugger
+
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
       const respuesta = await this.inventariosService.eliminarAsignacionInventario(asignacion.idrelusuarioinventario, this.sesionUsuarioActual.id);
@@ -363,7 +363,7 @@ export class AsignacionEquipoUsuarioComponent implements OnInit {
 
 
   async cargarResponsiva(event, usuarioInventarioModel: UsuarioInventarioModel) {
-    debugger
+
     if(event.target.files.length > 0)
      {
        const formData: any = new FormData();

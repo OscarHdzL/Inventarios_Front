@@ -78,7 +78,7 @@ export class ModalAsignacionInventarioClienteComponent implements OnInit {
     this.cantidad.setValue(this.asignacionInventarioFormModel.cantidad);
 
     /* this.cliente.valueChanges.subscribe(async (x)=>{
-      debugger
+
       this.listaInventarioProductoDisponible = await this.obtenerInventarioProductoDisponible();
       if(this.listaInventarioProductoDisponible.length == 0){
         this.swalService.alertaPersonalizada(false, 'No se encontro inventario disponible');
@@ -87,7 +87,7 @@ export class ModalAsignacionInventarioClienteComponent implements OnInit {
 
   }
   public async guardarPropietario(){
-    debugger
+
     //this.asignacionInventarioFormModel.id = 0;
     this.asignacionInventarioFormModel.catClienteId = this.cliente.value;
     this.asignacionInventarioFormModel.catProductoId = this.modelo.value;

@@ -7,7 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { NgxFileDropEntry } from "ngx-file-drop";
-import { WebcamInitError } from "ngx-webcam";
+import { WebcamImage, WebcamInitError } from "ngx-webcam";
 import { KeysStorageEnum } from "src/app/enum/keysStorage.enum";
 import {
   ArchivoUsuarioInventario,
@@ -25,12 +25,14 @@ import { SwalServices } from "src/app/servicios/sweetalert2.services";
   styleUrls: ["./contenedor-form.component.scss"],
 })
 export class ContenedorFormComponent implements OnInit {
+  public webcamImage: WebcamImage = null;
   sesionUsuarioActual: SesionModel;
   @Input() item: UsuarioInventarioContenedorModel;
   @Output() newItemEvent = new EventEmitter<boolean>();
   public files: NgxFileDropEntry[] = [];
   formContenedores: FormGroup;
   listaArchivos = [];
+  public selectedVal: string = 'Carga archivos';
   constructor(
     private formBuilder: FormBuilder,
     private filemanagerService: FileManagerService,
@@ -127,7 +129,7 @@ export class ContenedorFormComponent implements OnInit {
   }
 
   public async guardarContenedor() {
-    debugger;
+
     const objeto = this.formContenedores.value;
 
     const respuesta =
@@ -153,7 +155,7 @@ export class ContenedorFormComponent implements OnInit {
 
   public async eliminarArchivo(i, archivo) {
     //archivo: ImagenUsuarioInventarioContenedor){
-    debugger;
+
 
     if (archivo.value.id > 0) {
       let a = i;
@@ -244,4 +246,64 @@ export class ContenedorFormComponent implements OnInit {
     }
   }
 
+/*   public handleImage(webcamImage: WebcamImage) {
+
+    this.webcamImage = webcamImage;
+  } */
+
+  public onValChange(val: string) {
+    this.selectedVal = val;
+    console.log("Valor Selected");
+    console.log(this.selectedVal);
+  }
+
+  public async handleImage(webcamImage: any) {
+
+    const base64 = '...';
+    //const imageName = 'name.png';
+    var imageName = Guid.newGuid() +  ".jpeg";
+    const imageBlob = this.dataURItoBlob(webcamImage.imageAsBase64);
+    const imageFile = new File([imageBlob], imageName, { type: webcamImage._mimeType });
+
+    const formData: any = new FormData();
+    formData.append("file", imageFile);
+
+    const respuesta = await this.filemanagerService.cargarArchivo(
+      formData
+    );
+
+    if (respuesta.exito) {
+      this.agregarImagen(respuesta.anotacion);
+    } else {
+      this.swalService.alertaPersonalizada(
+        false,
+        "No se pudo cargar el archivo"
+      );
+    }
+
+    //this.webcamImage = webcamImage;
+  }
+
+  public dataURItoBlob(dataURI) {
+
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
+ }
+
+}
+
+export class Guid {
+  static newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
 }

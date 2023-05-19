@@ -79,7 +79,7 @@ export class ListaInventarioComponent implements OnInit {
     private router: Router,
 
     ) {
-      debugger
+
       let sesion = localStorage.getItem(KeysStorageEnum.USER);
       this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
       this.iniciarForm()

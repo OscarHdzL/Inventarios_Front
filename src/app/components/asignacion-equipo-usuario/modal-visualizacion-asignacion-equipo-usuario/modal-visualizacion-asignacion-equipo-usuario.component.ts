@@ -63,7 +63,7 @@ this.listaArchivos = this.asignacionModel.archivos;
 }
 
   public abrirImagen(token){
-    debugger
+
     this.filemanagerService.obtenerURLRutaArchivo(token);
   }
 
@@ -92,7 +92,7 @@ this.listaArchivos = this.asignacionModel.archivos;
 
           if (respuesta.exito) {
 
-            debugger
+
             let archivos: ArchivoUsuarioInventario[] = [];
             let archivo = new ArchivoUsuarioInventario();
             archivo.id = 0;
@@ -142,7 +142,7 @@ this.listaArchivos = this.asignacionModel.archivos;
   }
 
   public async eliminarArchivo(archivo: ArchivoUsuarioInventario){
-    debugger
+
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
       const respuesta = await this.inventariosService.eliminarArchivoAsignacionInventarioArrendamiento(archivo.id);

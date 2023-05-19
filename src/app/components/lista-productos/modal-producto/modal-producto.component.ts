@@ -149,7 +149,7 @@ export class ModalProductoComponent implements OnInit {
   }
 
   public async agregarCaracteristica() {
-    debugger
+
     if (this.caracteristica.value) {
       if (this.productoModel.id > 0) {
         let caracteritica = new CaracteristicaProductoFormModel_();

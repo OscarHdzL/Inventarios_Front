@@ -43,7 +43,7 @@ export class ModalInventarioComponent implements OnInit {
               private inventariosService: InventariosService,
               ) {
 
-                debugger
+
                 let sesion = localStorage.getItem(KeysStorageEnum.USER);
                 this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
 

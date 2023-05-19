@@ -1,9 +1,17 @@
-
-
 <form role="form" autocomplete="off" [formGroup]="formContenedores" novalidate>
+  <!-- <div class="mt-4 flex flex-row gap-2 m-10">
+    <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
+      <vex-camara (pictureTaken)="handleImage($event)"></vex-camara>
+
+      <div class="snapshot" *ngIf="webcamImage">
+        <img [src]="webcamImage.imageAsDataUrl" />
+      </div>
+    </div>
+  </div> -->
+  <br />
   <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4">
     <mat-form-field class="flex-auto">
-      <mat-label>Contenedor</mat-label>
+      <mat-label>Expediente</mat-label>
       <input
         type="text"
         matInput
@@ -16,6 +24,27 @@
     </mat-form-field>
   </div>
   <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4 mb-4">
+    <div class="w-full flex justify-end">
+      <mat-button-toggle-group
+        class="px-2 py-2"
+        #group="matButtonToggleGroup"
+        aria-label="Favorite Color"
+        [value]="selectedVal"
+        (change)="onValChange(group.value)"
+      >
+        <mat-button-toggle value="Carga archivos"
+          >Carga archivos</mat-button-toggle
+        >
+        <mat-button-toggle value="Cámara">Cámara</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <!-- Camara -->
+  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4 mb-4" *ngIf="group.value == 'Cámara'">
+    <vex-camara class="w-full" (pictureTaken)="handleImage($event)"></vex-camara>
+  </div>
+  <!-- CargaArchivos -->
+  <div class="flex flex-col lg:flex-row md:flex-row sm:gap-4 mb-4" *ngIf="group.value == 'Carga archivos'">
     <div class="w-full">
       <ngx-file-drop
         class="bg-gray-200 h-52"
@@ -41,51 +70,59 @@
 
   <div class="flex justify-end mt-5 mb-5">
     <button
-  class="mx-1 "
-  color="primary"
-  mat-mini-fab
-  matTooltip="Recargar imagenes"
-  *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length > 0"
-  (click)="recargar()"
-
->
-  <mat-icon svgIcon="mat:refresh"></mat-icon>
-</button>
+      class="mx-1"
+      color="primary"
+      mat-mini-fab
+      matTooltip="Recargar imagenes"
+      *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length > 0"
+      (click)="recargar()"
+    >
+      <mat-icon svgIcon="mat:refresh"></mat-icon>
+    </button>
   </div>
   <div
-  *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length == 0"
-  class="flex-auto items-center justify-center"
->
-  <h1 class="m-10 title" style="text-align: center">
-    No se encontraron archivos
-  </h1>
-</div>
-<div class="flex flex-col">
-  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-    <ng-container formArrayName="tblUsuarioInventarioContenedorImagenes">
-      <ng-container
-        *ngFor="let conf of tblUsuarioInventarioContenedorImagenes.controls; let i = index"
-      >
-        <div class="card h-72 mb-5">
-          <div class="flex justify-end mb-1" (click)="eliminarArchivo(i, conf)">
-            <a href="javascript:;">
-              <span
-                class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-red-700 text-red-200"
-              >
-                Eliminar
-              </span>
-            </a>
-          </div>
-          <div class="flex flex-col justify-center content-center" [formGroupName]="i">
-            <img
-              matTooltip="Ver Imagen"
-              class="h-40 max-w-full rounded-lg m-5"
-              (click)="abrirDocumento(conf.get('url').value)"
-              [src]="conf.get('url').value"
-              alt=""
-            />
+    *ngIf="this.item.tblUsuarioInventarioContenedorImagenes.length == 0"
+    class="flex-auto items-center justify-center"
+  >
+    <h1 class="m-10 title" style="text-align: center">
+      No se encontraron archivos
+    </h1>
+  </div>
+  <div class="flex flex-col">
+    <div class="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+      <ng-container formArrayName="tblUsuarioInventarioContenedorImagenes">
+        <ng-container
+          *ngFor="
+            let conf of tblUsuarioInventarioContenedorImagenes.controls;
+            let i = index
+          "
+        >
+          <div class="card h-72 mb-5">
+            <div
+              class="flex justify-end mb-1"
+              (click)="eliminarArchivo(i, conf)"
+            >
+              <a href="javascript:;">
+                <span
+                  class="text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-red-700 text-red-200"
+                >
+                  Eliminar
+                </span>
+              </a>
+            </div>
+            <div
+              class="flex flex-col justify-center content-center"
+              [formGroupName]="i"
+            >
+              <img
+                matTooltip="Ver Imagen"
+                class="h-40 max-w-full rounded-lg m-5"
+                (click)="abrirDocumento(conf.get('url').value)"
+                [src]="conf.get('url').value"
+                alt=""
+              />
 
-           <!--  <mat-form-field class="flex-auto h-20">
+              <!--  <mat-form-field class="flex-auto h-20">
               <mat-label>Descripcion</mat-label>
               <input type="text" matInput formControlName="descripcion" class="px-2 py-2 bg-white-100 w-full focus:outline-none rounded-md"/>
               <mat-error *ngIf="conf.get('descripcion').hasError('required')">
@@ -93,24 +130,31 @@
               >
             </mat-form-field> -->
 
-            <div class="bg-app-bar w-full flex ">
-              <div class="w-full px-2 py-2">
-                <input type="text" placeholder="Descripcion..." name="comentario" id="comentario" formControlName="descripcion"
-                class="px-2 py-2 bg-white-100 w-11/12 focus:outline-none rounded-md" />
-                <mat-error *ngIf="conf.get('descripcion').hasError('required')">
-                  El campo es requerido</mat-error
-                >
+              <div class="bg-app-bar w-full flex">
+                <div class="w-full px-2 py-2">
+                  <input
+                    type="text"
+                    placeholder="Descripcion..."
+                    name="comentario"
+                    id="comentario"
+                    formControlName="descripcion"
+                    class="px-2 py-2 bg-white-100 w-11/12 focus:outline-none rounded-md"
+                  />
+                  <mat-error
+                    *ngIf="conf.get('descripcion').hasError('required')"
+                  >
+                    El campo es requerido</mat-error
+                  >
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
   </div>
-</div>
 
-  <div class="flex justify-end mt-5" >
-
+  <div class="flex justify-end mt-5">
     <button
       type="submit"
       mat-flat-button
@@ -118,11 +162,11 @@
       [disabled]="this.formContenedores.invalid"
       (click)="guardarContenedor()"
     >
-      {{this.item.id > 0 ? 'Editar Contenedor':'Guardar Contenedor'}}
+      {{ this.item.id > 0 ? "Editar Expediente" : "Guardar Expediente" }}
     </button>
   </div>
   <!-- <div>{{this.formContenedores.getRawValue() | json}}</div> -->
-<!--
+  <!--
   <br>
   <div>{{this.item | json}}</div> -->
 </form>

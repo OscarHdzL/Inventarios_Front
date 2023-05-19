@@ -114,7 +114,7 @@ export class ModalProveedorComponent implements OnInit {
   }
   agregarContacto(){
 
-    debugger
+
     var val = this.nombreCon.value;
 
     if(this.nombreCon.value && !this.correoCon.value && !this.telefonoCon.value){

@@ -20,6 +20,7 @@ export class ModalLoadImageComponent implements OnInit {
   images:ProductosImagenes[] = []
   public files: NgxFileDropEntry[] = [];
   sesionUsuarioActual: SesionModel;
+  public selectedVal: string = 'Carga archivos';
   constructor(@Inject(MAT_DIALOG_DATA) public inventario: InventarioModel,
               private dialogRef: MatDialogRef<ModalLoadImageComponent>,
               private filemanagerService: FileManagerService,
@@ -38,6 +39,8 @@ export class ModalLoadImageComponent implements OnInit {
     this.imagenLoad = await this.filemanagerService.obtenerRutaArchivo(res[0].imagen);
   }
   async navegar(){
+
+    console.log(this.images);
    let indiceTemp=this.indiceImagen +1;
    this.indiceImagen+=1;
    if(indiceTemp > this.images.length-1)
@@ -69,7 +72,7 @@ export class ModalLoadImageComponent implements OnInit {
   }
 
   public dropped(files: NgxFileDropEntry[]) {
-    debugger
+
     this.files = files;
     for (const droppedFile of files) {
 
@@ -93,6 +96,7 @@ export class ModalLoadImageComponent implements OnInit {
             }]
             let res = await this.inventariosServices.insertarImagenesProductos(objeto)
             if (res.exito) {
+
               this.swalService.alertaPersonalizada(true, "Carga de imagen correcta");
               this.getUrl(respuesta.anotacion);
             }
@@ -115,17 +119,22 @@ export class ModalLoadImageComponent implements OnInit {
       }
     }
   }
-  async getUrl(token)
+  async getUrl(token: string)
   {
+
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
-    let imagen:ProductosImagenes= new ProductosImagenes()
-     imagen.imagen=url;
-
-     this.images.push(imagen);
+    var imagen_ = {
+      id: 0,
+      tblInventarioId: this.inventario.idinventario,
+      imagen: token,
+      usuarioAppid: this.sesionUsuarioActual.id
+    }
+     this.images.push(imagen_);
+    console.log(this.images)
      this.indiceImagen=0;
-     this.imagenLoad=this.images[this.indiceImagen].imagen;
-
-     this
+     //this.imagenLoad=this.images[this.indiceImagen].imagen;
+     this.imagenLoad = await this.filemanagerService.obtenerRutaArchivo(this.images[this.indiceImagen].imagen);
+     //this.imagenLoad = await this.filemanagerService.obtenerRutaArchivo(this.images[this.indiceImagen].imagen);
 
 
     console.log(url)
@@ -138,5 +147,73 @@ export class ModalLoadImageComponent implements OnInit {
   public fileLeave(event){
     console.log(event);
   }
+  public onValChange(val: string) {
+    this.selectedVal = val;
+    console.log("Valor Selected");
+    console.log(this.selectedVal);
+  }
 
+  public async handleImage(webcamImage: any) {
+
+    const base64 = '...';
+    //const imageName = 'name.png';
+    var imageName = Guid.newGuid() +  ".jpeg";
+    const imageBlob = this.dataURItoBlob(webcamImage.imageAsBase64);
+    const imageFile = new File([imageBlob], imageName, { type: webcamImage._mimeType });
+
+    const formData: any = new FormData();
+    formData.append("file", imageFile);
+
+    const respuesta = await this.filemanagerService.cargarArchivo(
+      formData
+    );
+
+    if (respuesta.exito) {
+      let objeto = [{
+        id: 0,
+        tblInventarioId: this.inventario.idinventario,
+        imagen: respuesta.anotacion,
+        usuarioAppid: this.sesionUsuarioActual.id
+      }]
+      let res = await this.inventariosServices.insertarImagenesProductos(objeto)
+      if (res.exito) {
+
+        this.swalService.alertaPersonalizada(true, "Carga de imagen correcta");
+        this.getUrl(respuesta.anotacion);
+      }
+      else {
+
+      }
+    } else {
+      this.swalService.alertaPersonalizada(false,"No se pudo cargar la imagen");
+    }
+
+    //this.webcamImage = webcamImage;
+  }
+
+  public dataURItoBlob(dataURI) {
+
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
+ }
+
+
+
+
+}
+
+export class Guid {
+  static newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
 }

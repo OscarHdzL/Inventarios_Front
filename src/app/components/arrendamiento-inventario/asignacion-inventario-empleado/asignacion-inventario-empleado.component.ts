@@ -150,7 +150,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
     });
 
     /*     this.formInventario.get('cliente').valueChanges.subscribe(async (x)=>{
-      debugger
+
       this.listaEquipo = await this.obtenerInventarioProductoDisponible(x);
       this.dataSourceOriginal = await this.obtenerAsignacionesInventarioProductoDisponible(x);
     }); */
@@ -180,7 +180,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
   }
 
   public async empleadoSeleccionado(empleado: EmpleadoLDAP) {
-    debugger;
+
     console.log("EMPLEADO seleccionado: ", empleado);
     this.empleadoInventarioArrendamientoFormModel.cuentaEmpleadoCliente =
       empleado.cuenta;
@@ -278,7 +278,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
   }
 
   async changeEquipo(x) {
-    debugger;
+
     const seleccionado = this.listaEquipo.find(
       (y) => y.idinventarioarrendamiento == x
     );
@@ -344,7 +344,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
   }
 
   public async guardarAsignacion() {
-    debugger;
+
     //this.asignacionInventarioFormModel.id = 0;
     this.empleadoInventarioArrendamientoFormModel.tblInventarioArrendamientoId =
       this.equipo.value;
@@ -402,7 +402,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
   }
 
   public async desasignar(asignacion: EmpleadoInventarioArrendamientoModel) {
-    debugger;
+
     let confirmacion = await this.swalService.confirmacion(
       "Atención",
       "¿Esta seguro de eliminar el registro?",
@@ -441,7 +441,7 @@ export class AsignacionInventarioEmpleadoComponent implements OnInit {
     event,
     empleadoInventarioArrendamientoModel: EmpleadoInventarioArrendamientoModel
   ) {
-    debugger;
+
     if (event.target.files.length > 0) {
       const formData: any = new FormData();
       formData.append("file", event.target.files[0]);

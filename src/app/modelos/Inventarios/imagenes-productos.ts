@@ -1,6 +1,6 @@
 export class ProductosImagenes{
-    id?:number;
-    tblInventarioId:number;
-    imagen?:string;
-    usuarioAppid?:number;
+    id?:number = 0;
+    tblInventarioId?:number = 0;
+    imagen?:string = null;
+    usuarioAppid?:number = 0;
 }
