@@ -262,6 +262,9 @@ export class ListaInventarioComponent implements OnInit {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+    else{
+      this.ngOnInit();
+    }
   }
 
 

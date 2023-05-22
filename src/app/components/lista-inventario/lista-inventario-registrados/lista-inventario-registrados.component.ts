@@ -23,7 +23,8 @@ import {Event, RouterEvent, Router, NavigationStart} from '@angular/router';
 import { filter } from 'rxjs';
 import { ModalLoadImageComponent } from '../modal-load-image/modal-load-image.component';
 import { ModalHistoricoInventarioComponent } from '../modal-historico-inventario/modal-historico-inventario.component';
-
+import { SesionModel } from "src/app/modelos/sesion.model";
+import { KeysStorageEnum } from "src/app/enum/keysStorage.enum";
 
 @Component({
   selector: 'vex-lista-inventario-registrados',
@@ -54,6 +55,7 @@ export class ListaInventarioRegistradosComponent implements OnInit {
   public productosAsignar: boolean;
   formFiltros: FormGroup;
   loadImages:boolean=false;
+  sesionUsuarioActual: SesionModel;
 
 
   columns: TableColumn<any>[] = [
@@ -78,7 +80,8 @@ export class ListaInventarioRegistradosComponent implements OnInit {
     private router: Router,
 
     ) {
-
+      let sesion = localStorage.getItem(KeysStorageEnum.USER);
+      this.sesionUsuarioActual = JSON.parse(sesion) as SesionModel;
       this.iniciarForm()
 
    }
@@ -244,18 +247,20 @@ export class ListaInventarioRegistradosComponent implements OnInit {
 
 
   public async EliminarInventario(inventario){
-
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
-      inventario.activo = false;
-      const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
+      const respuesta = await this.inventariosService.deshabilitarInventario(inventario.idinventario,this.sesionUsuarioActual.id);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();
       } else {
         this.swalService.alertaPersonalizada(false, 'Error');
+        this.ngOnInit();
       }
+    }
+    else{
+      this.ngOnInit();
     }
   }
 
