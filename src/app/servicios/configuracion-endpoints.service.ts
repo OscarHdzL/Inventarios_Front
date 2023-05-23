@@ -10,10 +10,10 @@ import { RespuestaModel } from '../modelos/respuesta.model';
 export class ConfiguracionEndpointsService {
 url_api = 'http://198.251.71.105:8090/';
 //url_api = 'https://localhost:7079/';
-
+//url_api = 'http://inventarioservicios.grupopm.mx/';
 url_filemanager = 'http://198.251.71.105:8082/';
 //url_filemanager = 'https://localhost:44362/';
-//
+//url_filemanager = 'http://inventarioservicios.grupopm.mx/filemanager/';
 
   constructor(public httpClient: HttpClient) { }
   getAsync(url: string): Promise<any> {

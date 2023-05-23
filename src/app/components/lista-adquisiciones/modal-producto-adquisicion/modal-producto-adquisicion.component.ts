@@ -164,7 +164,7 @@ private _normalizeValue(value: string): string {
 
 openModalProducto(producto: RelAdquisicionDetalle){
   this.dialog.open(ModalProductoComponent,{
-    height: '70%',
+    height: 'auto',
     width: '100%',
     autoFocus: true,
     data: producto,

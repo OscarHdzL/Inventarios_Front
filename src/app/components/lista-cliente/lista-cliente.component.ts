@@ -124,7 +124,7 @@ export class ListaClienteComponent implements OnInit {
   openModal(usuario: ClienteModel){
     this.dialog.open(ModalClienteCatalogoComponent,{
       //height: '50%',
-      height: window.innerWidth >= 1280 ? "65%" : "80%",
+      height: "auto",
       width: '100%',
       autoFocus: true,
       data: usuario,
@@ -145,6 +145,9 @@ export class ListaClienteComponent implements OnInit {
       } else {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
+    }
+    else{
+      this.ngOnInit();
     }
   }
 

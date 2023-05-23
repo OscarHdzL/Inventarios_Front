@@ -231,18 +231,20 @@ export class ListaProductosComponent implements OnInit {
 
 
   public async EliminarProducto(producto){
-
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
 
     if(confirmacion){
       producto.activo = false;
-      const respuesta = {exito: true}//await this.mesaValidacionService.deshabilitarCliente(cliente.id);
+      const respuesta = await this.inventariosService.deshabilitarProducto(producto.idproducto);
       if(respuesta.exito){
         this.swalService.alertaPersonalizada(true, 'Exito');
         this.ngOnInit();
       } else {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
+    }
+    else{
+      this.ngOnInit();
     }
   }
 

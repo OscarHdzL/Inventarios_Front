@@ -64,7 +64,7 @@ export class InventariosService extends ConfiguracionEndpointsService {
     }
 
     public async deshabilitarProducto(prod: number) : Promise <any> {
-      return await this.putAsync(this.url_api + 'Producto/eliminar?id='+prod, {});
+      return await this.deleteAsync(this.url_api + 'Producto/eliminar?id='+prod);
     }
 
     public async deshabilitarCaracteristicaProducto(prod: number) : Promise <any> {
