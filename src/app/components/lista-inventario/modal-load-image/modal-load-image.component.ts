@@ -88,17 +88,17 @@ export class ModalLoadImageComponent implements OnInit {
           const respuesta = await this.filemanagerService.cargarArchivo(formData);
 
           if (respuesta.exito) {
-            let objeto = [{
+            let objeto = {
               id: 0,
               tblInventarioId: this.inventario.idinventario,
               imagen: respuesta.anotacion,
               usuarioAppid: this.sesionUsuarioActual.id
-            }]
-            let res = await this.inventariosServices.insertarImagenesProductos(objeto)
+            }
+            let res = await this.inventariosServices.insertarImagenesProductos(objeto);
             if (res.exito) {
 
               this.swalService.alertaPersonalizada(true, "Carga de imagen correcta");
-              this.getUrl(respuesta.anotacion);
+              this.getUrl(respuesta.anotacion, res.id);
             }
             else {
 
@@ -119,12 +119,12 @@ export class ModalLoadImageComponent implements OnInit {
       }
     }
   }
-  async getUrl(token: string)
+  async getUrl(token: string, id: number)
   {
 
     let url = await this.filemanagerService.obtenerRutaArchivo(token);
     var imagen_ = {
-      id: 0,
+      id: id,
       tblInventarioId: this.inventario.idinventario,
       imagen: token,
       usuarioAppid: this.sesionUsuarioActual.id
@@ -169,17 +169,17 @@ export class ModalLoadImageComponent implements OnInit {
     );
 
     if (respuesta.exito) {
-      let objeto = [{
+      let objeto = {
         id: 0,
         tblInventarioId: this.inventario.idinventario,
         imagen: respuesta.anotacion,
         usuarioAppid: this.sesionUsuarioActual.id
-      }]
+      }
       let res = await this.inventariosServices.insertarImagenesProductos(objeto)
       if (res.exito) {
 
         this.swalService.alertaPersonalizada(true, "Carga de imagen correcta");
-        this.getUrl(respuesta.anotacion);
+        this.getUrl(respuesta.anotacion, res.id);
       }
       else {
 
