@@ -160,7 +160,10 @@ export class CrearPlanoComponent implements OnInit, AfterViewInit {
                   this.ctx.fillText(result.value,(this.coordenadas.x0 + this.coordenadas.x1)/2,(this.coordenadas.y0 + this.coordenadas.y1)/2)
                   this.swalService.alertaPersonalizada(true,res.mensaje)
                   this.mostrarEliminar = true;
-                  this.listaOficinas.push(this.oficina)
+                  this.listaOficinas = [];
+                  let res2 = await this.inventariosService.obtenerCatalogoUbicacionesId(this.activeRoute.snapshot.params.id)
+                  console.log("ID ROute ->", res2.output[0]);
+                  this.listaOficinas = res2.output[0].relClienteUbicacionOficinas
                 }
                 else {
                   this.swalService.alertaPersonalizada(false,res.mensaje)

@@ -152,6 +152,9 @@ export class ListaPropietariosComponent implements OnInit {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+    else{
+      this.ngOnInit();
+    }
   }
 
 }

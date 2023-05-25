@@ -256,6 +256,9 @@ console.log('this.dataSourceOriginal',this.dataSourceOriginal)
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+    else{
+      this.ngOnInit();
+    }
   }
 
 }

@@ -148,6 +148,9 @@ export class ListaFabricantesComponent implements OnInit {
         this.swalService.alertaPersonalizada(false, 'Error');
       }
     }
+    else{
+      this.ngOnInit();
+    }
   }
 
 }
