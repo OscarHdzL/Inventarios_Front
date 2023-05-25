@@ -11,6 +11,7 @@ import { AdquisicionFormModel, RelAdquisicionDetalle } from '../modelos/Inventar
 import { AccesorioInventario, InventarioFormModel } from '../modelos/Inventarios/inventario.model';
 import { ArchivoEmpleadoInventario, EmpleadoInventarioArrendamientoFormModel, InventarioArrendamientoAgrupadoModel, InventarioArrendamientoFormModel } from '../modelos/Inventarios/inventario-arrendamiento.model';
 import { ArchivoUsuarioInventario, UsuarioInventarioContenedorModel, UsuarioInventarioFormModel } from '../modelos/Inventarios/usuario-inventario.model';
+import { ConfiguracionCategoriaFormModel } from '../modelos/Inventarios/configuracion-categoria.model';
 
 
 @Injectable({
@@ -330,6 +331,14 @@ export class InventariosService extends ConfiguracionEndpointsService {
     //Configuracion
     public async obtenerConfiguracionProductoByCategoria(idCategoria: number) : Promise <any> {
       return await this.getAsync(this.url_api + 'ConfiguracionProducto/GetByCategory?id=' + idCategoria);
+    }
+
+    public async insertarConfiguracionCategoria(configuracion: ConfiguracionCategoriaFormModel) : Promise <any> {
+      return await this.postAsync(this.url_api + 'ConfiguracionProducto/Add', configuracion);
+    }
+
+    public async deshabilitarConfiguracionCategoria(Inventario: number) : Promise <any> {
+      return await this.deleteAsync(this.url_api + 'ConfiguracionProducto/Disable?id='+Inventario);
     }
 
 

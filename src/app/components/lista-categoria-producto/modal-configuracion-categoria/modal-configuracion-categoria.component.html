@@ -1,0 +1,121 @@
+<div class="flex items-center" style="border: none !important" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Configuracion de la categoría
+    <b>{{ this.categoria.nombre }}</b>
+  </h2>
+  <button></button>
+  <!-- <mat-icon  svgIcon="mat:help" matTooltip="El grupo de opciones funciona como un alias o una etiqueta para una lista de opciones."></mat-icon> -->
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="-mx-6 text-border"></mat-divider>
+<mat-dialog-content class="px-1 m-1">
+
+
+      <!-- CARACTERISTICAS -->
+      <form
+        role="form"
+        autocomplete="off"
+        [formGroup]="formConfiguracion"
+        (submit)="guardarConfiguracion()"
+        novalidate
+      >
+        <div class="flex flex-row gap-4">
+          <mat-form-field class="flex-auto">
+            <mat-label>Descripción</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="descripcion"
+              maxlength="2000"
+            />
+           <!--  <mat-icon matSuffix svgIcon="mat:add"></mat-icon> -->
+            <mat-error *ngIf="this.descripcion.hasError('required')">
+              El campo es requerido</mat-error
+            >
+          </mat-form-field>
+          <!-- <mat-form-field
+              class="flex-auto"
+              floatLabel="always"
+              appearance="outline"
+            >
+              Software
+              <mat-slide-toggle
+                formControlName="hardware"
+                [checked]="false"
+              ></mat-slide-toggle>
+              Hardware
+              <textarea matInput hidden></textarea>
+              <mat-error *ngIf="this.hardware.hasError('required')">
+                El campo es requerido</mat-error
+              >
+            </mat-form-field> -->
+          <button
+        class="mx-1 "
+        color="primary"
+        mat-mini-fab
+        matTooltip="Agregar caracteristica"
+        type="submit"
+      >
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+        </div>
+
+        <!-- {{this.listaCaracteristicas | json}} -->
+      </form>
+
+      <div class="relative shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th class="px-6 py-3">Configuración</th>
+             <!--  <th class="px-6 py-3">Tipo</th> -->
+              <th class="px-6 py-3">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="listaConfiguracionCategoria.length == 0">
+              <td colspan="2">
+                <div class="flex justify-center m-3">
+                  <p>NO SE HA REGISTRADO CONFIGURACIÓN</p>
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="bg-white border-b"
+              *ngFor="let row of listaConfiguracionCategoria"
+            >
+              <th
+                scope="row"
+                class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{ row.descripcion }}
+              </th>
+             <!--  <th
+                scope="row"
+                class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+              >
+                {{ row.tipo }}
+              </th> -->
+              <td class="px-3 py-2">
+                <a
+                  (click)="eliminarConfiguracion(row)"
+                  matTooltip="Eliminar"
+                  class="w-10 h-10 leading-none flex items-center justify-center hover:bg-hover text-primary bg-primary/10 mr-2"
+                  mat-icon-button
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:delete_forever"
+                  ></mat-icon>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <!-- <button type="button" mat-button (click)="close(false)">Cancelar</button> -->
+</mat-dialog-actions>

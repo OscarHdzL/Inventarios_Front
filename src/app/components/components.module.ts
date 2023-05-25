@@ -110,6 +110,7 @@ import { CamaraComponent } from './camara/camara.component';
 import { WebcamModule } from 'ngx-webcam';
 import { HistoricoInventarioComponent } from './historico-inventario/historico-inventario.component';
 import { ModalHistoricoInventarioComponent } from './lista-inventario/modal-historico-inventario/modal-historico-inventario.component';
+import { ModalConfiguracionCategoriaComponent } from './lista-categoria-producto/modal-configuracion-categoria/modal-configuracion-categoria.component';
 
 
 
@@ -195,7 +196,8 @@ import { ModalHistoricoInventarioComponent } from './lista-inventario/modal-hist
     ContenedorFormComponent,
     CamaraComponent,
     HistoricoInventarioComponent,
-    ModalHistoricoInventarioComponent
+    ModalHistoricoInventarioComponent,
+    ModalConfiguracionCategoriaComponent
   ],
   imports: [
     CommonModule,

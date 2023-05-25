@@ -14,6 +14,7 @@ import { InventariosService } from 'src/app/servicios/inventarios.service';
 
 import { ModalPropietarioComponent } from '../lista-propietarios/modal-propietario/modal-propietario.component';
 import { ModalCategoriaProductoComponent } from './modal-categoria-producto/modal-categoria-producto.component';
+import { ModalConfiguracionCategoriaComponent } from './modal-configuracion-categoria/modal-configuracion-categoria.component';
 
 @Component({
   selector: 'vex-lista-categoria-producto',
@@ -137,6 +138,21 @@ export class ListaCategoriaProductoComponent implements OnInit {
       this.ngOnInit();
     });
   }
+
+  openModalConfiguracion(configuracion: any){
+    this.dialog.open(ModalConfiguracionCategoriaComponent,{
+      height: 'auto',
+      width: '80%',
+      autoFocus: true,
+      data: configuracion,
+      disableClose: true,
+      maxWidth: (window.innerWidth >= 1280) ? '80vw': '100vw',
+    }).afterClosed().subscribe(result => {
+
+      this.ngOnInit();
+    });
+  }
+
   public async EliminarFabricante(propietario){
     let confirmacion = await this.swalService.confirmacion("Atención","¿Esta seguro de eliminar el registro?", "Eliminar","");
     if(confirmacion){
